@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Controller Movement
     PlayerControls controls;
-    public Vector2 move;
+    public Vector2 move;    
     public Vector2 jetpack;
     
     //checks
@@ -21,7 +21,11 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
 
     //Movement
-    public float moveSpeed;
+    public float speed;
+    public float maxSpeed;
+    public float Accel;
+    public float Deccel;
+    public float flySpeed;
 
     //Jetpack
     public float jetForce;
@@ -44,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        flySpeed = maxSpeed * 1.25f;
     }
 
     void Update()
@@ -52,7 +58,31 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
         //Move the player with new Vector2
-        rb.velocity = new Vector2(move.x * moveSpeed, rb.velocity.y);
+        if (isGrounded)
+        {
+            if (speed > -maxSpeed)
+            {
+                rb.velocity = new Vector2(move.x * (speed += (Accel * Time.deltaTime)), rb.velocity.y); //Slowly increasing the speed value to fake acceleeration
+            }
+
+            //setting speed to not excede max speed
+            if (speed > maxSpeed)
+            {
+                speed = maxSpeed;
+            }
+
+            //reset speed to 0 if the player stop moving, so acceleration will kick in again
+            if(move.x < 0.1f && move.x > -0.1f && move.y < 0.1f && move.y > -0.1f)
+            {
+                speed = 0;
+            }
+        }
+
+        //slightly increase movement when in the air
+        if(!isGrounded && jetIsOn)
+        {
+            rb.velocity = new Vector2(move.x * flySpeed, rb.velocity.y);
+        }
 
         //rotate sprite when moving left and right
         if (move.x > 0.3)
@@ -66,22 +96,38 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //ANIMATOR
-        //getting the player speed fot the animator
-
+        //getting the player speed for the animator
         if (isGrounded)
         {
-            animator.SetBool("isGrounded", true);
             animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+            animator.SetBool("isGrounded", true);
         }
+
     }
 
     void FixedUpdate()
     {
         if(jetIsOn)
         {
+            //add force when using jetpack
             rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
             StartCoroutine(JetPackCo());
         }
+    }
+    public IEnumerator JetPackCo()
+    {
+        animator.SetTrigger("jetPackActive");
+        animator.SetBool("isGrounded", false);
+
+        if(isGrounded)
+        {
+            yield break;
+        } else
+        {
+            yield return new WaitForSeconds(boostTime);
+        }
+
+        jetIsOn = false;
     }
 
     void JumpJet()
@@ -97,14 +143,5 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         controls.Gameplay.Disable();
-    }
-
-    public IEnumerator JetPackCo()
-    {
-        animator.SetTrigger("jetPackActive");
-
-        yield return new WaitForSeconds(boostTime);
-
-        jetIsOn = false;
     }
 }
