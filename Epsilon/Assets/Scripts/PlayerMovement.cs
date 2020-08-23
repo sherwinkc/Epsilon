@@ -23,14 +23,20 @@ public class PlayerMovement : MonoBehaviour
     //Movement
     public float speed;
     public float maxSpeed;
-    public float Accel;
-    public float Deccel;
+    public float walkAccel;
+    public float walkDeccel;
     public float flySpeed;
 
     //Jetpack
     public float jetForce;
     public bool jetIsOn;
     public float boostTime;
+    public float flyForce;
+
+    public float airSpeed;
+    public float maxAirSpeed;
+    public float flyAccel;
+    public float flyDeccel;
 
     private void Awake()
     {
@@ -49,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        flySpeed = maxSpeed * 1.25f;
+        flySpeed = maxSpeed * 1.33f;
     }
 
     void Update()
@@ -57,12 +63,13 @@ public class PlayerMovement : MonoBehaviour
         //ground check bool
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
+        //GROUND
         //Move the player with new Vector2
         if (isGrounded)
         {
             if (speed > -maxSpeed)
             {
-                rb.velocity = new Vector2(move.x * (speed += (Accel * Time.deltaTime)), rb.velocity.y); //Slowly increasing the speed value to fake acceleeration
+                rb.velocity = new Vector2(move.x * (speed += (walkAccel * Time.deltaTime)), rb.velocity.y); //Slowly increasing the speed value to fake acceleeration
             }
 
             //setting speed to not excede max speed
@@ -78,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        //AIR
         //slightly increase movement when in the air
         if(!isGrounded && jetIsOn)
         {
@@ -88,8 +96,8 @@ public class PlayerMovement : MonoBehaviour
         if (move.x > 0.3)
         {
             transform.localScale = new Vector3(0.2f, 0.2f, transform.localScale.z);
-            //RunningSound();
         }
+
         if (move.x < -0.3)
         {
             transform.localScale = new Vector3(-0.2f, 0.2f, transform.localScale.z);
@@ -102,7 +110,6 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
             animator.SetBool("isGrounded", true);
         }
-
     }
 
     void FixedUpdate()
@@ -126,7 +133,6 @@ public class PlayerMovement : MonoBehaviour
         {
             yield return new WaitForSeconds(boostTime);
         }
-
         jetIsOn = false;
     }
 
