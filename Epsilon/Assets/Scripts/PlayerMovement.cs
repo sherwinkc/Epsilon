@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public float flySpeed;
 
     //Jetpack
-    public float jetForce;
+    /*public float jetForce;
     public bool jetIsOn;
     public float boostTime;
     public float flyForce;
@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     public float airSpeed;
     public float maxAirSpeed;
     public float flyAccel;
-    public float flyDeccel;
+    public float flyDeccel;*/
 
     private void Awake()
     {
@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         controls.Gameplay.Move.canceled += ctx => move = Vector2.zero;
 
         //JetPack
-        controls.Gameplay.Jetpack.performed += ctx => JumpJet();
+        //aaaaaacontrols.Gameplay.Jetpack.performed += ctx => JumpJet();
     }
 
     void Start()
@@ -87,20 +87,20 @@ public class PlayerMovement : MonoBehaviour
 
         //AIR
         //slightly increase movement when in the air
-        if(!isGrounded && jetIsOn)
+        /*if(!isGrounded && jetIsOn)
         {
             rb.velocity = new Vector2(move.x * flySpeed, rb.velocity.y);
-        }
+        }*/
 
         //rotate sprite when moving left and right
         if (move.x > 0.3)
         {
-            transform.localScale = new Vector3(0.2f, 0.2f, transform.localScale.z);
+            transform.localScale = new Vector3(0.4f, 0.4f, transform.localScale.z);
         }
 
         if (move.x < -0.3)
         {
-            transform.localScale = new Vector3(-0.2f, 0.2f, transform.localScale.z);
+            transform.localScale = new Vector3(-0.4f, 0.4f, transform.localScale.z);
         }
 
         //ANIMATOR
@@ -114,14 +114,14 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(jetIsOn)
+        /*if(jetIsOn)
         {
             //add force when using jetpack
             rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
             StartCoroutine(JetPackCo());
-        }
+        }*/
     }
-    public IEnumerator JetPackCo()
+    /*public IEnumerator JetPackCo()
     {
         animator.SetTrigger("jetPackActive");
         animator.SetBool("isGrounded", false);
@@ -139,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
     void JumpJet()
     {
         jetIsOn = true;  
-    }
+    }*/
 
     private void OnEnable()
     {
