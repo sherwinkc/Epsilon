@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
     public float walkDeccel;
     public float flySpeed;
 
+    public float jumpSpeed;
+
     //Jetpack
     /*public float jetForce;
     public bool jetIsOn;
@@ -47,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         controls.Gameplay.Move.canceled += ctx => move = Vector2.zero;
 
         //JetPack
-        //aaaaaacontrols.Gameplay.Jetpack.performed += ctx => JumpJet();
+        controls.Gameplay.Jump.performed += ctx => Jump();
     }
 
     void Start()
@@ -135,11 +137,12 @@ public class PlayerMovement : MonoBehaviour
         }
         jetIsOn = false;
     }
-
-    void JumpJet()
+    */
+    void Jump()
     {
-        jetIsOn = true;  
-    }*/
+        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        animator.SetTrigger("Jump");
+    }
 
     private void OnEnable()
     {

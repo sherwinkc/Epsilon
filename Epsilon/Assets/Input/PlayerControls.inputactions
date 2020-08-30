@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Jetpack",
+                    "name": "Jump",
                     "type": "Button",
                     "id": "1d435be8-ab31-4567-96d3-0a3fd4ae9cad",
                     "expectedControlType": "Button",
@@ -104,7 +104,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jetpack",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -115,7 +115,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jetpack",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
