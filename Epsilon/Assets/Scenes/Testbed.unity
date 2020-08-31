@@ -2278,14 +2278,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1080476419}
-  m_LocalRotation: {x: -0, y: -0, z: 0.004139513, w: 0.9999915}
+  m_LocalRotation: {x: -0, y: -0, z: 0.008115113, w: 0.9999671}
   m_LocalPosition: {x: 1.163166, y: -0.02413559, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1374099558}
   m_Father: {fileID: 160178828}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.93}
 --- !u!1 &1083200115
 GameObject:
   m_ObjectHideFlags: 0
@@ -2302,6 +2302,7 @@ GameObject:
   - component: {fileID: 1083200118}
   - component: {fileID: 1083200121}
   - component: {fileID: 1083200123}
+  - component: {fileID: 1083200124}
   m_Layer: 0
   m_Name: SpacemanSprite
   m_TagString: Untagged
@@ -2406,30 +2407,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1083200115}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57c008f954fe54a8bb972de1018a2cb8, type: 3}
+  m_Script: {fileID: 11500000, guid: 86c97394749040e4c86119984deeff2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RootBone: {fileID: 1166048508}
-  m_BoneTransforms:
-  - {fileID: 1166048508}
-  - {fileID: 972735990}
-  - {fileID: 480549935}
-  - {fileID: 717430539}
-  - {fileID: 2138768615}
-  - {fileID: 623880464}
-  - {fileID: 1247603799}
-  - {fileID: 623557086}
-  - {fileID: 375282593}
-  - {fileID: 399550899}
-  - {fileID: 160178828}
-  - {fileID: 1080476420}
-  - {fileID: 1374099558}
-  - {fileID: 432376494}
-  m_Bounds:
-    m_Center: {x: -0.003399849, y: 2.216011, z: 0}
-    m_Extent: {x: 3.1263697, y: 3.0268772, z: 0}
-  m_UseBatching: 1
-  m_AlwaysUpdate: 1
+  rb: {fileID: 0}
+  animator: {fileID: 0}
+  move: {x: 0, y: 0}
+  jetpack: {x: 0, y: 0}
+  groundCheck: {fileID: 0}
+  groundCheckRadius: 0
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
+  isGrounded: 0
+  speed: 0
+  maxSpeed: 0
+  walkAccel: 0
+  walkDeccel: 0
+  flySpeed: 0
+  jumpSpeed: 0
 --- !u!70 &1083200120
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2517,6 +2513,39 @@ PlayableDirector:
     - 536621b47f7f57a4ebbc6e944f4dbdb2: {fileID: 566706297}
     - c685a394de3696f4ca92b8e7842c193b: {fileID: 566706297}
     - bad63c4a285f2b748af9be656ed99f15: {fileID: 757397504}
+--- !u!114 &1083200124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083200115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c008f954fe54a8bb972de1018a2cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RootBone: {fileID: 1166048508}
+  m_BoneTransforms:
+  - {fileID: 1166048508}
+  - {fileID: 972735990}
+  - {fileID: 480549935}
+  - {fileID: 717430539}
+  - {fileID: 2138768615}
+  - {fileID: 623880464}
+  - {fileID: 1247603799}
+  - {fileID: 623557086}
+  - {fileID: 375282593}
+  - {fileID: 399550899}
+  - {fileID: 160178828}
+  - {fileID: 1080476420}
+  - {fileID: 1374099558}
+  - {fileID: 432376494}
+  m_Bounds:
+    m_Center: {x: -0.59259224, y: 2.029716, z: 0}
+    m_Extent: {x: 1.6142702, y: 2.9478457, z: 0}
+  m_UseBatching: 1
+  m_AlwaysUpdate: 1
 --- !u!1 &1165093051
 GameObject:
   m_ObjectHideFlags: 3

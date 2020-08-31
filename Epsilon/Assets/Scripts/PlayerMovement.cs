@@ -65,6 +65,54 @@ public class PlayerMovement : MonoBehaviour
         //ground check bool
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
+        PlayerMovementGround();
+        RotateSprite();
+
+        //AIR
+        //slightly increase movement when in the air
+        /*if(!isGrounded && jetIsOn)
+        {
+            rb.velocity = new Vector2(move.x * flySpeed, rb.velocity.y);
+        }*/
+
+        //ANIMATOR
+        //getting the player speed for the animator
+        if (isGrounded)
+        {
+            animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+        }
+
+        animator.SetBool("isGrounded", isGrounded);
+    }
+
+    void FixedUpdate()
+    {
+        /*if(jetIsOn)
+        {
+            //add force when using jetpack
+            rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
+            StartCoroutine(JetPackCo());
+        }*/
+    }
+
+    /*public IEnumerator JetPackCo()
+    {
+        animator.SetTrigger("jetPackActive");
+        animator.SetBool("isGrounded", false);
+
+        if(isGrounded)
+        {
+            yield break;
+        } else
+        {
+            yield return new WaitForSeconds(boostTime);
+        }
+        jetIsOn = false;
+    }
+    */
+
+    void PlayerMovementGround()
+    {
         //GROUND
         //Move the player with new Vector2
         if (isGrounded)
@@ -81,19 +129,15 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //reset speed to 0 if the player stop moving, so acceleration will kick in again
-            if(move.x < 0.1f && move.x > -0.1f && move.y < 0.1f && move.y > -0.1f)
+            if (move.x < 0.1f && move.x > -0.1f && move.y < 0.1f && move.y > -0.1f)
             {
                 speed = 0;
             }
         }
+    }
 
-        //AIR
-        //slightly increase movement when in the air
-        /*if(!isGrounded && jetIsOn)
-        {
-            rb.velocity = new Vector2(move.x * flySpeed, rb.velocity.y);
-        }*/
-
+    void RotateSprite()
+    {
         //rotate sprite when moving left and right
         if (move.x > 0.3)
         {
@@ -104,46 +148,18 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(-0.4f, 0.4f, transform.localScale.z);
         }
-
-        //ANIMATOR
-        //getting the player speed for the animator
-        if (isGrounded)
-        {
-            animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
-            animator.SetBool("isGrounded", true);
-        }
     }
 
-    void FixedUpdate()
-    {
-        /*if(jetIsOn)
-        {
-            //add force when using jetpack
-            rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
-            StartCoroutine(JetPackCo());
-        }*/
-    }
-    /*public IEnumerator JetPackCo()
-    {
-        animator.SetTrigger("jetPackActive");
-        animator.SetBool("isGrounded", false);
-
-        if(isGrounded)
-        {
-            yield break;
-        } else
-        {
-            yield return new WaitForSeconds(boostTime);
-        }
-        jetIsOn = false;
-    }
-    */
     void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-        animator.SetTrigger("Jump");
+        if (isGrounded)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+            animator.SetTrigger("Jump");
+        }
     }
 
+    //Player Input 
     private void OnEnable()
     {
         controls.Gameplay.Enable();
