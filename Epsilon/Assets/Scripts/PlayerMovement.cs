@@ -13,12 +13,22 @@ public class PlayerMovement : MonoBehaviour
     PlayerControls controls;
     public Vector2 move;    
     public Vector2 jetpack;
-    
-    //checks
-    public Transform groundCheck;
+
+    //checks    
     public float groundCheckRadius;
     public LayerMask whatIsGround;
     public bool isGrounded;
+
+    public Transform groundCheck;
+    public Transform wallCheck;
+    public Transform ledgeCheck;
+
+    public bool isTouchingWall;
+    public bool isTouchingLedge;
+    public float wallCheckDistance;
+
+    public bool canClimbLedge = false;
+    public bool ledgeDetected;
 
     //Movement
     public float speed;
@@ -39,6 +49,9 @@ public class PlayerMovement : MonoBehaviour
     public float maxAirSpeed;
     public float flyAccel;
     public float flyDeccel;*/
+
+    //Audio
+    public AudioSource playerFootsteps;
 
     private void Awake()
     {
@@ -65,8 +78,18 @@ public class PlayerMovement : MonoBehaviour
         //ground check bool
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
+        isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance, whatIsGround);
+        isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, transform.right, wallCheckDistance, whatIsGround);
+
+        if (isTouchingWall && !isTouchingLedge && !ledgeDetected)
+        {
+            ledgeDetected = true;
+            animator.SetBool("ledgeDetected", ledgeDetected);
+        }
+
         PlayerMovementGround();
         RotateSprite();
+        CheckLedgeClimb();
 
         //AIR
         //slightly increase movement when in the air
@@ -142,11 +165,16 @@ public class PlayerMovement : MonoBehaviour
         if (move.x > 0.3)
         {
             transform.localScale = new Vector3(0.4f, 0.4f, transform.localScale.z);
+            Debug.DrawRay(wallCheck.position, Vector2.right * wallCheckDistance, Color.white);
+            Debug.DrawRay(ledgeCheck.position, Vector2.right * wallCheckDistance, Color.white);
+
         }
 
         if (move.x < -0.3)
         {
             transform.localScale = new Vector3(-0.4f, 0.4f, transform.localScale.z);
+            Debug.DrawRay(wallCheck.position, Vector2.left * wallCheckDistance, Color.white);
+            Debug.DrawRay(ledgeCheck.position, Vector2.left * wallCheckDistance, Color.white);
         }
     }
 
@@ -168,5 +196,16 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         controls.Gameplay.Disable();
+    }
+
+    public void PlayPlayerFootsteps()
+    {
+        playerFootsteps.pitch = (Random.Range(0.85f, 1f));
+        playerFootsteps.Play();
+    }
+
+    public void CheckLedgeClimb()
+    {
+
     }
 }
