@@ -3670,7 +3670,7 @@ MonoBehaviour:
   ledgeCheck: {fileID: 752422281}
   isTouchingWall: 0
   isTouchingLedge: 0
-  wallCheckDistance: 2
+  wallCheckDistance: 1
   canClimbLedge: 0
   ledgeDetected: 0
   speed: 0
@@ -3678,6 +3678,8 @@ MonoBehaviour:
   walkAccel: 5
   walkDeccel: 0
   flySpeed: 0
+  ledgeXSpeed: 15
+  ledgeYSpeed: 5
   jumpSpeed: 4
   playerFootsteps: {fileID: 392255477}
 --- !u!320 &1083200123
@@ -3687,7 +3689,7 @@ PlayableDirector:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1083200115}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 5195395c896c44846858f1caab3e200a, type: 2}
   m_InitialState: 1

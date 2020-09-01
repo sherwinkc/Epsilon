@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public float wallCheckDistance;
 
     public bool canClimbLedge = false;
-    public bool ledgeDetected;
+    public bool ledgeDetected = false;
 
     //Movement
     public float speed;
@@ -36,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
     public float walkAccel;
     public float walkDeccel;
     public float flySpeed;
+
+    public float ledgeXSpeed;
+    public float ledgeYSpeed;
 
     public float jumpSpeed;
 
@@ -85,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         {
             ledgeDetected = true;
             animator.SetBool("ledgeDetected", ledgeDetected);
+            StartCoroutine(LedgeClimbimgCo());
         }
 
         PlayerMovementGround();
@@ -207,5 +211,27 @@ public class PlayerMovement : MonoBehaviour
     public void CheckLedgeClimb()
     {
 
+    }
+
+    public IEnumerator LedgeClimbimgCo()
+    {
+        Debug.Log("Inside Coroutine");
+
+        rb.gravityScale = 0;
+
+        rb.position = new Vector2(rb.position.x, rb.position.y + 0.5f);
+
+        yield return new WaitForSeconds(0.33f);
+
+        rb.position = new Vector2(rb.position.x + 0.6f, rb.position.y);
+
+        yield return new WaitForSeconds(0.2f);
+
+        rb.gravityScale = 0.75f;
+
+        ledgeDetected = false;
+        animator.SetBool("ledgeDetected", ledgeDetected);
+
+        yield return null;
     }
 }
