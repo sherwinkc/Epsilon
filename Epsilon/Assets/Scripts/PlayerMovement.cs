@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     public float ledgeYSpeed;
 
     public float jumpSpeed;
+    public bool isSlowWalking;
+    public bool isNearBox = false;
 
     //Jetpack
     /*public float jetForce;
@@ -52,6 +54,9 @@ public class PlayerMovement : MonoBehaviour
     public float maxAirSpeed;
     public float flyAccel;
     public float flyDeccel;*/
+
+    //Colliders/Tiggers
+    public Collider2D slowWalkCollider;
 
     //Audio
     public AudioSource playerFootsteps;
@@ -66,6 +71,9 @@ public class PlayerMovement : MonoBehaviour
 
         //JetPack
         controls.Gameplay.Jump.performed += ctx => Jump();
+
+        //Interact
+        controls.Gameplay.Interact.performed += ctx => Interact();
     }
 
     void Start()
@@ -110,6 +118,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         animator.SetBool("isGrounded", isGrounded);
+        animator.SetBool("isSlowWalking", isSlowWalking);
     }
 
     void FixedUpdate()
@@ -159,8 +168,10 @@ public class PlayerMovement : MonoBehaviour
             if (move.x < 0.1f && move.x > -0.1f && move.y < 0.1f && move.y > -0.1f)
             {
                 speed = 0;
-            }
+            }            
         }
+
+        Debug.Log("move.x" + move.x);
     }
 
     void RotateSprite()
@@ -233,5 +244,39 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("ledgeDetected", ledgeDetected);
 
         yield return null;
+    }
+
+    //SLOW WALK FUNCTIONS
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "SlowWalk")
+        {
+            maxSpeed = 0.75f;
+            isSlowWalking = true;
+        }
+
+        if (other.tag == "HealthBox")
+        {
+            isNearBox = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "HealthBox")
+        {
+            //isNearBox = false;
+        }
+    }
+
+    public void Interact()
+    {
+        if(isNearBox)
+        {
+            Debug.Log("inside healthbox if statement");
+            maxSpeed = 4;
+            slowWalkCollider.enabled = false;
+            isSlowWalking = false;
+        }
     }
 }
