@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
@@ -57,6 +58,9 @@ public class PlayerMovement : MonoBehaviour
 
     //Colliders/Tiggers
     public Collider2D slowWalkCollider;
+
+    //Playable Directors
+    public PlayableDirector PD_HealthBox;
 
     //Audio
     public AudioSource playerFootsteps;
@@ -273,10 +277,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isNearBox)
         {
-            Debug.Log("inside healthbox if statement");
-            maxSpeed = 4;
-            slowWalkCollider.enabled = false;
-            isSlowWalking = false;
+            StartCoroutine(HealthBoxInteraction());
         }
+    }
+
+    public IEnumerator HealthBoxInteraction()
+    {
+        PD_HealthBox.Play();
+
+        yield return new WaitForSeconds(15);
+
+        maxSpeed = 4;
+        slowWalkCollider.enabled = false;
+        isSlowWalking = false;
+
+        yield return null;
     }
 }
