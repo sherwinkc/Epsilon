@@ -65,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
     //Audio
     public AudioSource playerFootsteps;
 
+    public UI_Interact interactBool;
+
     private void Awake()
     {
         controls = new PlayerControls();
@@ -278,6 +280,7 @@ public class PlayerMovement : MonoBehaviour
         if(isNearBox)
         {
             StartCoroutine(HealthBoxInteraction());
+            interactBool.textUI.enabled = false;
         }
     }
 
