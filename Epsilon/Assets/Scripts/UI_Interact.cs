@@ -12,8 +12,11 @@ public class UI_Interact : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        textUI.enabled = false;
+    { 
+        if (textUI != null)
+        {
+            textUI.enabled = false;
+        }
     }
 
     // Update is called once per frame
