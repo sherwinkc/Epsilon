@@ -177,7 +177,13 @@ public class PlayerMovement : MonoBehaviour
             }            
         }
 
-        Debug.Log("move.x" + move.x);
+        if (isTouchingWall && isGrounded)
+        {
+            animator.SetTrigger("wallStop");
+            speed = 0;
+        }
+
+        //Debug.Log("move.x" + move.x);
     }
 
     void RotateSprite()

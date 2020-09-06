@@ -1832,7 +1832,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 78df0b648d64c6648bcf1fce2e20b615, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.2
-  m_Pitch: 0.9335222
+  m_Pitch: 0.9692875
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -2369,8 +2369,8 @@ MonoBehaviour:
   - {fileID: 2020780020}
   - {fileID: 162258384}
   m_Bounds:
-    m_Center: {x: 0.0637508, y: 2.2160103, z: 0}
-    m_Extent: {x: 0.9232932, y: 3.0268772, z: 0}
+    m_Center: {x: -0.0030305386, y: 2.2160103, z: 0}
+    m_Extent: {x: 3.1260014, y: 3.0268772, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!50 &1560677854
