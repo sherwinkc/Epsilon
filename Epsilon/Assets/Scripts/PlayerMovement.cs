@@ -31,6 +31,11 @@ public class PlayerMovement : MonoBehaviour
     public bool canClimbLedge = false;
     public bool ledgeDetected = false;
 
+    //Pushing/Pulling boxes
+    public bool isCloseEnoughToPush;
+    public LayerMask whatIsMovable;
+    public float isCloseEnoughToPushDistance;
+
     //Movement
     public float speed;
     public float maxSpeed;
@@ -80,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Interact
         controls.Gameplay.Interact.performed += ctx => Interact();
+        controls.Gameplay.Interact.canceled += ctx => StopInteracting();
     }
 
     void Start()
@@ -95,8 +101,8 @@ public class PlayerMovement : MonoBehaviour
         //ground check bool
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
-        isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance, whatIsGround);
-        isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, transform.right, wallCheckDistance, whatIsGround);
+        isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right * transform.localScale.x, wallCheckDistance, whatIsGround);
+        isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, transform.right * transform.localScale.x, wallCheckDistance, whatIsGround);
 
         if (isTouchingWall && !isTouchingLedge && !ledgeDetected)
         {
@@ -108,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerMovementGround();
         RotateSprite();
         CheckLedgeClimb();
+        CheckMovable();
 
         //AIR
         //slightly increase movement when in the air
@@ -125,6 +132,15 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetBool("isGrounded", isGrounded);
         animator.SetBool("isSlowWalking", isSlowWalking);
+
+        if (transform.localScale.x < 0)
+        {
+            ledgeXSpeed = -0.6f;
+        }
+        else
+        {
+            ledgeXSpeed = 0.6f;
+        }
     }
 
     void FixedUpdate()
@@ -238,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator LedgeClimbimgCo()
     {
-        Debug.Log("Inside Coroutine");
+        //Debug.Log("Inside Coroutine");
 
         rb.gravityScale = 0;
 
@@ -246,7 +262,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(0.33f);
 
-        rb.position = new Vector2(rb.position.x + 0.6f, rb.position.y);
+        rb.position = new Vector2(rb.position.x + ledgeXSpeed, rb.position.y);
 
         yield return new WaitForSeconds(0.2f);
 
@@ -288,6 +304,42 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(HealthBoxInteraction());
             interactBool.textUI.enabled = false;
         }
+
+        RaycastHit2D isCloseEnoughToPush = Physics2D.Raycast(wallCheck.position, transform.right * transform.localScale.x, isCloseEnoughToPushDistance, whatIsMovable);
+
+        if (isCloseEnoughToPush)
+        {
+            Debug.Log("hit " + isCloseEnoughToPush.transform.tag);
+
+            Rigidbody2D boxRB = isCloseEnoughToPush.rigidbody.GetComponent<Rigidbody2D>();
+
+            Debug.Log("vel " + isCloseEnoughToPush.rigidbody.velocity);
+            Debug.Log("boxRB " + boxRB);
+
+            if (boxRB != null && Input.GetKeyDown(KeyCode.D))
+            {
+                Debug.Log("in function");
+                //boxRB.AddForce(new Vector2(1000f, 0f));
+                boxRB.velocity = new Vector2(boxRB.velocity.x + 10f, boxRB.velocity.y);
+            }
+
+            if (boxRB != null && Input.GetKeyDown(KeyCode.A))
+            {
+                Debug.Log("in function");
+                //boxRB.AddForce(new Vector2(1000f, 0f));
+                boxRB.velocity = new Vector2(boxRB.velocity.x -10f, boxRB.velocity.y);
+            }
+
+
+
+            animator.SetBool("stopPushing", false);
+            animator.SetTrigger("pushObject");
+        }
+    }
+
+    public void StopInteracting()
+    {
+        animator.SetBool("stopPushing", true);
     }
 
     public IEnumerator HealthBoxInteraction()
@@ -299,7 +351,13 @@ public class PlayerMovement : MonoBehaviour
         maxSpeed = 4;
         slowWalkCollider.enabled = false;
         isSlowWalking = false;
+        isNearBox = false;
 
         yield return null;
+    }
+
+    public void CheckMovable()
+    {
+
     }
 }
