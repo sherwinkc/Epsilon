@@ -330,8 +330,6 @@ public class PlayerMovement : MonoBehaviour
                 boxRB.velocity = new Vector2(boxRB.velocity.x -10f, boxRB.velocity.y);
             }
 
-
-
             animator.SetBool("stopPushing", false);
             animator.SetTrigger("pushObject");
         }
