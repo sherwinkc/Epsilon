@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     //Controller Movement
     PlayerControls controls;
     public Vector2 move;    
-    public Vector2 jetpack;
 
     //checks    
     public float groundCheckRadius;
@@ -49,17 +48,6 @@ public class PlayerMovement : MonoBehaviour
     public float jumpSpeed;
     public bool isSlowWalking;
     public bool isNearBox = false;
-
-    //Jetpack
-    /*public float jetForce;
-    public bool jetIsOn;
-    public float boostTime;
-    public float flyForce;
-
-    public float airSpeed;
-    public float maxAirSpeed;
-    public float flyAccel;
-    public float flyDeccel;*/
 
     //Colliders/Tiggers
     public Collider2D slowWalkCollider;
@@ -145,29 +133,8 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        /*if(jetIsOn)
-        {
-            //add force when using jetpack
-            rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
-            StartCoroutine(JetPackCo());
-        }*/
-    }
 
-    /*public IEnumerator JetPackCo()
-    {
-        animator.SetTrigger("jetPackActive");
-        animator.SetBool("isGrounded", false);
-
-        if(isGrounded)
-        {
-            yield break;
-        } else
-        {
-            yield return new WaitForSeconds(boostTime);
-        }
-        jetIsOn = false;
-    }
-    */
+    }    
 
     void PlayerMovementGround()
     {
