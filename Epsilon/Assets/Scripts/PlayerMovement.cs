@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     //Components
     public Rigidbody2D rb;
     public Animator animator;
+    public JetPack jetPack;
 
     //Controller Movement
     PlayerControls controls;
@@ -21,14 +22,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform groundCheck;
     public Transform wallCheck;
-    public Transform ledgeCheck;
 
     public bool isTouchingWall;
-    public bool isTouchingLedge;
-    public float wallCheckDistance;
-
-    public bool canClimbLedge = false;
-    public bool ledgeDetected = false;
 
     //Pushing/Pulling boxes
     public bool isCloseEnoughToPush;
@@ -40,10 +35,6 @@ public class PlayerMovement : MonoBehaviour
     public float maxSpeed;
     public float walkAccel;
     public float walkDeccel;
-    public float flySpeed;
-
-    public float ledgeXSpeed;
-    public float ledgeYSpeed;
 
     public float jumpSpeed;
     public bool isSlowWalking;
@@ -57,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
 
     //Audio
     public AudioSource playerFootsteps;
-
     public UI_Interact interactBool;
 
     private void Awake()
@@ -80,8 +70,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
-        flySpeed = maxSpeed * 1.33f;
+        jetPack = GetComponent<JetPack>();
     }
 
     void Update()
@@ -89,27 +78,8 @@ public class PlayerMovement : MonoBehaviour
         //ground check bool
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
-        isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right * transform.localScale.x, wallCheckDistance, whatIsGround);
-        isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, transform.right * transform.localScale.x, wallCheckDistance, whatIsGround);
-
-        if (isTouchingWall && !isTouchingLedge && !ledgeDetected)
-        {
-            ledgeDetected = true;
-            animator.SetBool("ledgeDetected", ledgeDetected);
-            StartCoroutine(LedgeClimbimgCo());
-        }
-
         PlayerMovementGround();
         RotateSprite();
-        CheckLedgeClimb();
-        CheckMovable();
-
-        //AIR
-        //slightly increase movement when in the air
-        /*if(!isGrounded && jetIsOn)
-        {
-            rb.velocity = new Vector2(move.x * flySpeed, rb.velocity.y);
-        }*/
 
         //ANIMATOR
         //getting the player speed for the animator
@@ -120,21 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetBool("isGrounded", isGrounded);
         animator.SetBool("isSlowWalking", isSlowWalking);
-
-        if (transform.localScale.x < 0)
-        {
-            ledgeXSpeed = -0.6f;
-        }
-        else
-        {
-            ledgeXSpeed = 0.6f;
-        }
     }
-
-    void FixedUpdate()
-    {
-
-    }    
 
     void PlayerMovementGround()
     {
@@ -160,13 +116,12 @@ public class PlayerMovement : MonoBehaviour
             }            
         }
 
+        //wall stop needs its own check
         if (isTouchingWall && isGrounded)
         {
             animator.SetTrigger("wallStop");
             speed = 0;
         }
-
-        //Debug.Log("move.x" + move.x);
     }
 
     void RotateSprite()
@@ -175,16 +130,11 @@ public class PlayerMovement : MonoBehaviour
         if (move.x > 0.3)
         {
             transform.localScale = new Vector3(0.4f, 0.4f, transform.localScale.z);
-            Debug.DrawRay(wallCheck.position, Vector2.right * wallCheckDistance, Color.white);
-            Debug.DrawRay(ledgeCheck.position, Vector2.right * wallCheckDistance, Color.white);
-
         }
 
         if (move.x < -0.3)
         {
             transform.localScale = new Vector3(-0.4f, 0.4f, transform.localScale.z);
-            Debug.DrawRay(wallCheck.position, Vector2.left * wallCheckDistance, Color.white);
-            Debug.DrawRay(ledgeCheck.position, Vector2.left * wallCheckDistance, Color.white);
         }
     }
 
@@ -195,6 +145,14 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
             animator.SetTrigger("Jump");
         }
+        else if (!isGrounded && !jetPack.jetIsOn)
+        {
+            jetPack.jetIsOn = true;
+        }
+        else if (!isGrounded && jetPack.jetIsOn)
+        {
+            jetPack.jetIsOn = false;
+        }
     }
 
     //Player Input 
@@ -202,7 +160,6 @@ public class PlayerMovement : MonoBehaviour
     {
         controls.Gameplay.Enable();
     }
-
     private void OnDisable()
     {
         controls.Gameplay.Disable();
@@ -212,33 +169,6 @@ public class PlayerMovement : MonoBehaviour
     {
         playerFootsteps.pitch = (Random.Range(0.85f, 1f));
         playerFootsteps.Play();
-    }
-
-    public void CheckLedgeClimb()
-    {
-
-    }
-
-    public IEnumerator LedgeClimbimgCo()
-    {
-        //Debug.Log("Inside Coroutine");
-
-        rb.gravityScale = 0;
-
-        rb.position = new Vector2(rb.position.x, rb.position.y + 0.5f);
-
-        yield return new WaitForSeconds(0.33f);
-
-        rb.position = new Vector2(rb.position.x + ledgeXSpeed, rb.position.y);
-
-        yield return new WaitForSeconds(0.2f);
-
-        rb.gravityScale = 0.75f;
-
-        ledgeDetected = false;
-        animator.SetBool("ledgeDetected", ledgeDetected);
-
-        yield return null;
     }
 
     //SLOW WALK FUNCTIONS
@@ -319,10 +249,5 @@ public class PlayerMovement : MonoBehaviour
         isNearBox = false;
 
         yield return null;
-    }
-
-    public void CheckMovable()
-    {
-
     }
 }
