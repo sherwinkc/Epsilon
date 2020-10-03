@@ -7,12 +7,13 @@ public class TextBehaviour : MonoBehaviour
 {
     public TMP_Text text;
 
-    public bool isTextFlashing = false; 
+    public bool isTextFlashing;
 
     // Start is called before the first frame update
     void Start()
     {
         text = GetComponent<TMP_Text>();
+        isTextFlashing = false;
     }
 
     // Update is called once per frame

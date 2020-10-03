@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
     public JetPack jetPack;
+    public HUDController hudController;
 
     //Controller Movement
     PlayerControls controls;
@@ -65,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         jetPack = GetComponent<JetPack>();
+        hudController = GetComponent<HUDController>();
     }
 
     void Update()
@@ -203,6 +205,7 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(HealthBoxInteraction());
             interactBool.textUI.enabled = false;
+            hudController.SuitRepaired();
         }
     }
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JetPack : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class JetPack : MonoBehaviour
     public Animator animator;
 
     public Vector2 jetpack;
+
+    public Slider slider;
 
     public bool isGrounded;
 
@@ -36,6 +39,8 @@ public class JetPack : MonoBehaviour
         animator = GetComponent<Animator>();
 
         flySpeed = playerMovement.maxSpeed * 1.2f;
+
+        slider.maxValue = boostTime;
     }
 
     // Update is called once per frame
@@ -52,12 +57,26 @@ public class JetPack : MonoBehaviour
             rb.velocity = new Vector2(playerMovement.move.x * flySpeed, rb.velocity.y);
         }
 
-        Debug.Log(rb.velocity);
+        //Debug.Log(rb.velocity);
+
+        isGrounded = playerMovement.isGrounded;
+
+        if (isGrounded && boostTime >= 1.5f)
+        {
+            boostTime = 1.5f;
+            slider.value = boostTime;
+        }
+
+        if(isGrounded && boostTime < 1.5f)
+        {
+            boostTime = boostTime += Time.deltaTime/5;
+            slider.value = boostTime += Time.deltaTime/5;
+        }
     }
 
     void FixedUpdate()
     {
-        if(jetIsOn)
+        if (jetIsOn && boostTime > 0f)
         {
             //add force when using jetpack
             if(rb.velocity.y < 0)
@@ -66,11 +85,14 @@ public class JetPack : MonoBehaviour
             }
             rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
             StartCoroutine(JetPackCo());
+
+            slider.value = boostTime -= Time.deltaTime;
         }
     }
     public IEnumerator JetPackCo()
     {
-        animator.SetTrigger("jetPackActive");
+        //Doesn't exist
+        //animator.SetTrigger("jetPackActive");
         animator.SetBool("isGrounded", false);
 
         if (isGrounded)
