@@ -8,7 +8,7 @@ public class LedgeClimb : MonoBehaviour
     public Animator animator;
     public Rigidbody2D rb;
     public Transform playerTransform;
-    public Transform climbMarker;
+    //public Transform climbMarker;
 
     //Checks
     public LayerMask whatIsGround;
@@ -52,11 +52,11 @@ public class LedgeClimb : MonoBehaviour
 
         if (transform.localScale.x < 0)
         {
-            ledgeXSpeed = -0.6f;
+            ledgeXSpeed = -1f;
         }
         else
         {
-            ledgeXSpeed = 0.6f;
+            ledgeXSpeed = 1f;
         }
 
         //Raycast Debug
@@ -70,13 +70,19 @@ public class LedgeClimb : MonoBehaviour
 
         rb.gravityScale = 0;
 
-        playerTransform.transform.position = climbMarker.transform.position;
+        //playerTransform.transform.position = climbMarker.transform.position;
+
+        rb.velocity = Vector2.zero;
 
         rb.position = new Vector2(rb.position.x, rb.position.y + 0.5f);
 
-        yield return new WaitForSeconds(0.4f);
+        //rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + ledgeYSpeed);
+
+        yield return new WaitForSeconds(0.5f);
 
         rb.position = new Vector2(rb.position.x + ledgeXSpeed, rb.position.y);
+
+        //rb.velocity = new Vector2(rb.velocity.x + ledgeXSpeed, rb.velocity.y);
 
         yield return new WaitForSeconds(0.5f);
 

@@ -22,13 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform groundCheck;
     public Transform wallCheck;
-
     public bool isTouchingWall;
-
-    //Pushing/Pulling boxes
-    public bool isCloseEnoughToPush;
-    public LayerMask whatIsMovable;
-    public float isCloseEnoughToPushDistance;
 
     //Movement
     public float speed;
@@ -85,11 +79,12 @@ public class PlayerMovement : MonoBehaviour
         //getting the player speed for the animator
         if (isGrounded)
         {
-            animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+            animator.SetFloat("SpeedX", Mathf.Abs(rb.velocity.x));
         }
 
         animator.SetBool("isGrounded", isGrounded);
         animator.SetBool("isSlowWalking", isSlowWalking);
+        animator.SetFloat("SpeedY", rb.velocity.y);
     }
 
     void PlayerMovementGround()
@@ -121,6 +116,11 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetTrigger("wallStop");
             speed = 0;
+        }
+
+        if(rb.velocity.y < 0 && !isGrounded)
+        {
+            //animator.SetTrigger("Falling");
         }
     }
 
@@ -167,8 +167,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayPlayerFootsteps()
     {
-        playerFootsteps.pitch = (Random.Range(0.85f, 1f));
-        playerFootsteps.Play();
+        if(isGrounded)
+        {
+            playerFootsteps.Play();
+            playerFootsteps.pitch = (Random.Range(0.85f, 1f));
+        }
     }
 
     //SLOW WALK FUNCTIONS
@@ -201,35 +204,6 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(HealthBoxInteraction());
             interactBool.textUI.enabled = false;
         }
-
-        RaycastHit2D isCloseEnoughToPush = Physics2D.Raycast(wallCheck.position, transform.right * transform.localScale.x, isCloseEnoughToPushDistance, whatIsMovable);
-
-        if (isCloseEnoughToPush)
-        {
-            Debug.Log("hit " + isCloseEnoughToPush.transform.tag);
-
-            Rigidbody2D boxRB = isCloseEnoughToPush.rigidbody.GetComponent<Rigidbody2D>();
-
-            Debug.Log("vel " + isCloseEnoughToPush.rigidbody.velocity);
-            Debug.Log("boxRB " + boxRB);
-
-            if (boxRB != null && Input.GetKeyDown(KeyCode.D))
-            {
-                Debug.Log("in function");
-                //boxRB.AddForce(new Vector2(1000f, 0f));
-                boxRB.velocity = new Vector2(boxRB.velocity.x + 10f, boxRB.velocity.y);
-            }
-
-            if (boxRB != null && Input.GetKeyDown(KeyCode.A))
-            {
-                Debug.Log("in function");
-                //boxRB.AddForce(new Vector2(1000f, 0f));
-                boxRB.velocity = new Vector2(boxRB.velocity.x -10f, boxRB.velocity.y);
-            }
-
-            animator.SetBool("stopPushing", false);
-            animator.SetTrigger("pushObject");
-        }
     }
 
     public void StopInteracting()
@@ -237,6 +211,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("stopPushing", true);
     }
 
+    //Interact IEnumerators
     public IEnumerator HealthBoxInteraction()
     {
         PD_HealthBox.Play();
