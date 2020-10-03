@@ -26,7 +26,7 @@ public class HUDController : MonoBehaviour
 
     public IEnumerator FirstUI()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(18f);
 
         repairSuit.SetActive(enabled);
         airBar.SetActive(enabled);
@@ -46,7 +46,7 @@ public class HUDController : MonoBehaviour
     public IEnumerator RefillCo()
     {
         Debug.Log("Co Called");
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(15f);
 
         airCanister.SetActive(enabled);
         airBar.SetActive(enabled);
@@ -56,9 +56,19 @@ public class HUDController : MonoBehaviour
     }
     public void AirFound()
     {
-        airCanister.SetActive(false);
-        repairJetpack.SetActive(enabled);
+        if(airCanister.activeSelf == true)
+        { 
+            airCanister.SetActive(false);
+            repairJetpack.SetActive(enabled);
+        }
+    }
 
+    public void JetpackRepaired()
+    {
+        jetpackOffline.SetActive(false);
+        repairJetpack.SetActive(false);
+        jetpackBar.SetActive(enabled);
+        findEpsilon.SetActive(enabled);
     }
 
 }

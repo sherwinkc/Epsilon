@@ -34,12 +34,14 @@ public class PlayerMovement : MonoBehaviour
     public float jumpSpeed;
     public bool isSlowWalking;
     public bool isNearBox = false;
+    public bool isNearBox2 = false;
 
     //Colliders/Tiggers
     public Collider2D slowWalkCollider;
 
     //Playable Directors
     public PlayableDirector PD_HealthBox;
+    public PlayableDirector PD_JetPack;
 
     //Audio
     public AudioSource playerFootsteps;
@@ -189,13 +191,23 @@ public class PlayerMovement : MonoBehaviour
         {
             isNearBox = true;
         }
+
+        if (other.tag == "JetpackBox")
+        {
+            isNearBox2 = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "HealthBox")
         {
-            //isNearBox = false;
+            isNearBox = false;
+        }
+
+        if (other.tag == "JetpackBox")
+        {
+            isNearBox2 = false;
         }
     }
 
@@ -206,6 +218,12 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(HealthBoxInteraction());
             interactBool.textUI.enabled = false;
             hudController.SuitRepaired();
+        }
+
+        if(isNearBox2)
+        {
+            PD_JetPack.Play();
+            hudController.JetpackRepaired();
         }
     }
 

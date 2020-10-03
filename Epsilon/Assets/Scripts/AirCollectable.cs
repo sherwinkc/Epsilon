@@ -5,10 +5,13 @@ using UnityEngine;
 public class AirCollectable : MonoBehaviour
 {
     private Player player;
+    public HUDController hudController;
+
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<Player>();
+        hudController = FindObjectOfType<HUDController>();
     }
 
     // Update is called once per frame
@@ -23,6 +26,7 @@ public class AirCollectable : MonoBehaviour
         {
             Debug.Log("Collision Detected");
             player.currentAir = player.maxAir;
+            hudController.AirFound();
             Destroy(gameObject);
         }
     }

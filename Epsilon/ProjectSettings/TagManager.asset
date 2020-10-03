@@ -7,6 +7,7 @@ TagManager:
   - SlowWalk
   - HealthBox
   - MovableBox
+  - JetpackBox
   layers:
   - Default
   - TransparentFX
