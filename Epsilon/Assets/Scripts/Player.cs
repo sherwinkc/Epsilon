@@ -25,7 +25,6 @@ public class Player : MonoBehaviour
 
         currentAir = startingAir;
         airBar.SetMaxAir(maxAir);
-
     }
 
     // Update is called once per frame

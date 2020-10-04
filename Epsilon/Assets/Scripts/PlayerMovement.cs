@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public HUDController hudController;
     public LevelManager levelMan;
     public Player player;
+    public LedgeClimb ledgeClimb;
 
     //Controller Movement
     PlayerControls controls;
@@ -73,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
         hudController = GetComponent<HUDController>();
         levelMan = FindObjectOfType<LevelManager>();
         player = GetComponent<Player>();
+        ledgeClimb = GetComponent<LedgeClimb>();
     }
 
     void Update()
@@ -99,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //GROUND
         //Move the player with new Vector2
-        if (isGrounded)
+        if (isGrounded && !ledgeClimb.isClimbing)
         {
             if (speed > -maxSpeed)
             {
@@ -134,15 +136,18 @@ public class PlayerMovement : MonoBehaviour
 
     void RotateSprite()
     {
-        //rotate sprite when moving left and right
-        if (move.x > 0.3)
+        if(!ledgeClimb.isClimbing)
         {
-            transform.localScale = new Vector3(0.4f, 0.4f, transform.localScale.z);
-        }
+            //rotate sprite when moving left and right
+            if (move.x > 0.3)
+            {
+                transform.localScale = new Vector3(0.4f, 0.4f, transform.localScale.z);
+            }
 
-        if (move.x < -0.3)
-        {
-            transform.localScale = new Vector3(-0.4f, 0.4f, transform.localScale.z);
+            if (move.x < -0.3)
+            {
+                transform.localScale = new Vector3(-0.4f, 0.4f, transform.localScale.z);
+            }
         }
     }
 

@@ -10,6 +10,7 @@ public class JetPack : MonoBehaviour
     public PlayerMovement playerMovement;
     public Rigidbody2D rb;
     public Animator animator;
+    public LedgeClimb ledgeClimb;
 
     public Vector2 jetpack;
 
@@ -37,6 +38,7 @@ public class JetPack : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        ledgeClimb = GetComponent<LedgeClimb>();
 
         flySpeed = playerMovement.maxSpeed * 1.2f;
 
@@ -48,12 +50,17 @@ public class JetPack : MonoBehaviour
     {
         //AIR
         //slightly increase movement when in the air
-        if(!isGrounded && jetIsOn)
+        /*if(!isGrounded && jetIsOn && !ledgeClimb.isClimbing)
         {
             if(playerMovement.move.x <= 0.1 && playerMovement.move.x >= -0.1f)
             {   
                 playerMovement.move.x = flightXInertia * transform.localScale.x;
             }
+            rb.velocity = new Vector2(playerMovement.move.x * flySpeed, rb.velocity.y);
+        }*/
+
+        if (!isGrounded && jetIsOn && !ledgeClimb.isClimbing)
+        {
             rb.velocity = new Vector2(playerMovement.move.x * flySpeed, rb.velocity.y);
         }
 
@@ -76,17 +83,20 @@ public class JetPack : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (jetIsOn && boostTime > 0f)
+        if(!ledgeClimb.isClimbing)
         {
-            //add force when using jetpack
-            if(rb.velocity.y < 0)
+            if (jetIsOn && boostTime > 0f)
             {
-                rb.velocity = new Vector2(rb.velocity.x, flightYbuffer);
-            }
-            rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
-            StartCoroutine(JetPackCo());
+                //add force when using jetpack
+                if(rb.velocity.y < 0)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, flightYbuffer);
+                }
+                rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
+                StartCoroutine(JetPackCo());
 
-            slider.value = boostTime -= Time.deltaTime;
+                slider.value = boostTime -= Time.deltaTime;
+            }
         }
     }
     public IEnumerator JetPackCo()

@@ -29,6 +29,8 @@ public class LedgeClimb : MonoBehaviour
     public float ledgeXSpeed;
     public float ledgeYSpeed;
 
+    public bool isClimbing = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +50,7 @@ public class LedgeClimb : MonoBehaviour
             ledgeDetected = true;
             animator.SetBool("ledgeDetected", ledgeDetected);
             StartCoroutine(LedgeClimbimgCo());
+            isClimbing = true;
         }
 
         if (transform.localScale.x < 0)
@@ -90,6 +93,8 @@ public class LedgeClimb : MonoBehaviour
 
         ledgeDetected = false;
         animator.SetBool("ledgeDetected", ledgeDetected);
+
+        isClimbing = false;
 
         yield return null;
     }
