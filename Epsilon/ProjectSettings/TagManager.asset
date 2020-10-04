@@ -9,6 +9,7 @@ TagManager:
   - MovableBox
   - JetpackBox
   - Spikes
+  - Flames
   layers:
   - Default
   - TransparentFX

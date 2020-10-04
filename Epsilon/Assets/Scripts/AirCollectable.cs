@@ -7,6 +7,8 @@ public class AirCollectable : MonoBehaviour
     private Player player;
     public HUDController hudController;
 
+    public AudioSource airUse;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class AirCollectable : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            airUse.Play();
             player.currentAir = player.maxAir;
             hudController.AirFound();
             Destroy(gameObject);

@@ -32,6 +32,9 @@ public class JetPack : MonoBehaviour
     //public float flyAccel;
     //public float flyDeccel;
 
+    public AudioSource jetpackSfx;
+    public AudioSource thrusters;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +62,7 @@ public class JetPack : MonoBehaviour
             rb.velocity = new Vector2(playerMovement.move.x * flySpeed, rb.velocity.y);
         }*/
 
-        if (!isGrounded && jetIsOn && !ledgeClimb.isClimbing)
+        if (!isGrounded && jetIsOn && !ledgeClimb.isClimbing && playerMovement.canMove)
         {
             rb.velocity = new Vector2(playerMovement.move.x * flySpeed, rb.velocity.y);
         }
@@ -72,18 +75,20 @@ public class JetPack : MonoBehaviour
         {
             boostTime = 1.5f;
             slider.value = boostTime;
+            thrusters.Stop();
         }
 
         if(isGrounded && boostTime < 1.5f)
         {
             boostTime = boostTime += Time.deltaTime/3;
             slider.value = boostTime += Time.deltaTime/3;
+            thrusters.Stop();
         }
     }
 
     void FixedUpdate()
     {
-        if(!ledgeClimb.isClimbing)
+        if(!ledgeClimb.isClimbing && playerMovement.canMove)
         {
             if (jetIsOn && boostTime > 0f)
             {
@@ -96,6 +101,16 @@ public class JetPack : MonoBehaviour
                 StartCoroutine(JetPackCo());
 
                 slider.value = boostTime -= Time.deltaTime;
+
+                if(!jetpackSfx.isPlaying)
+                {
+                    jetpackSfx.Play();
+                }
+
+                if(!thrusters.isPlaying)
+                {
+                    thrusters.Play();
+                }
             }
         }
     }
@@ -107,6 +122,7 @@ public class JetPack : MonoBehaviour
 
         if (isGrounded)
         {
+            thrusters.Stop();
             yield break;
         }
         else

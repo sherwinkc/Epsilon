@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public LevelManager levelMan;
     public Player player;
     public LedgeClimb ledgeClimb;
+    public GameObject icon1, icon2, icon3;
 
     //Controller Movement
     PlayerControls controls;
@@ -46,9 +47,15 @@ public class PlayerMovement : MonoBehaviour
     public PlayableDirector PD_HealthBox;
     public PlayableDirector PD_JetPack;
 
+    public bool canMove;
+
     //Audio
     public AudioSource playerFootsteps;
     public UI_Interact interactBool;
+    public AudioSource alarm;
+    public AudioSource bootup;
+
+
 
     private void Awake()
     {
@@ -75,6 +82,10 @@ public class PlayerMovement : MonoBehaviour
         levelMan = FindObjectOfType<LevelManager>();
         player = GetComponent<Player>();
         ledgeClimb = GetComponent<LedgeClimb>();
+
+        //delete this. Debug only
+        canMove = true;
+        
     }
 
     void Update()
@@ -90,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             animator.SetFloat("SpeedX", Mathf.Abs(rb.velocity.x));
+            jetPack.thrusters.Stop();
         }
 
         animator.SetBool("isGrounded", isGrounded);
@@ -101,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //GROUND
         //Move the player with new Vector2
-        if (isGrounded && !ledgeClimb.isClimbing)
+        if (isGrounded && !ledgeClimb.isClimbing && canMove)
         {
             if (speed > -maxSpeed)
             {
@@ -136,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
 
     void RotateSprite()
     {
-        if(!ledgeClimb.isClimbing)
+        if(!ledgeClimb.isClimbing && canMove)
         {
             //rotate sprite when moving left and right
             if (move.x > 0.3)
@@ -153,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (isGrounded && !isSlowWalking)
+        if (isGrounded && !isSlowWalking && !ledgeClimb.isClimbing && canMove)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
             animator.SetTrigger("Jump");
@@ -161,10 +173,12 @@ public class PlayerMovement : MonoBehaviour
         else if (!isGrounded && !jetPack.jetIsOn)
         {
             jetPack.jetIsOn = true;
+            jetPack.thrusters.Stop();
         }
         else if (!isGrounded && jetPack.jetIsOn)
         {
             jetPack.jetIsOn = false;
+
         }
     }
 
@@ -229,13 +243,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isNearBox)
         {
+            rb.velocity = Vector2.zero;
+            icon1.SetActive(false);
             StartCoroutine(HealthBoxInteraction());
-            interactBool.textUI.enabled = false;
             hudController.SuitRepaired();
+            alarm.Stop();
         }
 
         if(isNearBox2)
         {
+            rb.velocity = Vector2.zero;
+            icon3.SetActive(false);
+            StartCoroutine(JetPackBoxCo());
             PD_JetPack.Play();
             hudController.JetpackRepaired();
         }
@@ -251,13 +270,34 @@ public class PlayerMovement : MonoBehaviour
     {
         PD_HealthBox.Play();
 
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(14);
 
+        bootup.Play();
         maxSpeed = 4;
         slowWalkCollider.enabled = false;
         isSlowWalking = false;
         isNearBox = false;
 
         yield return null;
+    }
+
+    public IEnumerator JetPackBoxCo()
+    {
+        yield return new WaitForSeconds(14);
+
+        bootup.Play();
+        yield return null;
+    }
+
+    public void EnablePlayeControls()
+    {
+        //Debug.Log("Enable Function called");
+        canMove = true;
+    }
+
+    public void DisablePlayeControls()
+    {
+        //Debug.Log("Disable Function called");
+        canMove = false;
     }
 }

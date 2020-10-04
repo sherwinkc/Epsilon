@@ -18,7 +18,7 @@ public class HUDController : MonoBehaviour
     void Start()
     {
         jetpackScript = GetComponent<JetPack>();
-        jetpackScript.enabled = true;
+        jetpackScript.enabled = false;
         StartCoroutine(FirstUI());
     }
 
@@ -49,7 +49,7 @@ public class HUDController : MonoBehaviour
 
     public IEnumerator RefillCo()
     {
-        Debug.Log("Co Called");
+        //Debug.Log("Co Called");
         yield return new WaitForSeconds(15f);
 
         airCanister.SetActive(enabled);

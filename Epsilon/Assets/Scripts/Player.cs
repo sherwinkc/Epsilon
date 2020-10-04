@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     public PlayerMovement playerMov;
     public JetPack playerJet;
 
+    public AudioSource crunch;
+
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +48,12 @@ public class Player : MonoBehaviour
 
     public void Die()
     {
+        if(!crunch.isPlaying)
+        {
+            crunch.Play();
+        }
+
+        playerMov.rb.velocity = Vector2.zero;
         playerMov.enabled = false;
         playerJet.enabled = false;
         anim.SetTrigger("Die");

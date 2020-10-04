@@ -6,25 +6,23 @@ using UnityEngine.UI;
 
 public class UI_Interact : MonoBehaviour
 {
-    public TMP_Text textUI;
-    public Transform boxTransorm;
+    public GameObject icon;
     public bool isOn = false;
+
+    public AudioSource iconSFX;
 
     // Start is called before the first frame update
     void Start()
-    { 
-        if (textUI != null)
-        {
-            textUI.enabled = false;
-        }
+    {
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isOn)
+        if(!isOn)
         {
-            textUI.transform.position = new Vector3(boxTransorm.position.x, boxTransorm.position.y + 1f, boxTransorm.position.z);
+            //StartCoroutine(BounceCo());
         }
     }
 
@@ -32,8 +30,37 @@ public class UI_Interact : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            textUI.enabled = true;
-            isOn = true;
+            icon.SetActive(true);
+            iconSFX.Play();
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            icon.SetActive(false);
+        }
+    }
+
+    public IEnumerator BounceCo()
+    {
+        transform.position = new Vector2(transform.position.x, transform.position.y - 0.01f);
+
+        yield return new WaitForSeconds(1f);
+
+        transform.position = new Vector2(transform.position.x, transform.position.y + 0.01f);
+
+        yield return new WaitForSeconds(1f);
+
+        transform.position = new Vector2(transform.position.x, transform.position.y - 0.01f);
+
+        yield return new WaitForSeconds(1f);
+
+        transform.position = new Vector2(transform.position.x, transform.position.y + 0.01f);
+
+        isOn = false;
+
+        yield return null;
     }
 }
