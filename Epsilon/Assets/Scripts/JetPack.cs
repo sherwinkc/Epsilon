@@ -69,8 +69,8 @@ public class JetPack : MonoBehaviour
 
         if(isGrounded && boostTime < 1.5f)
         {
-            boostTime = boostTime += Time.deltaTime/5;
-            slider.value = boostTime += Time.deltaTime/5;
+            boostTime = boostTime += Time.deltaTime/3;
+            slider.value = boostTime += Time.deltaTime/3;
         }
     }
 

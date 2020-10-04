@@ -8,6 +8,7 @@ TagManager:
   - HealthBox
   - MovableBox
   - JetpackBox
+  - Spikes
   layers:
   - Default
   - TransparentFX

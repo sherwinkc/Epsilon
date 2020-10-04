@@ -12,9 +12,13 @@ public class HUDController : MonoBehaviour
     public GameObject repairJetpack;
     public GameObject findEpsilon;
 
+    public JetPack jetpackScript;
+
     // Start is called before the first frame update
     void Start()
     {
+        jetpackScript = GetComponent<JetPack>();
+        jetpackScript.enabled = false;
         StartCoroutine(FirstUI());
     }
 
@@ -65,8 +69,11 @@ public class HUDController : MonoBehaviour
 
     public void JetpackRepaired()
     {
+        jetpackScript.enabled = true;
+
         jetpackOffline.SetActive(false);
         repairJetpack.SetActive(false);
+
         jetpackBar.SetActive(enabled);
         findEpsilon.SetActive(enabled);
     }

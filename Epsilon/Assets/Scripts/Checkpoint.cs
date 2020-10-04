@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AirCollectable : MonoBehaviour
+public class Checkpoint : MonoBehaviour
 {
-    private Player player;
-    public HUDController hudController;
+    public LevelManager levelMan;
+    public Transform newRespawnPos;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<Player>();
-        hudController = FindObjectOfType<HUDController>();
+        levelMan = FindObjectOfType<LevelManager>();    
     }
 
     // Update is called once per frame
@@ -24,9 +23,7 @@ public class AirCollectable : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            player.currentAir = player.maxAir;
-            hudController.AirFound();
-            Destroy(gameObject);
+            levelMan.respawnPosition = newRespawnPos;
         }
     }
 }

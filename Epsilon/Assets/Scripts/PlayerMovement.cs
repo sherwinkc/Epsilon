@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     public JetPack jetPack;
     public HUDController hudController;
+    public LevelManager levelMan;
+    public Player player;
 
     //Controller Movement
     PlayerControls controls;
@@ -69,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         jetPack = GetComponent<JetPack>();
         hudController = GetComponent<HUDController>();
+        levelMan = FindObjectOfType<LevelManager>();
+        player = GetComponent<Player>();
     }
 
     void Update()
@@ -144,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (isGrounded)
+        if (isGrounded && !isSlowWalking)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
             animator.SetTrigger("Jump");
@@ -195,6 +199,11 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag == "JetpackBox")
         {
             isNearBox2 = true;
+        }
+
+        if (other.tag == "Spikes" || other.tag == "Flames")
+        {
+            player.Die();
         }
     }
 
