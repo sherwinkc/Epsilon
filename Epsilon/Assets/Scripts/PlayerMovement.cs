@@ -53,9 +53,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource playerFootsteps;
     public UI_Interact interactBool;
     public AudioSource alarm;
-    public AudioSource bootup;
-
-
+    public AudioSource bootup, click;
 
     private void Awake()
     {
@@ -136,8 +134,8 @@ public class PlayerMovement : MonoBehaviour
         //wall stop needs its own check
         if (isTouchingWall && isGrounded)
         {
-            animator.SetTrigger("wallStop");
-            speed = 0;
+            //animator.SetTrigger("wallStop");
+            //speed = 0;
         }
 
         if(rb.velocity.y < 0 && !isGrounded)
@@ -173,12 +171,11 @@ public class PlayerMovement : MonoBehaviour
         else if (!isGrounded && !jetPack.jetIsOn)
         {
             jetPack.jetIsOn = true;
-            jetPack.thrusters.Stop();
         }
         else if (!isGrounded && jetPack.jetIsOn)
         {
             jetPack.jetIsOn = false;
-
+            //jetPack.thrusters.Stop();
         }
     }
 
@@ -247,7 +244,8 @@ public class PlayerMovement : MonoBehaviour
             icon1.SetActive(false);
             StartCoroutine(HealthBoxInteraction());
             hudController.SuitRepaired();
-            alarm.Stop();
+            //alarm.Stop();
+            click.Play();
         }
 
         if(isNearBox2)
@@ -257,6 +255,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(JetPackBoxCo());
             PD_JetPack.Play();
             hudController.JetpackRepaired();
+            click.Play();
         }
     }
 
@@ -270,9 +269,13 @@ public class PlayerMovement : MonoBehaviour
     {
         PD_HealthBox.Play();
 
-        yield return new WaitForSeconds(14);
+        yield return new WaitForSeconds(10);
 
+        alarm.Stop();
         bootup.Play();
+
+        yield return new WaitForSeconds(4);
+
         maxSpeed = 4;
         slowWalkCollider.enabled = false;
         isSlowWalking = false;
@@ -283,7 +286,7 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator JetPackBoxCo()
     {
-        yield return new WaitForSeconds(14);
+        yield return new WaitForSeconds(10);
 
         bootup.Play();
         yield return null;

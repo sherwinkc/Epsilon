@@ -75,14 +75,36 @@ public class JetPack : MonoBehaviour
         {
             boostTime = 1.5f;
             slider.value = boostTime;
-            thrusters.Stop();
+            //thrusters.Stop();
         }
 
         if(isGrounded && boostTime < 1.5f)
         {
-            boostTime = boostTime += Time.deltaTime/3;
-            slider.value = boostTime += Time.deltaTime/3;
-            thrusters.Stop();
+            boostTime = boostTime += Time.deltaTime; //Time.deltaTime / 3;
+            slider.value = boostTime += Time.deltaTime; //Time.deltaTime / 3;
+            //thrusters.Stop();
+        }
+
+        if (jetIsOn)
+        {
+            animator.SetTrigger("JetPackOn");
+            if (!thrusters.isPlaying)
+            {
+                thrusters.Play();
+            }
+
+            if (!jetpackSfx.isPlaying)
+            {
+                jetpackSfx.Play();
+            }
+        }
+
+        if(!jetIsOn)
+        {
+            if (thrusters.isPlaying)
+            {
+                thrusters.Stop();
+            }
         }
     }
 
@@ -90,14 +112,15 @@ public class JetPack : MonoBehaviour
     {
         if(!ledgeClimb.isClimbing && playerMovement.canMove)
         {
-            if (jetIsOn && boostTime > 0f)
+            if (jetIsOn && boostTime >= 0f)
             {
                 //add force when using jetpack
-                if(rb.velocity.y < 0)
+                if(rb.velocity.y < 0 && !isGrounded)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, flightYbuffer);
                 }
                 rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
+
                 StartCoroutine(JetPackCo());
 
                 slider.value = boostTime -= Time.deltaTime;
@@ -106,23 +129,16 @@ public class JetPack : MonoBehaviour
                 {
                     jetpackSfx.Play();
                 }
-
-                if(!thrusters.isPlaying)
-                {
-                    thrusters.Play();
-                }
             }
         }
     }
     public IEnumerator JetPackCo()
     {
-        //Doesn't exist
-        //animator.SetTrigger("jetPackActive");
-        animator.SetBool("isGrounded", false);
+        //animator.SetBool("isGrounded", false);
 
         if (isGrounded)
         {
-            thrusters.Stop();
+            //thrusters.Stop();
             yield break;
         }
         else
