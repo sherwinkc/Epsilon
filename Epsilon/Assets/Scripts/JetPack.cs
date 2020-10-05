@@ -16,6 +16,8 @@ public class JetPack : MonoBehaviour
 
     public Slider slider;
 
+    public GameObject boosterFlame;
+
     public bool isGrounded;
 
     //Jetpack
@@ -46,6 +48,8 @@ public class JetPack : MonoBehaviour
         flySpeed = playerMovement.maxSpeed * 1.2f;
 
         slider.maxValue = boostTime;
+
+        boosterFlame.SetActive(false);
     }
 
     // Update is called once per frame
@@ -75,28 +79,25 @@ public class JetPack : MonoBehaviour
         {
             boostTime = 1.5f;
             slider.value = boostTime;
-            //thrusters.Stop();
         }
 
         if(isGrounded && boostTime < 1.5f)
         {
-            boostTime = boostTime += Time.deltaTime; //Time.deltaTime / 3;
-            slider.value = boostTime += Time.deltaTime; //Time.deltaTime / 3;
-            //thrusters.Stop();
+            boostTime = boostTime += Time.deltaTime/2; //Time.deltaTime / 3;
+            slider.value = boostTime += Time.deltaTime/2; //Time.deltaTime / 3;
         }
 
         if (jetIsOn)
         {
             animator.SetTrigger("JetPackOn");
-            if (!thrusters.isPlaying)
+            if (!thrusters.isPlaying && !isGrounded)
             {
-                thrusters.Play();
-            }
-
-            if (!jetpackSfx.isPlaying)
-            {
-                jetpackSfx.Play();
-            }
+                if (boostTime > 0f)
+                {
+                    thrusters.Play();
+                    boosterFlame.SetActive(true);
+                }
+            }        
         }
 
         if(!jetIsOn)
@@ -104,6 +105,7 @@ public class JetPack : MonoBehaviour
             if (thrusters.isPlaying)
             {
                 thrusters.Stop();
+                boosterFlame.SetActive(false);
             }
         }
     }
@@ -112,23 +114,24 @@ public class JetPack : MonoBehaviour
     {
         if(!ledgeClimb.isClimbing && playerMovement.canMove)
         {
-            if (jetIsOn && boostTime >= 0f)
+            if (jetIsOn && boostTime >= 0f) //if Jet is on and boost time is more than 0
             {
-                //add force when using jetpack
+                
+                //While in the air, if dipping, add a buffer (Feels better)
                 if(rb.velocity.y < 0 && !isGrounded)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, flightYbuffer);
                 }
+
+                //Adding the force here
                 rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
 
+                //Start the coroutine
                 StartCoroutine(JetPackCo());
 
+                //slider - if slider equals boost time decreasing
                 slider.value = boostTime -= Time.deltaTime;
 
-                if(!jetpackSfx.isPlaying)
-                {
-                    jetpackSfx.Play();
-                }
             }
         }
     }
@@ -138,7 +141,9 @@ public class JetPack : MonoBehaviour
 
         if (isGrounded)
         {
-            //thrusters.Stop();
+            thrusters.Stop();
+            boosterFlame.SetActive(false);
+            jetIsOn = false;
             yield break;
         }
         else

@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
 
     public void Die()
     {
+        playerMov.isDying = true;
+
         if(!crunch.isPlaying)
         {
             crunch.Play();

@@ -55,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource alarm;
     public AudioSource bootup, click;
 
+    public bool isDying = false;
+
     private void Awake()
     {
         controls = new PlayerControls();
@@ -175,7 +177,6 @@ public class PlayerMovement : MonoBehaviour
         else if (!isGrounded && jetPack.jetIsOn)
         {
             jetPack.jetIsOn = false;
-            //jetPack.thrusters.Stop();
         }
     }
 
@@ -219,7 +220,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.tag == "Spikes" || other.tag == "Flames")
         {
-            player.Die();
+            if(!isDying)
+            {
+                player.Die();
+            }
         }
     }
 
@@ -241,6 +245,7 @@ public class PlayerMovement : MonoBehaviour
         if(isNearBox)
         {
             rb.velocity = Vector2.zero;
+            canMove = false;
             icon1.SetActive(false);
             StartCoroutine(HealthBoxInteraction());
             hudController.SuitRepaired();
@@ -251,6 +256,7 @@ public class PlayerMovement : MonoBehaviour
         if(isNearBox2)
         {
             rb.velocity = Vector2.zero;
+            canMove = false;
             icon3.SetActive(false);
             StartCoroutine(JetPackBoxCo());
             PD_JetPack.Play();

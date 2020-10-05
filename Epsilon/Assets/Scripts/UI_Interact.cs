@@ -9,6 +9,8 @@ public class UI_Interact : MonoBehaviour
     public GameObject icon;
     public bool isOn = false;
 
+    public bool usedOnce = false;
+
     public AudioSource iconSFX;
 
     // Start is called before the first frame update
@@ -30,8 +32,11 @@ public class UI_Interact : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            icon.SetActive(true);
-            iconSFX.Play();
+            if(!usedOnce)
+            {
+                icon.SetActive(true);
+                iconSFX.Play();
+            }
         }
     }
 
@@ -40,6 +45,7 @@ public class UI_Interact : MonoBehaviour
         if (other.tag == "Player")
         {
             icon.SetActive(false);
+            usedOnce = true;
         }
     }
 

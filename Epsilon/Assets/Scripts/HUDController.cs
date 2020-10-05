@@ -18,7 +18,7 @@ public class HUDController : MonoBehaviour
     void Start()
     {
         jetpackScript = GetComponent<JetPack>();
-        jetpackScript.enabled = true; // change this to false
+        jetpackScript.enabled = false; // change this to false
         StartCoroutine(FirstUI());
     }
 

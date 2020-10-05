@@ -7,6 +7,7 @@ using Cinemachine;
 public class LevelManager : MonoBehaviour
 {
     public Transform respawnPosition;
+    public Transform playerTransform;
     public GameObject playerMov;
     public Animator anim;
     public Player player;
@@ -53,13 +54,17 @@ public class LevelManager : MonoBehaviour
         cam1.m_Lens.OrthographicSize = 9f;
 
         anim.SetTrigger("Idle");
-        playerMov.transform.position = respawnPosition.transform.position;
-        playerMovScript.enabled = true;
+        //playerMov.transform.position = respawnPosition.transform.position;
+        playerTransform.position = respawnPosition.transform.position;
 
+        playerMovScript.enabled = true;
         if (hudController.jetpackOffline.activeSelf == false)
         {
             playerJet.enabled = true;
         }
+
+        playerMovScript.isDying = false;
+
         yield return null;
     }
 }
