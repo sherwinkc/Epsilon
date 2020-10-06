@@ -9,10 +9,12 @@ public class Parallax : MonoBehaviour
     public float offset;
     public float parallaxSpeed;
 
+    public bool lockY;
+
     // Start is called before the first frame update
     void Start()
     {
-        //offset valu
+        //offset value
         offset = transform.position.x;
     }
 
@@ -20,7 +22,15 @@ public class Parallax : MonoBehaviour
     void Update()
     {
         //transform.position = new Vector3((cam.transform.position.x * parallaxSpeed) + (offset), transform.position.y, transform.position.z);
-        transform.position = new Vector3((cam.transform.position.x * parallaxSpeed) + (offset), transform.position.y, transform.position.z);
+        if (!lockY)
+        {
+            transform.position = new Vector3((cam.transform.position.x * parallaxSpeed) + (offset), transform.position.y, transform.position.z);
+        }
+
+        if (lockY)
+        {
+            transform.position = new Vector2((cam.transform.position.x * parallaxSpeed) + offset, cam.transform.position.y+7);
+        }
 
         //DEBUG
         /*Debug.Log("transform.position.x " + transform.position.x);

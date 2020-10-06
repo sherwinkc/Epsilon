@@ -9,6 +9,7 @@ public class EndTimeline : MonoBehaviour
     public PlayerMovement playerMov;
     public PlayableDirector cloneTimeline;
     public AudioSource endMusic, levelMusic;
+
     public bool musicFadeOut;
 
     public string levelToLoad;

@@ -1862,6 +1862,7 @@ MonoBehaviour:
   cam: {fileID: 209684038}
   offset: 0
   parallaxSpeed: -1.5
+  lockY: 0
 --- !u!114 &625751277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4609,7 +4610,7 @@ GameObject:
   - component: {fileID: 1253683713}
   - component: {fileID: 1253683712}
   m_Layer: 5
-  m_Name: Press Enter
+  m_Name: Controls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4631,7 +4632,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -322.6, y: 149}
+  m_AnchoredPosition: {x: -322.6, y: 264}
   m_SizeDelta: {x: 571.39496, y: 257.38013}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1253683712
@@ -4673,7 +4674,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Move - A,D / L2
+  m_text: 'Move - A,D / LS
 
     Interact - E / X
 
