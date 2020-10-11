@@ -66,9 +66,21 @@ public class JetPack : MonoBehaviour
             rb.velocity = new Vector2(playerMovement.move.x * flySpeed, rb.velocity.y);
         }*/
 
-        if (!isGrounded && jetIsOn && !ledgeClimb.isClimbing && playerMovement.canMove)
+        //if we are flying and jetpack is on we can move left and right with velocity * flyspeed
+        if (!isGrounded && jetIsOn && !ledgeClimb.isClimbing && playerMovement.canMove && boostTime >= 0f)
         {
             rb.velocity = new Vector2(playerMovement.move.x * flySpeed, rb.velocity.y);
+        }        
+        
+        if (!isGrounded && !jetIsOn && !ledgeClimb.isClimbing && playerMovement.canMove)
+        {
+            rb.AddForce(new Vector2(playerMovement.move.x/3, 0f), ForceMode2D.Force);
+        }
+
+        //if we are flying and jetpack is off and boost time is 0 we can move left and right with velocity * flyspeed * 0.9f   
+        if (!isGrounded && !jetIsOn && !ledgeClimb.isClimbing && playerMovement.canMove && boostTime <= 0f)
+        {
+            rb.velocity = new Vector2((playerMovement.move.x * flySpeed) * 0.9f, rb.velocity.y);
         }
 
         //Debug.Log(rb.velocity);
@@ -108,6 +120,11 @@ public class JetPack : MonoBehaviour
                 boosterFlame.SetActive(false);
             }
         }
+
+        if(boostTime <= 0)
+        {
+            jetIsOn = false;
+        }
     }
 
     void FixedUpdate()
@@ -118,10 +135,10 @@ public class JetPack : MonoBehaviour
             {
                 
                 //While in the air, if dipping, add a buffer (Feels better)
-                if(rb.velocity.y < 0 && !isGrounded)
+                /*if(rb.velocity.y < 0 && !isGrounded)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, flightYbuffer);
-                }
+                }*/
 
                 //Adding the force here
                 rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
@@ -131,7 +148,6 @@ public class JetPack : MonoBehaviour
 
                 //slider - if slider equals boost time decreasing
                 slider.value = boostTime -= Time.deltaTime;
-
             }
         }
     }

@@ -22,7 +22,6 @@ public class TransparencyScript : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            //Debug.Log("Collision");
             sr.color = new Color(1f, 1f, 1f, 0.33f);
         }
     }

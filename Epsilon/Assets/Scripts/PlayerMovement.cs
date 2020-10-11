@@ -172,6 +172,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!isGrounded && !jetPack.jetIsOn)
         {
+            rb.velocity = Vector2.zero;
             jetPack.jetIsOn = true;
         }
         else if (!isGrounded && jetPack.jetIsOn)

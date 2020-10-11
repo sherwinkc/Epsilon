@@ -5,6 +5,7 @@ using UnityEngine;
 public class LedgeClimb : MonoBehaviour
 {
     //Components
+    public PlayerMovement playerMov;
     public Animator animator;
     public Rigidbody2D rb;
     public Transform playerTransform;
@@ -36,6 +37,7 @@ public class LedgeClimb : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        playerMov = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -45,7 +47,7 @@ public class LedgeClimb : MonoBehaviour
         isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right * (transform.localScale.x * 2.5f), wallCheckDistance, whatIsGround);
         isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, transform.right * (transform.localScale.x * 2.5f), wallCheckDistance, whatIsGround);
 
-        if (isTouchingWall && !isTouchingLedge && !ledgeDetected)
+        if (isTouchingWall && !isTouchingLedge && !ledgeDetected && playerMov.canMove)
         {
             ledgeDetected = true;
             animator.SetBool("ledgeDetected", ledgeDetected);

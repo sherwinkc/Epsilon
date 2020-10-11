@@ -18,7 +18,7 @@ public class HUDController : MonoBehaviour
     void Start()
     {
         jetpackScript = GetComponent<JetPack>();
-        jetpackScript.enabled = false; // change this to false
+        jetpackScript.enabled = true; // change this to false if you want to play the level
         StartCoroutine(FirstUI());
     }
 
@@ -30,11 +30,12 @@ public class HUDController : MonoBehaviour
 
     public IEnumerator FirstUI()
     {
-        yield return new WaitForSeconds(18f);
+        yield return new WaitForSeconds(0f);//change this to 18f
 
         repairSuit.SetActive(enabled);
         airBar.SetActive(enabled);
-        jetpackOffline.SetActive(enabled);
+        //jetpackOffline.SetActive(enabled); // this need to be on to play jetpack offline
+        jetpackBar.SetActive(enabled);// turn this off see above
 
         yield return null;
     }

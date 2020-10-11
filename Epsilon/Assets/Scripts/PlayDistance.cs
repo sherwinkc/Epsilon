@@ -40,8 +40,6 @@ public class PlayDistance : MonoBehaviour
             {
                 audioSource.volume = 0f;
             }
-
-
         }
     }
 }
