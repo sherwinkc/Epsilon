@@ -19,7 +19,7 @@ public class HUDController : MonoBehaviour
     {
         jetpackScript = GetComponent<JetPack>();
         jetpackScript.enabled = true; // change this to false if you want to play the level
-        StartCoroutine(FirstUI());
+        //StartCoroutine(FirstUI());
     }
 
     // Update is called once per frame

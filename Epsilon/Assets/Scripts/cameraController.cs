@@ -18,7 +18,7 @@ public class cameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!playerMov.isGrounded && playerMov.canMove)
+        /*if (!playerMov.isGrounded && playerMov.canMove)
         {
             cam1.enabled = false;
             cam2.enabled = true;
@@ -27,6 +27,6 @@ public class cameraController : MonoBehaviour
         {
             cam1.enabled = true;
             cam2.enabled = false;
-        }
+        }*/
     }
 }

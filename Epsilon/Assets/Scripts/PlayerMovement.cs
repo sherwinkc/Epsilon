@@ -195,8 +195,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isGrounded)
         {
-            playerFootsteps.Play();
             playerFootsteps.pitch = (Random.Range(0.85f, 1f));
+            playerFootsteps.Play();
         }
     }
 
