@@ -9,12 +9,12 @@ public class PlayerMovement : MonoBehaviour
     //Components
     public Rigidbody2D rb;
     public Animator animator;
-    public JetPack jetPack;
-    public HUDController hudController;
-    public LevelManager levelMan;
-    public Player player;
-    public LedgeClimb ledgeClimb;
-    public GameObject icon1, icon2, icon3;
+    //public JetPack jetPack;
+    //public HUDController hudController;
+    //public LevelManager levelMan;
+    //public Player player;
+    //public LedgeClimb ledgeClimb;
+    //public GameObject icon1, icon2, icon3;
 
     //Controller Movement
     PlayerControls controls;
@@ -26,36 +26,36 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
 
     public Transform groundCheck;
-    public Transform wallCheck;
-    public bool isTouchingWall;
+    //public Transform wallCheck;
+    //public bool isTouchingWall;
 
     //Movement
-    public float speed;
+    public float moveSpeed = 2f;
     public float maxSpeed;
     public float walkAccel;
     public float walkDeccel;
 
-    public float jumpSpeed;
-    public bool isSlowWalking;
-    public bool isNearBox = false;
-    public bool isNearBox2 = false;
+    //public float jumpSpeed;
+    //public bool isSlowWalking;
+    //public bool isNearBox = false;
+    //public bool isNearBox2 = false;
 
     //Colliders/Tiggers
-    public Collider2D slowWalkCollider;
+    //public Collider2D slowWalkCollider;
 
     //Playable Directors
-    public PlayableDirector PD_HealthBox;
-    public PlayableDirector PD_JetPack;
+    //public PlayableDirector PD_HealthBox;
+    //public PlayableDirector PD_JetPack;
 
     public bool canMove;
 
     //Audio
-    public AudioSource playerFootsteps;
+    /*public AudioSource playerFootsteps;
     public UI_Interact interactBool;
     public AudioSource alarm;
-    public AudioSource bootup, click;
+    public AudioSource bootup, click;*/
 
-    public bool isDying = false;
+    //public bool isDying = false;
 
     private void Awake()
     {
@@ -66,26 +66,25 @@ public class PlayerMovement : MonoBehaviour
         controls.Gameplay.Move.canceled += ctx => move = Vector2.zero;
 
         //JetPack
-        controls.Gameplay.Jump.performed += ctx => Jump();
+        //controls.Gameplay.Jump.performed += ctx => Jump();
 
         //Interact
-        controls.Gameplay.Interact.performed += ctx => Interact();
-        controls.Gameplay.Interact.canceled += ctx => StopInteracting();
+        //controls.Gameplay.Interact.performed += ctx => Interact();
+        //controls.Gameplay.Interact.canceled += ctx => StopInteracting();
     }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        jetPack = GetComponent<JetPack>();
+        /*jetPack = GetComponent<JetPack>();
         hudController = GetComponent<HUDController>();
         levelMan = FindObjectOfType<LevelManager>();
         player = GetComponent<Player>();
-        ledgeClimb = GetComponent<LedgeClimb>();
+        ledgeClimb = GetComponent<LedgeClimb>();*/
 
         //delete this. Debug only
-        canMove = true;
-        
+        canMove = true;        
     }
 
     void Update()
@@ -93,7 +92,9 @@ public class PlayerMovement : MonoBehaviour
         //ground check bool
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
-        PlayerMovementGround();
+        rb.velocity = new Vector2(move.x * moveSpeed, rb.velocity.y);
+
+        //PlayerMovementGround();
         RotateSprite();
 
         //ANIMATOR
@@ -101,19 +102,19 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             animator.SetFloat("SpeedX", Mathf.Abs(rb.velocity.x));
-            jetPack.thrusters.Stop();
+            //jetPack.thrusters.Stop();
         }
 
         animator.SetBool("isGrounded", isGrounded);
-        animator.SetBool("isSlowWalking", isSlowWalking);
-        animator.SetFloat("SpeedY", rb.velocity.y);
+        //animator.SetBool("isSlowWalking", isSlowWalking);
+        //animator.SetFloat("SpeedY", rb.velocity.y);*/
     }
 
     void PlayerMovementGround()
     {
         //GROUND
         //Move the player with new Vector2
-        if (isGrounded && !ledgeClimb.isClimbing && canMove)
+        /*if (isGrounded && !ledgeClimb.isClimbing && canMove)
         {
             if (speed > -maxSpeed)
             {
@@ -143,27 +144,26 @@ public class PlayerMovement : MonoBehaviour
         if(rb.velocity.y < 0 && !isGrounded)
         {
             //animator.SetTrigger("Falling");
-        }
+        }*/
     }
 
     void RotateSprite()
     {
-        if(!ledgeClimb.isClimbing && canMove)
         {
             //rotate sprite when moving left and right
             if (move.x > 0.3)
             {
-                transform.localScale = new Vector3(0.4f, 0.4f, transform.localScale.z);
+                transform.localScale = new Vector3(0.33f, 0.33f, transform.localScale.z);
             }
 
             if (move.x < -0.3)
             {
-                transform.localScale = new Vector3(-0.4f, 0.4f, transform.localScale.z);
+                transform.localScale = new Vector3(-0.33f, 0.33f, transform.localScale.z);
             }
         }
     }
 
-    void Jump()
+    /*void Jump()
     {
         if (isGrounded && !isSlowWalking && !ledgeClimb.isClimbing && canMove)
         {
@@ -181,15 +181,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    //Player Input 
-    private void OnEnable()
-    {
-        controls.Gameplay.Enable();
-    }
-    private void OnDisable()
-    {
-        controls.Gameplay.Disable();
-    }
 
     public void PlayPlayerFootsteps()
     {
@@ -309,5 +300,15 @@ public class PlayerMovement : MonoBehaviour
     {
         //Debug.Log("Disable Function called");
         canMove = false;
+    }*/
+
+    //Player Input 
+    private void OnEnable()
+    {
+        controls.Gameplay.Enable();
+    }
+    private void OnDisable()
+    {
+        controls.Gameplay.Disable();
     }
 }

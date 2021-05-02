@@ -53,6 +53,9 @@ TagManager:
   - name: Background1
     uniqueID: 2033000091
     locked: 0
+  - name: Blur
+    uniqueID: 1666759961
+    locked: 0
   - name: Ground
     uniqueID: 3039020185
     locked: 0

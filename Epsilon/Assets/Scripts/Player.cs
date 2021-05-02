@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
 
         if(currentAir <= 0)
         {
-            Die();
+            //Die();
         }
     }
 
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
         airBar.setAir(currentAir);
     }
 
-    public void Die()
+    /*public void Die()
     {
         playerMov.isDying = true;
 
@@ -60,5 +60,5 @@ public class Player : MonoBehaviour
         playerJet.enabled = false;
         anim.SetTrigger("Die");
         levelMan.Respawn();
-    }
+    }*/
 }

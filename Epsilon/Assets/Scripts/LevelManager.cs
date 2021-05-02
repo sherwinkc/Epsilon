@@ -63,7 +63,7 @@ public class LevelManager : MonoBehaviour
             playerJet.enabled = true;
         }
 
-        playerMovScript.isDying = false;
+        //playerMovScript.isDying = false;
 
         yield return null;
     }
