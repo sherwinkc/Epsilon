@@ -35,7 +35,9 @@ public class PlayerMovement : MonoBehaviour
     public float walkAccel;
     public float walkDeccel;
 
-    //public float jumpSpeed;
+    [SerializeField] float rotationScaleAmount = 0.33f;
+
+    public float jumpSpeed;
     //public bool isSlowWalking;
     //public bool isNearBox = false;
     //public bool isNearBox2 = false;
@@ -66,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         controls.Gameplay.Move.canceled += ctx => move = Vector2.zero;
 
         //JetPack
-        //controls.Gameplay.Jump.performed += ctx => Jump();
+        controls.Gameplay.Jump.performed += ctx => Jump();
 
         //Interact
         //controls.Gameplay.Interact.performed += ctx => Interact();
@@ -149,23 +151,27 @@ public class PlayerMovement : MonoBehaviour
 
     void RotateSprite()
     {
+        //rotate sprite when moving left and right
+        if (move.x > 0.3)
         {
-            //rotate sprite when moving left and right
-            if (move.x > 0.3)
-            {
-                transform.localScale = new Vector3(0.33f, 0.33f, transform.localScale.z);
-            }
-
-            if (move.x < -0.3)
-            {
-                transform.localScale = new Vector3(-0.33f, 0.33f, transform.localScale.z);
-            }
+            transform.localScale = new Vector3(rotationScaleAmount, rotationScaleAmount, transform.localScale.z);
+        } 
+        else if (move.x < -0.3)
+        {
+            transform.localScale = new Vector3(-rotationScaleAmount, rotationScaleAmount, transform.localScale.z);
         }
+
     }
 
-    /*void Jump()
+    void Jump()
     {
-        if (isGrounded && !isSlowWalking && !ledgeClimb.isClimbing && canMove)
+        if (isGrounded)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+            animator.SetTrigger("Jump");
+        }
+
+        /*if (isGrounded && !isSlowWalking && !ledgeClimb.isClimbing && canMove)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
             animator.SetTrigger("Jump");
@@ -178,8 +184,8 @@ public class PlayerMovement : MonoBehaviour
         else if (!isGrounded && jetPack.jetIsOn)
         {
             jetPack.jetIsOn = false;
-        }
-    }
+        }*/
+    }/*
 
 
     public void PlayPlayerFootsteps()
