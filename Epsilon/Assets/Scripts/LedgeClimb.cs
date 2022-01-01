@@ -19,54 +19,93 @@ public class LedgeClimb : MonoBehaviour
     public Transform wallCheck;
     public Transform ledgeCheck;
 
+    public float playerLocalScaleOffset = 3f; // should equal 1 divided player scale reduction
+
     public bool isTouchingWall;
     public bool isTouchingLedge;
     public float wallCheckDistance;
 
     public bool canClimbLedge = false;
     public bool ledgeDetected = false;
+    public bool canDetectLedges = true;
+    public bool isHanging = false;
 
     //Floats
-    public float ledgeXSpeed;
-    public float ledgeYSpeed;
+    //public float ledgeXSpeed;
+    //public float ledgeYSpeed;
+    [SerializeField] float ledgeTeleportOffsetX;
+    [SerializeField] float ledgeTeleportOffsetY;
+
+    public Transform grabPoint;
 
     public bool isClimbing = false;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerMov = GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+
+    }
+
     void Update()
     {
-        //Raycast Checks
-        isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right * (transform.localScale.x * 2.5f), wallCheckDistance, whatIsGround);
-        isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, transform.right * (transform.localScale.x * 2.5f), wallCheckDistance, whatIsGround);
+        ShootRaycasts();
 
         if (isTouchingWall && !isTouchingLedge && !ledgeDetected && playerMov.canMove)
         {
             ledgeDetected = true;
             animator.SetBool("ledgeDetected", ledgeDetected);
-            StartCoroutine(LedgeClimbimgCo());
+            //StartCoroutine(LedgeClimbimgCo());
+            if (canDetectLedges) LedgeHang();
+
             isClimbing = true;
         }
 
-        if (transform.localScale.x < 0)
+       /* if (transform.localScale.x < 0)
         {
             ledgeXSpeed = -1f;
         }
         else
         {
             ledgeXSpeed = 1f;
+        }*/
+
+        if (Input.GetKeyDown(KeyCode.S) && ledgeDetected)
+        {
+            LedgeLetGo();
         }
 
-        //Raycast Debug
-        Debug.DrawRay(wallCheck.position, (Vector2.right * wallCheckDistance) * transform.localScale.x * 2.5f, Color.white);
-        Debug.DrawRay(ledgeCheck.position, (Vector2.right * wallCheckDistance) * transform.localScale.x * 2.5f, Color.white);
+        RaycastDebug();
+
+        if (playerMov.isGrounded)
+        {
+            canDetectLedges = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.W) && isHanging)
+        {
+            animator.SetTrigger("Climb Up");
+        }
+    }
+
+
+    private void ShootRaycasts()
+    {
+        if (canDetectLedges)
+        {
+            isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right * (transform.localScale.x * playerLocalScaleOffset), wallCheckDistance, whatIsGround);
+            isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, transform.right * (transform.localScale.x * playerLocalScaleOffset), wallCheckDistance, whatIsGround);
+        }
+    }
+    private void RaycastDebug()
+    {
+        Debug.DrawRay(wallCheck.position, (Vector2.right * wallCheckDistance) * transform.localScale.x * playerLocalScaleOffset, Color.white);
+        Debug.DrawRay(ledgeCheck.position, (Vector2.right * wallCheckDistance) * transform.localScale.x * playerLocalScaleOffset, Color.white);
     }
 
     public IEnumerator LedgeClimbimgCo()
@@ -85,7 +124,7 @@ public class LedgeClimb : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        rb.position = new Vector2(rb.position.x + ledgeXSpeed, rb.position.y);
+        //rb.position = new Vector2(rb.position.x + ledgeXSpeed, rb.position.y);
 
         //rb.velocity = new Vector2(rb.velocity.x + ledgeXSpeed, rb.velocity.y);
 
@@ -99,5 +138,32 @@ public class LedgeClimb : MonoBehaviour
         isClimbing = false;
 
         yield return null;
+    }
+
+    public void LedgeHang()
+    {
+        //rb.gravityScale = 0;
+        //rb.velocity = Vector2.zero;
+        rb.simulated = false;
+        playerMov.transform.position = grabPoint.transform.position;
+        canDetectLedges = false;
+        isHanging = true;
+    }
+
+    public void LedgeLetGo()
+    {
+        ledgeDetected = false;
+        rb.simulated = true;
+        animator.SetBool("ledgeDetected", ledgeDetected);
+    }
+
+    public void TeleportPlayerAfterLedgeClimb()
+    {
+        
+        playerMov.transform.position = new Vector3(playerMov.transform.position.x + ledgeTeleportOffsetX, playerMov.transform.position.y + ledgeTeleportOffsetY);
+        ledgeDetected = false;
+        rb.simulated = true;
+        //rb.position = new Vector2(rb.position.x + ledgeTeleportOffsetX, rb.position.y + ledgeTeleportOffsetY);
+        animator.SetBool("ledgeDetected", ledgeDetected);
     }
 }

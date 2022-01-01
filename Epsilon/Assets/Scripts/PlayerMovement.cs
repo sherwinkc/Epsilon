@@ -6,9 +6,14 @@ using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //Player States
+    public enum PlayerState { Idle, Running, Jumping };
+    public PlayerState playerCurrentState;
+
     //Components
     public Rigidbody2D rb;
     public Animator animator;
+    AudioManager audioManager;
     //public JetPack jetPack;
     //public HUDController hudController;
     //public LevelManager levelMan;
@@ -61,6 +66,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+
         controls = new PlayerControls();
 
         //Stick Movement
@@ -86,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
         ledgeClimb = GetComponent<LedgeClimb>();*/
 
         //delete this. Debug only
-        canMove = true;        
+        canMove = true;
     }
 
     void Update()
@@ -95,6 +102,11 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
         rb.velocity = new Vector2(move.x * moveSpeed, rb.velocity.y);
+
+        if (isGrounded && Mathf.Abs(rb.velocity.x) > 0f && !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump"))
+        {
+            playerCurrentState = PlayerState.Running;
+        }
 
         //PlayerMovementGround();
         RotateSprite();
@@ -111,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
         //animator.SetBool("isSlowWalking", isSlowWalking);
         //animator.SetFloat("SpeedY", rb.velocity.y);*/
     }
+
 
     void PlayerMovementGround()
     {
@@ -168,7 +181,8 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-            animator.SetTrigger("Jump");
+            if(animator != null) animator.SetTrigger("Jump");
+            playerCurrentState = PlayerState.Jumping;
         }
 
         /*if (isGrounded && !isSlowWalking && !ledgeClimb.isClimbing && canMove)
@@ -316,5 +330,10 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         controls.Gameplay.Disable();
+    }
+
+    public void PlayFootsteps()
+    {
+        audioManager.Play_playerSFX_footsteps_sand();
     }
 }
