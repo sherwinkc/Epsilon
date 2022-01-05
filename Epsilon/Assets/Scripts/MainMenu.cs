@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Return))
         {
             menuMusic.Stop();
-            SceneManager.LoadScene("Crash");
+            SceneManager.LoadScene(levelToLoad);
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
     public void PressEnter()
     {
         menuMusic.Stop();
-        SceneManager.LoadScene("Crash");
+        SceneManager.LoadScene(levelToLoad);
     }
 
     public void QuitButton()

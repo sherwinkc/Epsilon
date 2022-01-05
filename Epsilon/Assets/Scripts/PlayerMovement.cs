@@ -119,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
             //jetPack.thrusters.Stop();
         }
 
-        animator.SetBool("isGrounded", isGrounded);
+
         //animator.SetBool("isSlowWalking", isSlowWalking);
         //animator.SetFloat("SpeedY", rb.velocity.y);*/
     }
@@ -173,7 +173,6 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(-rotationScaleAmount, rotationScaleAmount, transform.localScale.z);
         }
-
     }
 
     void Jump()
