@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class AnimationAndMovementController : MonoBehaviour
+public class PlayerStateMachine : MonoBehaviour
 {
     //decalre reference variables
     PlayerControls _playerControls;
     Rigidbody2D _rb;
-    Animator _anim;    
+    Animator _anim;
 
     //variables
     [SerializeField] float moveSpeed = 1f;
@@ -60,6 +60,17 @@ public class AnimationAndMovementController : MonoBehaviour
         //speedXHash = Animator.StringToHash("SpeedX");
     }
 
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
     void OnMovementInput(InputAction.CallbackContext ctx)
     {
         currentMovementInput = ctx.ReadValue<Vector2>();
@@ -79,107 +90,12 @@ public class AnimationAndMovementController : MonoBehaviour
 
             _anim.SetTrigger("Jump");
         }
-        else if(!isFalling)
+        else if (!isFalling)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * jumpReleasedMultiplier);
         }
 
         Debug.Log("is Jump Pressed: " + isJumpPressed);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    void HandleAnimation()
-    {
-        bool isRunning = _anim.GetBool(isRunningHash);
-
-        if (isMovementPressed)
-        {
-            _anim.SetBool(isRunningHash, true);
-        }
-        else if (!isMovementPressed)
-        {
-            _anim.SetBool(isRunningHash, false);
-        }
-
-        _anim.SetBool("isFalling", isFalling);
-    }
-
-    void Update()
-    {
-        //ground check bool
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-        _anim.SetBool("isGrounded", isGrounded);
-
-        if (!isGrounded)
-        {
-            _rb.velocity = new Vector2((currentMovement.x * moveSpeed * inAirMoveSpeedMultiplier), _rb.velocity.y);
-
-            // Time.delta time version
-            //rb.velocity = new Vector3((currentMovement.x * moveSpeed * inAirMoveSpeedMultiplier * Time.deltaTime), rb.velocity.y);
-
-        }
-        else
-        {
-            _rb.velocity = new Vector2((currentMovement.x * moveSpeed), _rb.velocity.y);
-
-            // Time.delta time version
-            //rb.velocity = new Vector2((currentMovement.x * moveSpeed * Time.deltaTime), rb.velocity.y);
-        }
-
-        //Debug.Log(currentMovement.x);
-        Debug.Log("y vel: " + _rb.velocity.y);
-
-        CheckIfPlayerIsFalling();
-
-        //set gravity when falling
-        if (isFalling)
-        {
-            _rb.gravityScale = gravityScaleWhenFalling;
-        }
-        else
-        {
-            _rb.gravityScale = 1f;
-        }
-
-        //clamp mav y velocity if falling
-        if (_rb.velocity.y < -maxFallVelocity)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, -maxFallVelocity);
-        }
-
-        HandleAnimation();
-        RotateSprite();
-    }
-
-    private void CheckIfPlayerIsFalling()
-    {
-        // is the player falling
-        if (!isGrounded && _rb.velocity.y < fallingYAxisThreshold)
-        {
-            isFalling = true;
-        }
-        else
-        {
-            isFalling = false;
-        }
-    }
-
-    void RotateSprite()
-    {
-        //rotate sprite when moving left and right
-        if (currentMovement.x > 0.1)
-        {
-            transform.localScale = new Vector3(rotationScaleAmount, rotationScaleAmount, transform.localScale.z);
-        }
-        else if (currentMovement.x < -0.1)
-        {
-            transform.localScale = new Vector3(-rotationScaleAmount, rotationScaleAmount, transform.localScale.z);
-        }
     }
 
     private void OnEnable()
@@ -189,6 +105,6 @@ public class AnimationAndMovementController : MonoBehaviour
 
     private void OnDisable()
     {
-        _playerControls.Gameplay.Disable();   
+        _playerControls.Gameplay.Disable();
     }
 }
