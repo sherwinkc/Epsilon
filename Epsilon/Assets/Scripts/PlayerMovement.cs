@@ -335,4 +335,9 @@ public class PlayerMovement : MonoBehaviour
     {
         audioManager.Play_playerSFX_footsteps_sand();
     }
+
+    public void PlayJumpSFX()
+    {
+        audioManager.Play_playerSFX_Jump();
+    }
 }

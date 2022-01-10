@@ -16,7 +16,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] float rotationScaleAmount = 0.33f;
 
     //grounded checks    
-    [SerializeField] bool isGrounded;
+    [SerializeField] bool _isGrounded;
     public Transform groundCheck;
     public LayerMask whatIsGround;
     public float groundCheckRadius = 0.2f;
@@ -32,8 +32,8 @@ public class PlayerStateMachine : MonoBehaviour
     //int speedXHash;
 
     //jumping variables
-    bool isJumpPressed = false;
-    [SerializeField] float jumpSpeed;
+    bool _isJumpPressed = false;
+    [SerializeField] float _jumpSpeed = 5f;
     [SerializeField] float gravityScaleWhenFalling = 2.5f;
     [SerializeField] float jumpReleasedMultiplier = 0.33f;
 
@@ -41,11 +41,28 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool isFalling;
     [SerializeField] float maxFallVelocity = 10f;
 
+    // state variables
+    PlayerBaseState _currentState;
+    PlayerStateFactory _states;
+
+    // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
+    public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
+    public Animator Animator { get { return _anim; } }
+    public Rigidbody2D Rigidbody { get { return _rb; } }
+    public bool IsGrounded { get { return _isGrounded; } }
+    public bool IsJumpPressed { get { return _isJumpPressed; } }
+    public float JumpSpeed { get { return _jumpSpeed; } }
+
     private void Awake()
     {
         _playerControls = new PlayerControls();
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+
+        // setup state
+        _states = new PlayerStateFactory(this); // passes this PlayerStateMachine instance. PlayerStateFactory is expecting a PlayerStateMachine 
+        _currentState = _states.Grounded();
+        _currentState.EnterState();
 
         //Controls calling OnMovement Input Function
         _playerControls.Gameplay.Move.started += OnMovementInput;
@@ -68,7 +85,11 @@ public class PlayerStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //ground check bool
+        _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        _anim.SetBool("isGrounded", _isGrounded);
+
+        _currentState.UpdateState();
     }
 
     void OnMovementInput(InputAction.CallbackContext ctx)
@@ -82,20 +103,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     void OnJump(InputAction.CallbackContext ctx)
     {
-        isJumpPressed = ctx.ReadValueAsButton();
-
-        if (isGrounded && isJumpPressed)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, jumpSpeed);
-
-            _anim.SetTrigger("Jump");
-        }
-        else if (!isFalling)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * jumpReleasedMultiplier);
-        }
-
-        Debug.Log("is Jump Pressed: " + isJumpPressed);
+        _isJumpPressed = ctx.ReadValueAsButton();
     }
 
     private void OnEnable()

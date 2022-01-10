@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1.5f)]
     public float pitchRangeHigh = 1.2f;
 
+    public AudioSource playerSFX_Jump;
+
     void Start()
     {
         
@@ -27,6 +29,15 @@ public class AudioManager : MonoBehaviour
         {
             playerSFX_footsteps_sand.pitch = Random.Range(pitchRangeLow, pitchRangeHigh);
             playerSFX_footsteps_sand.Play();
+        }
+    }
+
+    public void Play_playerSFX_Jump()
+    {
+        if (playerSFX_Jump != null)
+        {
+            playerSFX_Jump.pitch = Random.Range(pitchRangeLow, pitchRangeHigh);
+            playerSFX_Jump.Play();
         }
     }
 }
