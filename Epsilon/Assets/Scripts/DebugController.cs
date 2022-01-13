@@ -9,7 +9,7 @@ public class DebugController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spaceManPosition = GetComponent<Transform>();
+        //spaceManPosition = GetComponent<Transform>();
     }
 
     // Update is called once per frame

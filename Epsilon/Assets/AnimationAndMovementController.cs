@@ -146,7 +146,7 @@ public class AnimationAndMovementController : MonoBehaviour
             _rb.gravityScale = 1f;
         }
 
-        //clamp mav y velocity if falling
+        //clamp max y velocity if falling
         if (_rb.velocity.y < -maxFallVelocity)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, -maxFallVelocity);

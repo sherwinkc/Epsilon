@@ -28,8 +28,8 @@ public class PlayerStateFactory
         return new PlayerJumpState(_context, this);
     }
 
-    public PlayerBaseState Grounded()
+    /*public PlayerBaseState Grounded()
     {
         return new PlayerGroundedState(_context, this);
-    }
+    }*/
 }

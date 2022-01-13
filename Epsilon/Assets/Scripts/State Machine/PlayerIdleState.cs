@@ -6,11 +6,12 @@ public class PlayerIdleState : PlayerBaseState
 {
     //constructor functions
     // passes cocnrete state arguments directly to the base state constructor
-    public PlayerIdleState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { }
+    public PlayerIdleState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) 
+        : base(currentContext, playerStateFactory) { }
 
     public override void EnterState()  
-    { 
-
+    {
+        _ctx.Animator.SetBool(_ctx.IsRunningHash, false);
     }
 
     public override void UpdateState()
@@ -23,13 +24,21 @@ public class PlayerIdleState : PlayerBaseState
 
     }
 
+    /*public override void InitializeSubState()
+    {
+
+    }*/
+
     public override void CheckSwitchStates()
     {
+        if (_ctx.IsMovementPressed && _ctx.IsGrounded)
+        {
+            SwitchState(_factory.Run());
+        }
 
-    }
-
-    public override void InitializeSubState()
-    {
-
+        if (_ctx.IsJumpPressed)
+        {
+            SwitchState(_factory.Jump());
+        }
     }
 }

@@ -6,17 +6,21 @@ public class PlayerJumpState : PlayerBaseState
 {
     //constructor functions
     // passes cocnrete state arguments directly to the base state constructor
-    public PlayerJumpState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { }
+    public PlayerJumpState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) 
+        : base(currentContext, playerStateFactory) {
+        _isRootState = true;
+        //InitializeSubState(); 
+    }
 
     public override void EnterState()
     {
-        Debug.Log("Jump State");
         HandleJump();
     }
 
     public override void UpdateState()
     {
         CheckSwitchStates();
+        _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * (_ctx.MoveSpeed * _ctx.InAirSpeedMultiplier)), _ctx.Rigidbody.velocity.y);
     }
 
     public override void ExitState()
@@ -29,20 +33,20 @@ public class PlayerJumpState : PlayerBaseState
         //if is grounded (from PlayerStateMachine) switch state to the PlayerGroundedState
         if (_ctx.IsGrounded)
         {
-            SwitchState(_factory.Grounded());
+            //SwitchState(_factory.Grounded());
+            SwitchState(_factory.Idle());
         }
     }
 
-    public override void InitializeSubState()
+    /*public override void InitializeSubState()
     {
 
-    }
+    }*/
 
     void HandleJump()
     {
-        //_rb.velocity = new Vector2(_rb.velocity.x, jumpSpeed);
+        _ctx.Animator.SetBool(_ctx.IsRunningHash, false);
         _ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x, _ctx.JumpSpeed);
-        //_anim.SetTrigger("Jump");
         _ctx.Animator.SetTrigger("Jump");
     }
         

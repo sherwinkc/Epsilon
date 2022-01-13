@@ -6,16 +6,18 @@ public class PlayerRunState : PlayerBaseState
 {
     //constructor functions
     // passes cocnrete state arguments directly to the base state constructor
-    public PlayerRunState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { }
+    public PlayerRunState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) 
+        : base(currentContext, playerStateFactory) { }
 
     public override void EnterState()
     {
-
+        _ctx.Animator.SetBool(_ctx.IsRunningHash, true);
     }
 
     public override void UpdateState()
     {
         CheckSwitchStates();
+        _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx.MoveSpeed), _ctx.Rigidbody.velocity.y);
     }
 
     public override void ExitState()
@@ -23,13 +25,27 @@ public class PlayerRunState : PlayerBaseState
 
     }
 
+    /*public override void InitializeSubState()
+    {
+
+    }*/
+
     public override void CheckSwitchStates()
     {
-
+        if (!_ctx.IsMovementPressed)
+        {
+            SwitchState(_factory.Idle());
+        } 
+        else if(_ctx.IsMovementPressed)
+        {
+            SwitchState(_factory.Run());
+        }
+        
+        
+        if (_ctx.IsJumpPressed)
+        {
+            SwitchState(_factory.Jump());
+        }
     }
 
-    public override void InitializeSubState()
-    {
-
-    }
 }
