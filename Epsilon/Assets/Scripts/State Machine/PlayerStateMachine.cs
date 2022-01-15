@@ -34,32 +34,43 @@ public class PlayerStateMachine : MonoBehaviour
     //jumping variables
     [SerializeField] bool _isJumpPressed = false;
     [SerializeField] float _jumpSpeed = 5f;
-    //[SerializeField] float gravityScaleWhenFalling = 2.5f;
+    [SerializeField] float _gravityScaleWhenFalling = 2.5f;
     //[SerializeField] float jumpReleasedMultiplier = 0.33f;
 
     //Falling & Velocity
-    //[SerializeField] float fallingYAxisThreshold = -0.25f;
-    //[SerializeField] bool isFalling;
-    //[SerializeField] float maxFallVelocity = 10f;
+    [SerializeField] float _fallingYAxisThreshold = -0.25f;
+    [SerializeField] bool _isFalling;
+    [SerializeField] float _maxFallVelocity = 10f;
 
     // state variables
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
+
+    //Footsteps particle system
+    public ParticleSystem _footEmission;
+    //public ParticleSystem _footsteps;
+    //public ParticleSystem _impactEffect;
+    bool _wasOnGround;
 
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Animator Animator { get { return _anim; } }
     public Rigidbody2D Rigidbody { get { return _rb; } }
+    public Vector2 CurrentMovementInput { get { return _currentMovementInput; } }
+    public Vector2 CurrentMovement { get { return _currentMovement;  } }
     public bool IsGrounded { get { return _isGrounded; } }
     public bool IsJumpPressed { get { return _isJumpPressed; } }
     public float JumpSpeed { get { return _jumpSpeed; } }
     public bool IsMovementPressed { get { return isMovementPressed; } }
-    public Vector2 CurrentMovementInput { get { return _currentMovementInput; } }
-    public Vector2 CurrentMovement { get { return _currentMovement;  } }
     public float MoveSpeed { get { return _moveSpeed; } }
     public float InAirSpeedMultiplier { get { return _inAirMoveSpeedMultiplier; } }
-    public int IsRunningHash { get { return _isRunningHash; }/*get { IsRunningHash = value; }*/ }
+    public int IsRunningHash { get { return _isRunningHash; } }
+    public float FallingYAxisThreshold { get { return _fallingYAxisThreshold; } }
+    public bool IsFalling { get { return _isFalling;  } }
+    public float MaxFallVelocity { get { return _maxFallVelocity; } }
+    public float GravityScaleWhenFalling { get { return _gravityScaleWhenFalling; } }
+    public ParticleSystem FootEmission { get { return _footEmission; } set { _footEmission = value; } }
     #endregion
 
     private void Awake()
@@ -100,7 +111,6 @@ public class PlayerStateMachine : MonoBehaviour
 
         _currentState.UpdateStates();
         //Debug.Log("State : " + _currentState);
-        //Debug.Log("SubState : " +  
 
         RotateSprite();
     }
@@ -111,7 +121,6 @@ public class PlayerStateMachine : MonoBehaviour
         _currentMovement.x = _currentMovementInput.x;
         _currentMovement.y = _currentMovementInput.y;
         isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
-        //Debug.Log(ctx.ReadValue<Vector2>());
     }
 
     void OnJump(InputAction.CallbackContext ctx)

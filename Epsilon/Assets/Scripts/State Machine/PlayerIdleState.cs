@@ -12,6 +12,9 @@ public class PlayerIdleState : PlayerBaseState
     public override void EnterState()  
     {
         _ctx.Animator.SetBool(_ctx.IsRunningHash, false);
+
+        //stop foot emission VFX when entering Idle
+        _ctx.FootEmission.Stop();
     }
 
     public override void UpdateState()

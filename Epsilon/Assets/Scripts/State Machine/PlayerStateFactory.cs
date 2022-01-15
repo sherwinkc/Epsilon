@@ -11,7 +11,6 @@ public class PlayerStateFactory
 
     // Factory holds a reference of our state machine
 
-
     // public methods for our concrete states, of type PlayerBaseState
     public PlayerBaseState Idle()
     {
