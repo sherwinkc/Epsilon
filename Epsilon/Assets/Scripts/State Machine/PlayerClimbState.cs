@@ -10,6 +10,7 @@ public class PlayerClimbState : PlayerBaseState
     public override void EnterState()
     {
         _ctx.Animator.SetBool("Climb Up", true);
+        _ctx.camManager.isCameraTargetPlayer = false;
         //ClimbLedge();
     }
 
@@ -20,7 +21,7 @@ public class PlayerClimbState : PlayerBaseState
 
     public override void ExitState()
     {
-
+        _ctx.camManager.isCameraTargetPlayer = true;
     }
 
     public override void CheckSwitchStates()
