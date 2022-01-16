@@ -18,9 +18,20 @@ public class PlayerRunState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
-        _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx.MoveSpeed), _ctx.Rigidbody.velocity.y);
+
+        //check if player is doing a soft landing - TODO create a Landing state for light and heavy landings
+        if (_ctx.Animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Landing_Light"))
+        {
+            _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx.MoveSpeed * 0.75f), _ctx.Rigidbody.velocity.y); //TODO magic number
+        }
+        else
+        {
+            _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx.MoveSpeed), _ctx.Rigidbody.velocity.y);
+        }
 
         EmitFootstepVFX();
+
+        RotateSprite();
     }
 
     private void EmitFootstepVFX()
@@ -32,11 +43,6 @@ public class PlayerRunState : PlayerBaseState
     {
 
     }
-
-    /*public override void InitializeSubState()
-    {
-
-    }*/
 
     public override void CheckSwitchStates()
     {
@@ -56,4 +62,16 @@ public class PlayerRunState : PlayerBaseState
         }
     }
 
+    void RotateSprite()
+    {
+        //rotate sprite when moving left and right
+        if (_ctx.CurrentMovement.x > 0.1)
+        {
+            _ctx.transform.localScale = new Vector3(_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
+        }
+        else if (_ctx.CurrentMovement.x < -0.1)
+        {
+            _ctx.transform.localScale = new Vector3(-_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
+        }
+    }
 }

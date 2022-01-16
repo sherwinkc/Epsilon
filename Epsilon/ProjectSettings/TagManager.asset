@@ -10,6 +10,9 @@ TagManager:
   - JetpackBox
   - Spikes
   - Flames
+  - LeftSideLedge
+  - RightSideLedge
+  - ClimbableMesh
   layers:
   - Default
   - TransparentFX

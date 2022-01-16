@@ -330,14 +330,4 @@ public class PlayerMovement : MonoBehaviour
     {
         controls.Gameplay.Disable();
     }
-
-    public void PlayFootsteps()
-    {
-        audioManager.Play_playerSFX_footsteps_sand();
-    }
-
-    public void PlayJumpSFX()
-    {
-        audioManager.Play_playerSFX_Jump();
-    }
 }

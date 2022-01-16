@@ -27,6 +27,16 @@ public class PlayerStateFactory
         return new PlayerJumpState(_context, this);
     }
 
+    public PlayerBaseState LedgeHang()
+    {
+        return new PlayerLedgeHangState(_context, this);
+    }
+
+    public PlayerBaseState ClimbLedge()
+    {
+        return new PlayerClimbState(_context, this);
+    }
+
     /*public PlayerBaseState Grounded()
     {
         return new PlayerGroundedState(_context, this);

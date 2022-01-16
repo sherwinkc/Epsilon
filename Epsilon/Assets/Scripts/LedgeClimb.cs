@@ -83,7 +83,7 @@ public class LedgeClimb : MonoBehaviour
 
         RaycastDebug();
 
-        if (playerMov.isGrounded)
+        //if (playerMov.isGrounded)
         {
             canDetectLedges = true;
         }
@@ -126,7 +126,7 @@ public class LedgeClimb : MonoBehaviour
         //animator.SetBool("ledgeDetected", ledgeDetected);
     }
 
-    public void TeleportPlayerAfterLedgeClimb()
+    /*public void TeleportPlayerAfterLedgeClimb()
     {
         //playerMov.position = new Vector3(playerMov.transform.position.x + ledgeTeleportOffsetX, playerMov.transform.position.y + ledgeTeleportOffsetY);
         playerMov.transform.position = endPoint.position;
@@ -136,5 +136,5 @@ public class LedgeClimb : MonoBehaviour
         //rb.position = new Vector2(rb.position.x + ledgeTeleportOffsetX, rb.position.y + ledgeTeleportOffsetY);
         animator.SetBool("ledgeDetected", ledgeDetected);
         rb.simulated = true;
-    }
+    }*/
 }

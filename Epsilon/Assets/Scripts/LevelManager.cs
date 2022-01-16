@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
     public IEnumerator RespawnCo()
     {
         player.currentAir = player.maxAir;
-        jetPack.boostTime = 1.5f;
+        //jetPack.boostTime = 1.5f;
 
         cam1.m_Lens.OrthographicSize = 7f;
 

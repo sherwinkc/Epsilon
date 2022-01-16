@@ -9,6 +9,7 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerControls _playerControls;
     Rigidbody2D _rb;
     Animator _anim;
+    AudioManager audioManager; // TODO Remove
 
     //variables
     [SerializeField] float _moveSpeed = 1f;
@@ -52,6 +53,34 @@ public class PlayerStateMachine : MonoBehaviour
     //public ParticleSystem _impactEffect;
     bool _wasOnGround;
 
+    //Ledge Hang
+    public Transform wallCheck;
+    public Transform ledgeCheck;
+
+    public LedgeInformation ledgeInfo;
+
+    public float playerLocalScaleOffset = 3f; // should equal 1 divided player scale reduction
+
+    public bool isTouchingWall;
+    public bool isTouchingLedge;
+    public float wallCheckDistance;
+
+    //public bool canClimbLedge = false;
+    public bool ledgeDetected = false;
+    //public bool canDetectLedges = true;
+    //public bool isHanging = false;
+
+    //Floats
+    //public float ledgeXSpeed;
+    //public float ledgeYSpeed;
+    //[SerializeField] float ledgeTeleportOffsetX;
+    //[SerializeField] float ledgeTeleportOffsetY;
+
+    //public Transform grabPoint;
+    //public Transform endPoint;
+
+    //public bool isClimbing = false;
+
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -59,6 +88,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Rigidbody2D Rigidbody { get { return _rb; } }
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } }
     public Vector2 CurrentMovement { get { return _currentMovement;  } }
+    public ParticleSystem FootEmission { get { return _footEmission; } set { _footEmission = value; } }
     public bool IsGrounded { get { return _isGrounded; } }
     public bool IsJumpPressed { get { return _isJumpPressed; } }
     public float JumpSpeed { get { return _jumpSpeed; } }
@@ -70,7 +100,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsFalling { get { return _isFalling;  } }
     public float MaxFallVelocity { get { return _maxFallVelocity; } }
     public float GravityScaleWhenFalling { get { return _gravityScaleWhenFalling; } }
-    public ParticleSystem FootEmission { get { return _footEmission; } set { _footEmission = value; } }
+    public float RotationScaleAmount {  get { return _rotationScaleAmount; } }
     #endregion
 
     private void Awake()
@@ -78,6 +108,7 @@ public class PlayerStateMachine : MonoBehaviour
         _playerControls = new PlayerControls();
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+        audioManager = FindObjectOfType<AudioManager>();
 
         //Controls calling OnMovement Input Function
         _playerControls.Gameplay.Move.started += OnMovementInput;
@@ -95,6 +126,8 @@ public class PlayerStateMachine : MonoBehaviour
         _states = new PlayerStateFactory(this); // passes this PlayerStateMachine instance. PlayerStateFactory is expecting a PlayerStateMachine 
         _currentState = _states.Idle();
         _currentState.EnterState();
+
+        ledgeInfo = GetComponent<LedgeInformation>();
     }
 
     void Start()
@@ -111,8 +144,9 @@ public class PlayerStateMachine : MonoBehaviour
 
         _currentState.UpdateStates();
         //Debug.Log("State : " + _currentState);
-
-        RotateSprite();
+        
+        //Debug.Log(ledgeInfo._currentGrabPoint);
+        //Debug.Log("ledgeDetected : " + ledgeDetected);
     }
 
     void OnMovementInput(InputAction.CallbackContext ctx)
@@ -128,19 +162,6 @@ public class PlayerStateMachine : MonoBehaviour
         _isJumpPressed = ctx.ReadValueAsButton();
     }
 
-    void RotateSprite()
-    {
-        //rotate sprite when moving left and right
-        if (_currentMovement.x > 0.1)
-        {
-            transform.localScale = new Vector3(_rotationScaleAmount, _rotationScaleAmount, transform.localScale.z);
-        }
-        else if (_currentMovement.x < -0.1)
-        {
-            transform.localScale = new Vector3(-_rotationScaleAmount, _rotationScaleAmount, transform.localScale.z);
-        }
-    }
-
     private void OnEnable()
     {
         _playerControls.Gameplay.Enable();
@@ -149,5 +170,33 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnDisable()
     {
         _playerControls.Gameplay.Disable();
+    }
+
+    //TODO Remove these audio functions required by the animator
+    public void PlayFootsteps()
+    {
+        audioManager.Play_playerSFX_footsteps_sand();
+    }
+
+    public void PlayJumpSFX()
+    {
+        audioManager.Play_playerSFX_Jump();
+    }
+
+    public void PlayLandingSFX()
+    {
+        audioManager.Play_playerSFX_Land();
+    }
+
+    public void TeleportPlayerAfterLedgeClimb()
+    {
+        //playerMov.position = new Vector3(playerMov.transform.position.x + ledgeTeleportOffsetX, playerMov.transform.position.y + ledgeTeleportOffsetY);
+        if(ledgeInfo._currentEndPoint.position != null ) transform.position = ledgeInfo._currentEndPoint.position; // Not working
+        //transform.position = endPoint.position;
+
+        Rigidbody.simulated = true;
+        Rigidbody.velocity = Vector2.zero;
+        //rb.position = new Vector2(rb.position.x + ledgeTeleportOffsetX, rb.position.y + ledgeTeleportOffsetY);
+        //Debug.Log("Teleported");
     }
 }

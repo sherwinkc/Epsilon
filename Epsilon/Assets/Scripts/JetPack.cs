@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class JetPack : MonoBehaviour
 {
-    //Components
+    /*//Components
     public PlayerMovement playerMovement;
     public Rigidbody2D rb;
     public Animator animator;
@@ -45,7 +45,7 @@ public class JetPack : MonoBehaviour
         animator = GetComponent<Animator>();
         ledgeClimb = GetComponent<LedgeClimb>();
 
-        flySpeed = playerMovement.maxSpeed * 1.2f;
+        //flySpeed = playerMovement.maxSpeed * 1.2f;/
 
         slider.maxValue = boostTime;
 
@@ -64,7 +64,7 @@ public class JetPack : MonoBehaviour
                 playerMovement.move.x = flightXInertia * transform.localScale.x;
             }
             rb.velocity = new Vector2(playerMovement.move.x * flySpeed, rb.velocity.y);
-        }*/
+        }
 
         //if we are flying and jetpack is on we can move left and right with velocity * flyspeed
         if (!isGrounded && jetIsOn && !ledgeClimb.isClimbing && playerMovement.canMove && boostTime >= 0f)
@@ -138,7 +138,7 @@ public class JetPack : MonoBehaviour
                 /*if(rb.velocity.y < 0 && !isGrounded)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, flightYbuffer);
-                }*/
+                }
 
                 //Adding the force here
                 rb.AddForce(new Vector2(0f, jetForce), ForceMode2D.Force);
@@ -167,7 +167,7 @@ public class JetPack : MonoBehaviour
             yield return new WaitForSeconds(boostTime);
         }
         jetIsOn = false;
-    }
+    }*/
 }
 
 

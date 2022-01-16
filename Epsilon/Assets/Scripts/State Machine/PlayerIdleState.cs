@@ -20,6 +20,7 @@ public class PlayerIdleState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
+        RotateSprite();
     }
 
     public override void ExitState()
@@ -42,6 +43,19 @@ public class PlayerIdleState : PlayerBaseState
         if (_ctx.IsJumpPressed)
         {
             SwitchState(_factory.Jump());
+        }
+    }
+
+    void RotateSprite()
+    {
+        //rotate sprite when moving left and right
+        if (_ctx.CurrentMovement.x > 0.1)
+        {
+            _ctx.transform.localScale = new Vector3(_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
+        }
+        else if (_ctx.CurrentMovement.x < -0.1)
+        {
+            _ctx.transform.localScale = new Vector3(-_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
         }
     }
 }
