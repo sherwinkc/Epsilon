@@ -7,6 +7,7 @@ public class LedgeInformation : MonoBehaviour
     public Transform _currentGrabPoint;
     public Transform _currentEndPoint;
 
+    public bool isNearClimbableMesh; // this checks weather player is near a climable box. See Player Jump State CheckSwitchStates()
 
     void Start()
     {
@@ -23,9 +24,11 @@ public class LedgeInformation : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("LeftSideLedge") || collision.gameObject.CompareTag("RightSideLedge"))
         {
-            Debug.Log(collision.tag);
+            //Debug.Log(collision.tag);
             _currentGrabPoint = collision.GetComponentInChildren<GrabPoint>().transform;
             _currentEndPoint = collision.GetComponentInChildren<EndPoint>().transform;
+
+            isNearClimbableMesh = true;
         }
     }
 
@@ -36,6 +39,8 @@ public class LedgeInformation : MonoBehaviour
             //_currentGrabPoint = null;
             //_currentEndPoint = null;
             if (_currentGrabPoint == null && _currentEndPoint == null) Debug.Log("Current Grab Point Is Null!");
+
+            isNearClimbableMesh = false;
         }
     }
 }

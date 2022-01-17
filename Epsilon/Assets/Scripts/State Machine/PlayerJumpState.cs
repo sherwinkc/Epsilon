@@ -26,6 +26,8 @@ public class PlayerJumpState : PlayerBaseState
         ShootRaycastsForLedgeClimb();
         RaycastDebug();
         RotateSprite();
+
+        Debug.Log(_ctx.ledgeInfo.gameObject.tag);
     }
 
     public override void ExitState()
@@ -39,8 +41,8 @@ public class PlayerJumpState : PlayerBaseState
         if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Idle());
-        } 
-        else if (_ctx.isTouchingWall && !_ctx.isTouchingLedge)
+        }
+        else if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
         {  
             SwitchState(_factory.LedgeHang());
         }
