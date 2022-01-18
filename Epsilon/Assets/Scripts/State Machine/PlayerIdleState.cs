@@ -15,6 +15,8 @@ public class PlayerIdleState : PlayerBaseState
 
         //stop foot emission VFX when entering Idle
         _ctx.FootEmission.Stop();
+
+        _ctx.Animator.SetBool("isFalling", false);
     }
 
     public override void UpdateState()
@@ -35,15 +37,18 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.IsMovementPressed && _ctx.IsGrounded)
-        {
-            SwitchState(_factory.Run());
-        }
-
         if (_ctx.IsJumpPressed)
         {
             SwitchState(_factory.Jump());
         }
+        else if (_ctx.IsMovementPressed && _ctx.IsGrounded)
+        {
+            SwitchState(_factory.Run());
+        } 
+        /*else if (_ctx.Rigidbody.velocity.y < -1f)
+        {
+            SwitchState(_factory.Falling());
+        }*/
     }
 
     void RotateSprite()

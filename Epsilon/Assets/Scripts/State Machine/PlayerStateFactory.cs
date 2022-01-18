@@ -37,6 +37,11 @@ public class PlayerStateFactory
         return new PlayerClimbState(_context, this);
     }
 
+    public PlayerBaseState Falling()
+    {
+        return new PlayerFallingState(_context, this);
+    }
+
     /*public PlayerBaseState Grounded()
     {
         return new PlayerGroundedState(_context, this);

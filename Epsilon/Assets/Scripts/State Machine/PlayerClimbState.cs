@@ -31,9 +31,4 @@ public class PlayerClimbState : PlayerBaseState
             SwitchState(_factory.Idle());
         }
     }
-
-    void ClimbLedge()
-    {
-
-    }
 }

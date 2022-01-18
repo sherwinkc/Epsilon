@@ -13,6 +13,8 @@ public class PlayerRunState : PlayerBaseState
     {
         _ctx.Animator.SetBool(_ctx.IsRunningHash, true);
         //_ctx.Rigidbody.gravityScale = 1f;
+
+        _ctx.Animator.SetBool("isFalling", false);
     }
 
     public override void UpdateState()
@@ -46,20 +48,26 @@ public class PlayerRunState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (!_ctx.IsMovementPressed)
-        {
-            SwitchState(_factory.Idle());
-        } 
-        else if(_ctx.IsMovementPressed)
-        {
-            SwitchState(_factory.Run());
-        }
-        
-        
         if (_ctx.IsJumpPressed)
         {
             SwitchState(_factory.Jump());
         }
+        else if (!_ctx.IsMovementPressed)
+        {
+            SwitchState(_factory.Idle());
+        }
+        /*else if (_ctx.Rigidbody.velocity.y < 20f)
+        {
+            SwitchState(_factory.Falling());
+        }*/
+
+        /*else if(_ctx.IsMovementPressed)
+        {
+            SwitchState(_factory.Run());
+        }*/
+
+
+
     }
 
     void RotateSprite()
