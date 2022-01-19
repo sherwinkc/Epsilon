@@ -12,7 +12,7 @@ public class PlayerRunState : PlayerBaseState
     public override void EnterState()
     {
         _ctx.Animator.SetBool(_ctx.IsRunningHash, true);
-        _ctx.Animator.SetBool("isFalling", false);
+        _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
     }
 
     public override void UpdateState()
@@ -22,7 +22,7 @@ public class PlayerRunState : PlayerBaseState
         //check if player is doing a soft landing - TODO create a Landing state for light and heavy landings
         if (_ctx.Animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Landing_Light"))
         {
-            _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx.MoveSpeed * 0.75f), _ctx.Rigidbody.velocity.y); //TODO magic number
+            _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx.MoveSpeed * _ctx.SoftLandingSpeedMultiplier), _ctx.Rigidbody.velocity.y); //TODO magic number
         }
         else
         {

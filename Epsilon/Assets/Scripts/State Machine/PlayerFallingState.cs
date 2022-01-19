@@ -9,7 +9,7 @@ public class PlayerFallingState : PlayerBaseState
 
     public override void EnterState()
     {
-        _ctx.Animator.SetBool("isFalling", true);
+        _ctx.Animator.SetBool(_ctx.IsFallingHash, true);
     }
 
     public override void UpdateState()

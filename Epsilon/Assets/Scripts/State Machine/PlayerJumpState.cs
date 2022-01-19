@@ -14,6 +14,8 @@ public class PlayerJumpState : PlayerBaseState
     public override void EnterState()
     {
         HandleJump();
+
+        _ctx.canJump = false;
     }
 
     public override void UpdateState()
@@ -56,7 +58,7 @@ public class PlayerJumpState : PlayerBaseState
     {
         _ctx.Animator.SetBool(_ctx.IsRunningHash, false);
         _ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x, _ctx.JumpSpeed);
-        _ctx.Animator.SetTrigger("Jump");
+        _ctx.Animator.SetTrigger(_ctx.JumpHash);
     }
 
     /*void HandleFalling()

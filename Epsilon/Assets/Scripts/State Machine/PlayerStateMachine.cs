@@ -20,9 +20,11 @@ public class PlayerStateMachine : MonoBehaviour
     public CameraManager camManager;
 
     //variables
-    [SerializeField] float _moveSpeed = 1f;
+    [SerializeField] float _moveSpeed = 4f; //4f before * by Time.Delta Time.
     [SerializeField] float _inAirMoveSpeedMultiplier;
     [SerializeField] float _rotationScaleAmount = 0.33f;
+    [SerializeField] float _softLandingSpeedMultiplier = 0.75f;
+    public bool canJump = true;
 
     //grounded checks    
     [SerializeField] bool _isGrounded;
@@ -36,8 +38,10 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool isMovementPressed;
 
     #region Animation Hashes
-    int isGroundedHash;
+    int _isGroundedHash;
     int _isRunningHash;
+    int _isFallingHash;
+    int _jumpHash;
     //int speedXHash;
     #endregion
 
@@ -49,7 +53,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     //Falling & Velocity
     [SerializeField] float _fallingYAxisThreshold = -0.25f;
-    [SerializeField] bool _isFalling;
+    //[SerializeField] bool _isFalling;
     [SerializeField] float _maxFallVelocity = 10f;
 
     //Footsteps particle system
@@ -82,13 +86,17 @@ public class PlayerStateMachine : MonoBehaviour
     public float JumpSpeed { get { return _jumpSpeed; } }
     public bool IsMovementPressed { get { return isMovementPressed; } }
     public float MoveSpeed { get { return _moveSpeed; } }
+    public float SoftLandingSpeedMultiplier { get { return _softLandingSpeedMultiplier; } }
     public float InAirSpeedMultiplier { get { return _inAirMoveSpeedMultiplier; } }
-    public int IsRunningHash { get { return _isRunningHash; } }
     public float FallingYAxisThreshold { get { return _fallingYAxisThreshold; } }
-    public bool IsFalling { get { return _isFalling;  } }
     public float MaxFallVelocity { get { return _maxFallVelocity; } }
     public float GravityScaleWhenFalling { get { return _gravityScaleWhenFalling; } }
     public float RotationScaleAmount {  get { return _rotationScaleAmount; } }
+    public int IsRunningHash { get { return _isRunningHash; } }
+    public int JumpHash { get { return _jumpHash; } }
+    public int IsFallingHash { get { return _isFallingHash; } }
+
+    //public bool IsFalling { get { return _isFalling;  } }
     #endregion
 
     private void Awake()
@@ -108,10 +116,14 @@ public class PlayerStateMachine : MonoBehaviour
         _playerControls.Gameplay.Move.performed += OnMovementInput;
         _playerControls.Gameplay.Jump.started += OnJump;
         _playerControls.Gameplay.Jump.canceled += OnJump;
+        //_playerControls.Gameplay.Jump.started += ctx => OnJump;
+        //_playerControls.Gameplay.Jump.canceled += ctx => OnJumpReleased();
 
         //Converting strings to hash is more performant
-        isGroundedHash = Animator.StringToHash("isGrounded");
+        _isGroundedHash = Animator.StringToHash("isGrounded");
         _isRunningHash = Animator.StringToHash("isRunning");
+        _isFallingHash = Animator.StringToHash("isFalling");
+        _jumpHash = Animator.StringToHash("Jump");
         //speedXHash = Animator.StringToHash("SpeedX");
 
         // setup state
@@ -129,7 +141,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         //ground check bool
         _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-        _anim.SetBool("isGrounded", _isGrounded);
+        _anim.SetBool(_isGroundedHash, _isGrounded);
 
         _currentState.UpdateStates();
     }
@@ -145,13 +157,43 @@ public class PlayerStateMachine : MonoBehaviour
     void OnJump(InputAction.CallbackContext ctx)
     {
         _isJumpPressed = ctx.ReadValueAsButton();
+
+        //canJump = !canJump;
     }
+
+    /*void OnJump()
+    {
+        _isJumpPressed = true;
+    }
+
+    void OnJumpReleased()
+    {
+        //canJump = true;
+        _isJumpPressed = false;
+    }*/
 
     public void TeleportPlayerAfterLedgeClimb()
     {
-        if(ledgeInfo._currentEndPoint.position != null ) transform.position = ledgeInfo._currentEndPoint.position;
+        if(ledgeInfo._currentEndPoint.position != null) transform.position = ledgeInfo._currentEndPoint.position;
         Rigidbody.simulated = true;
         Rigidbody.velocity = Vector2.zero;
+    }
+
+    //make player a child of moving platforms
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.parent = collision.transform;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.parent = null;
+        }
     }
 
     private void OnEnable()
