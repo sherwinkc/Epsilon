@@ -12,8 +12,6 @@ public class PlayerRunState : PlayerBaseState
     public override void EnterState()
     {
         _ctx.Animator.SetBool(_ctx.IsRunningHash, true);
-        //_ctx.Rigidbody.gravityScale = 1f;
-
         _ctx.Animator.SetBool("isFalling", false);
     }
 
@@ -32,13 +30,7 @@ public class PlayerRunState : PlayerBaseState
         }
 
         EmitFootstepVFX();
-
         RotateSprite();
-    }
-
-    private void EmitFootstepVFX()
-    {
-        if (!_ctx.FootEmission.isPlaying) _ctx.FootEmission.Play();
     }
 
     public override void ExitState()
@@ -65,9 +57,14 @@ public class PlayerRunState : PlayerBaseState
         {
             SwitchState(_factory.Run());
         }*/
+    }
 
-
-
+    private void EmitFootstepVFX()
+    {
+        if (!_ctx.FootEmission.isPlaying)
+        {
+            _ctx.FootEmission.Play();
+        }
     }
 
     void RotateSprite()

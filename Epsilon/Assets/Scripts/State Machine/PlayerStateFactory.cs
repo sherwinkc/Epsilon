@@ -41,9 +41,4 @@ public class PlayerStateFactory
     {
         return new PlayerFallingState(_context, this);
     }
-
-    /*public PlayerBaseState Grounded()
-    {
-        return new PlayerGroundedState(_context, this);
-    }*/
 }

@@ -29,13 +29,15 @@ public class PlayerLedgeHangState : PlayerBaseState
         {
             SwitchState(_factory.ClimbLedge());
         }
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Joystick1Button1)) //TODO Let go of ledge
+        {
+            //SwitchState(_factory.Jump());
+        }
     }
 
     public void LedgeHang()
     {
         _ctx.Rigidbody.simulated = false;
-        //Debug.Log("Ledge Hang");
-        _ctx.transform.position = _ctx.ledgeInfo._currentGrabPoint.transform.position; //not working
-        //_ctx.transform.position = _ctx.grabPoint.transform.position;
+        _ctx.transform.position = _ctx.ledgeInfo._currentGrabPoint.transform.position; 
     }
 }

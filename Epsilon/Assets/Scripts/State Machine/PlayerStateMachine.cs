@@ -9,7 +9,15 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerControls _playerControls;
     Rigidbody2D _rb;
     Animator _anim;
-    AudioManager audioManager; // TODO Remove
+    AudioManager audioManager; // TODO Remove from here?
+    public LedgeInformation ledgeInfo;
+
+    // state variables
+    PlayerBaseState _currentState;
+    PlayerStateFactory _states;
+
+    //camera test
+    public CameraManager camManager;
 
     //variables
     [SerializeField] float _moveSpeed = 1f;
@@ -27,10 +35,11 @@ public class PlayerStateMachine : MonoBehaviour
     Vector2 _currentMovement;
     [SerializeField] bool isMovementPressed;
 
-    //Animation Hashes
+    #region Animation Hashes
     int isGroundedHash;
     int _isRunningHash;
     //int speedXHash;
+    #endregion
 
     //jumping variables
     [SerializeField] bool _isJumpPressed = false;
@@ -43,46 +52,22 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool _isFalling;
     [SerializeField] float _maxFallVelocity = 10f;
 
-    // state variables
-    PlayerBaseState _currentState;
-    PlayerStateFactory _states;
-
     //Footsteps particle system
     public ParticleSystem _footEmission;
     //public ParticleSystem _footsteps;
     //public ParticleSystem _impactEffect;
-    bool _wasOnGround;
+    //bool _wasOnGround;
 
     //Ledge Hang
     public Transform wallCheck;
     public Transform ledgeCheck;
-
-    public LedgeInformation ledgeInfo;
 
     public float playerLocalScaleOffset = 3f; // should equal 1 divided player scale reduction
 
     public bool isTouchingWall;
     public bool isTouchingLedge;
     public float wallCheckDistance;
-
-    //public bool canClimbLedge = false;
     public bool ledgeDetected = false;
-    //public bool canDetectLedges = true;
-    //public bool isHanging = false;
-
-    //Floats
-    //public float ledgeXSpeed;
-    //public float ledgeYSpeed;
-    //[SerializeField] float ledgeTeleportOffsetX;
-    //[SerializeField] float ledgeTeleportOffsetY;
-
-    //public Transform grabPoint;
-    //public Transform endPoint;
-
-    //public bool isClimbing = false;
-
-    //camera test
-    public CameraManager camManager;
 
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
@@ -112,6 +97,7 @@ public class PlayerStateMachine : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
+        ledgeInfo = GetComponent<LedgeInformation>();
 
         //camera test
         camManager = FindObjectOfType<CameraManager>();
@@ -132,8 +118,6 @@ public class PlayerStateMachine : MonoBehaviour
         _states = new PlayerStateFactory(this); // passes this PlayerStateMachine instance. PlayerStateFactory is expecting a PlayerStateMachine 
         _currentState = _states.Idle();
         _currentState.EnterState();
-
-        ledgeInfo = GetComponent<LedgeInformation>();
     }
 
     void Start()
@@ -141,7 +125,6 @@ public class PlayerStateMachine : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         //ground check bool
@@ -149,10 +132,6 @@ public class PlayerStateMachine : MonoBehaviour
         _anim.SetBool("isGrounded", _isGrounded);
 
         _currentState.UpdateStates();
-        //Debug.Log("State : " + _currentState);
-        
-        //Debug.Log(ledgeInfo._currentGrabPoint);
-        //Debug.Log("ledgeDetected : " + ledgeDetected);
     }
 
     void OnMovementInput(InputAction.CallbackContext ctx)
@@ -168,6 +147,13 @@ public class PlayerStateMachine : MonoBehaviour
         _isJumpPressed = ctx.ReadValueAsButton();
     }
 
+    public void TeleportPlayerAfterLedgeClimb()
+    {
+        if(ledgeInfo._currentEndPoint.position != null ) transform.position = ledgeInfo._currentEndPoint.position;
+        Rigidbody.simulated = true;
+        Rigidbody.velocity = Vector2.zero;
+    }
+
     private void OnEnable()
     {
         _playerControls.Gameplay.Enable();
@@ -178,7 +164,7 @@ public class PlayerStateMachine : MonoBehaviour
         _playerControls.Gameplay.Disable();
     }
 
-    //TODO Remove these audio functions required by the animator
+    #region Audio functions for Animator events //TODO find a potential alternative solution
     public void PlayFootsteps()
     {
         audioManager.Play_playerSFX_footsteps_sand();
@@ -193,16 +179,5 @@ public class PlayerStateMachine : MonoBehaviour
     {
         audioManager.Play_playerSFX_Land();
     }
-
-    public void TeleportPlayerAfterLedgeClimb()
-    {
-        //playerMov.position = new Vector3(playerMov.transform.position.x + ledgeTeleportOffsetX, playerMov.transform.position.y + ledgeTeleportOffsetY);
-        if(ledgeInfo._currentEndPoint.position != null ) transform.position = ledgeInfo._currentEndPoint.position; // Not working
-        //transform.position = endPoint.position;
-
-        Rigidbody.simulated = true;
-        Rigidbody.velocity = Vector2.zero;
-        //rb.position = new Vector2(rb.position.x + ledgeTeleportOffsetX, rb.position.y + ledgeTeleportOffsetY);
-        //Debug.Log("Teleported");
-    }
+    #endregion
 }

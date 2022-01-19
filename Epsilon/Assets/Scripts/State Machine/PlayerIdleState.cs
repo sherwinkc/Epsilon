@@ -30,11 +30,6 @@ public class PlayerIdleState : PlayerBaseState
 
     }
 
-    /*public override void InitializeSubState()
-    {
-
-    }*/
-
     public override void CheckSwitchStates()
     {
         if (_ctx.IsJumpPressed)
