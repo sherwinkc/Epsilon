@@ -29,15 +29,15 @@ public class PlayerFallingState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.IsGrounded)
-        {
-            SwitchState(_factory.Idle());
-        }
-        
         if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
         {
             SwitchState(_factory.LedgeHang());
         }
+        else if (_ctx.IsGrounded)
+        {
+            SwitchState(_factory.Idle());
+        }       
+
     }
 
     private void ShootRaycastsForLedgeClimb()

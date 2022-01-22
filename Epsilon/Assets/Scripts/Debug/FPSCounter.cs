@@ -15,7 +15,6 @@ public class FPSCounter : MonoBehaviour
     private void Start()
     {
         m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
-        //m_Text = GetComponent<Text>();
     }
 
 

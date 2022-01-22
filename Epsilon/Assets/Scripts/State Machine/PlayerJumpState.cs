@@ -16,6 +16,8 @@ public class PlayerJumpState : PlayerBaseState
         HandleJump();
 
         _ctx.canJump = false;
+
+        _ctx._impactEffect.Play();
     }
 
     public override void UpdateState()
@@ -23,18 +25,16 @@ public class PlayerJumpState : PlayerBaseState
         CheckSwitchStates();
         _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * (_ctx.MoveSpeed * _ctx.InAirSpeedMultiplier)), _ctx.Rigidbody.velocity.y);
 
-        //HandleFalling(); TODO Move to falling
-
         ShootRaycastsForLedgeClimb();
         RaycastDebug();
         RotateSprite();
 
-        Debug.Log(_ctx.ledgeInfo.gameObject.tag);
+        //Debug.Log(_ctx.ledgeInfo.gameObject.tag);
     }
 
     public override void ExitState()
     {
-
+        _ctx.Rigidbody.velocity = new Vector2(0f, 0f);
     }
 
     public override void CheckSwitchStates()

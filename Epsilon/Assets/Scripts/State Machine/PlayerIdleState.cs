@@ -17,6 +17,8 @@ public class PlayerIdleState : PlayerBaseState
         _ctx.FootEmission.Stop();
 
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
+
+        _ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x * _ctx.deaccelerationRate, _ctx.Rigidbody.velocity.y);
     }
 
     public override void UpdateState()
@@ -32,18 +34,18 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.IsJumpPressed)
+        if (_ctx.Rigidbody.velocity.y < -1f)
+        {
+            SwitchState(_factory.Falling());
+        }
+        else if (_ctx.IsJumpPressed)
         {
             SwitchState(_factory.Jump());
         }
         else if (_ctx.IsMovementPressed && _ctx.IsGrounded)
         {
             SwitchState(_factory.Run());
-        } 
-        /*else if (_ctx.Rigidbody.velocity.y < -1f)
-        {
-            SwitchState(_factory.Falling());
-        }*/
+        }      
     }
 
     void RotateSprite()

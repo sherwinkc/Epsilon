@@ -5,34 +5,34 @@ using UnityEngine.InputSystem;
 
 public class PlayerStateMachine : MonoBehaviour
 {
-    //decalre reference variables
+    [Header("Reference variables")]
     PlayerControls _playerControls;
     Rigidbody2D _rb;
     Animator _anim;
-    AudioManager audioManager; // TODO Remove from here?
+
     public LedgeInformation ledgeInfo;
 
     // state variables
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
 
-    //camera test
+    [Header("Camera")]
     public CameraManager camManager;
 
-    //variables
+    [Header("Variables")]
     [SerializeField] float _moveSpeed = 4f; //4f before * by Time.Delta Time.
     [SerializeField] float _inAirMoveSpeedMultiplier;
     [SerializeField] float _rotationScaleAmount = 0.33f;
     [SerializeField] float _softLandingSpeedMultiplier = 0.75f;
     public bool canJump = true;
 
-    //grounded checks    
+    [Header("Ground Checks")]  
     [SerializeField] bool _isGrounded;
     public Transform groundCheck;
     public LayerMask whatIsGround;
     public float groundCheckRadius = 0.2f;
 
-    //variables to store player inputs
+    [Header("Player Input Variables")]    //variables to store player inputs
     Vector2 _currentMovementInput;
     Vector2 _currentMovement;
     [SerializeField] bool isMovementPressed;
@@ -45,33 +45,42 @@ public class PlayerStateMachine : MonoBehaviour
     //int speedXHash;
     #endregion
 
-    //jumping variables
+    [Header("Jump Variables")]
     [SerializeField] bool _isJumpPressed = false;
     [SerializeField] float _jumpSpeed = 5f;
     [SerializeField] float _gravityScaleWhenFalling = 2.5f;
     //[SerializeField] float jumpReleasedMultiplier = 0.33f;
+    public float jumpBufferCounter = 0f;
+    public float jumpBufferTime = 0.2f;
+    public float coyoteTimeCounter;
+    public float coyoteTime = 0.4f;
 
-    //Falling & Velocity
+    [Header("Falling & Velocity")]
     [SerializeField] float _fallingYAxisThreshold = -0.25f;
     //[SerializeField] bool _isFalling;
     [SerializeField] float _maxFallVelocity = 10f;
 
-    //Footsteps particle system
+    [Header("Footsteps VFX")]    //Footsteps particle system
     public ParticleSystem _footEmission;
     //public ParticleSystem _footsteps;
-    //public ParticleSystem _impactEffect;
-    //bool _wasOnGround;
+    public ParticleSystem _impactEffect;
+    public bool _wasOnGround;
 
-    //Ledge Hang
+    [Header("Ledge Hang")]
     public Transform wallCheck;
     public Transform ledgeCheck;
-
     public float playerLocalScaleOffset = 3f; // should equal 1 divided player scale reduction
-
     public bool isTouchingWall;
     public bool isTouchingLedge;
     public float wallCheckDistance;
-    public bool ledgeDetected = false;
+    //public bool ledgeDetected = false;
+
+    [Header("Acceleration & Deacceleration")]
+    //public float fHorizontalDamping;
+    //public float fHorizontalVelocity;
+    [Tooltip("Default = 10f. Higher values result in faster acceleration")]
+    public float accelerationRate = 10f;
+    public float deaccelerationRate = 0.5f;
 
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
@@ -104,7 +113,6 @@ public class PlayerStateMachine : MonoBehaviour
         _playerControls = new PlayerControls();
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-        audioManager = FindObjectOfType<AudioManager>();
         ledgeInfo = GetComponent<LedgeInformation>();
 
         //camera test
@@ -114,10 +122,10 @@ public class PlayerStateMachine : MonoBehaviour
         _playerControls.Gameplay.Move.started += OnMovementInput;
         _playerControls.Gameplay.Move.canceled += OnMovementInput;
         _playerControls.Gameplay.Move.performed += OnMovementInput;
-        _playerControls.Gameplay.Jump.started += OnJump;
-        _playerControls.Gameplay.Jump.canceled += OnJump;
-        //_playerControls.Gameplay.Jump.started += ctx => OnJump;
-        //_playerControls.Gameplay.Jump.canceled += ctx => OnJumpReleased();
+        //_playerControls.Gameplay.Jump.started += OnJump; //Default
+        //_playerControls.Gameplay.Jump.canceled += OnJump; //Default
+        _playerControls.Gameplay.Jump.started += ctx => OnJump();
+        _playerControls.Gameplay.Jump.canceled += ctx => OnJumpReleased();
 
         //Converting strings to hash is more performant
         _isGroundedHash = Animator.StringToHash("isGrounded");
@@ -144,6 +152,10 @@ public class PlayerStateMachine : MonoBehaviour
         _anim.SetBool(_isGroundedHash, _isGrounded);
 
         _currentState.UpdateStates();
+
+        PlayLandingImpactVFX();
+
+        JumpLogic();
     }
 
     void OnMovementInput(InputAction.CallbackContext ctx)
@@ -154,12 +166,53 @@ public class PlayerStateMachine : MonoBehaviour
         isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
     }
 
-    void OnJump(InputAction.CallbackContext ctx)
+    /*void OnJump(InputAction.CallbackContext ctx)
     {
-        _isJumpPressed = ctx.ReadValueAsButton();
+        if (jumpBufferTime > 0f && IsGrounded)
+        {
+            _isJumpPressed = ctx.ReadValueAsButton();
+        }
+        jumpBuffer = jumpBufferTime;
+    }*/
 
-        //canJump = !canJump;
+    void OnJump()
+    {
+        if (coyoteTimeCounter > 0f)
+        {
+            _isJumpPressed = true;
+        }
+
+        jumpBufferCounter = jumpBufferTime;
     }
+    void OnJumpReleased()
+    {
+        _isJumpPressed = false;
+    }
+    private void JumpLogic()
+    {
+        jumpBufferCounter -= Time.deltaTime;
+
+        if (jumpBufferCounter > 0f && _isGrounded)
+        {
+            _isJumpPressed = true;
+        }
+        else if (jumpBufferCounter < 0 && !_isGrounded)       
+        {
+            _isJumpPressed = false;
+        }
+
+        coyoteTimeCounter -= Time.deltaTime;
+
+        if (_isGrounded)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+    }
+    //default way
+    /*void OnJump(InputAction.CallbackContext ctx)
+    {
+        _isJumpPressed = ctx.ReadValueAsButton();  
+    }*/
 
     /*void OnJump()
     {
@@ -171,6 +224,15 @@ public class PlayerStateMachine : MonoBehaviour
         //canJump = true;
         _isJumpPressed = false;
     }*/
+
+    private void PlayLandingImpactVFX()
+    {
+        if (!_wasOnGround && _isGrounded)
+        {
+            _impactEffect.Play();
+        }
+        _wasOnGround = _isGrounded;
+    }
 
     public void TeleportPlayerAfterLedgeClimb()
     {
@@ -205,21 +267,4 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _playerControls.Gameplay.Disable();
     }
-
-    #region Audio functions for Animator events //TODO find a potential alternative solution
-    public void PlayFootsteps()
-    {
-        audioManager.Play_playerSFX_footsteps_sand();
-    }
-
-    public void PlayJumpSFX()
-    {
-        audioManager.Play_playerSFX_Jump();
-    }
-
-    public void PlayLandingSFX()
-    {
-        audioManager.Play_playerSFX_Land();
-    }
-    #endregion
 }
