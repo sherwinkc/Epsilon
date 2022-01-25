@@ -11,7 +11,7 @@ public class PlayerRunState : PlayerBaseState
 
     public override void EnterState()
     {
-        Debug.Log("Run Enter State");
+        //Debug.Log("Run Enter State");
         _ctx.Animator.SetBool(_ctx.IsRunningHash, true);
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
     }
@@ -53,12 +53,11 @@ public class PlayerRunState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-
         if (_ctx.IsJumpPressed)
         {
             SwitchState(_factory.Jump());
         }
-        else if (_ctx.Rigidbody.velocity.y < -2f)
+        else if (_ctx.Rigidbody.velocity.y < -3f && !_ctx._hasLetGoOfLedge)
         {
             SwitchState(_factory.Falling());
         }
@@ -86,7 +85,7 @@ public class PlayerRunState : PlayerBaseState
     }
     private void EmitFootstepVFX()
     {
-        if (!_ctx.FootEmission.isPlaying)
+        if (!_ctx.FootEmission.isPlaying && _ctx.IsGrounded)
         {
             _ctx.FootEmission.Play();
         }

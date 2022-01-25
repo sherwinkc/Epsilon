@@ -6,11 +6,13 @@ public class PlayerFunctions : MonoBehaviour
 {
     AudioManager audioManager;
     PlayerStateMachine playerStateMachine;
+    CameraManager camManager;
 
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
         playerStateMachine = GetComponent<PlayerStateMachine>();
+        camManager = FindObjectOfType<CameraManager>();
     }
 
     public void PlayFootsteps()
@@ -31,5 +33,10 @@ public class PlayerFunctions : MonoBehaviour
     public void PlayImpactVFX()
     {
         if(playerStateMachine != null) playerStateMachine._impactEffect.Play();
+    }
+
+    public void ActivatePlayerCameraDuringClimb()
+    {
+        if(camManager != null) camManager.isCameraTargetPlayer = true;
     }
 }

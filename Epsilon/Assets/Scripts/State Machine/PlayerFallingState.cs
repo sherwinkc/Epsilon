@@ -9,7 +9,9 @@ public class PlayerFallingState : PlayerBaseState
 
     public override void EnterState()
     {
+        //set Animator variables
         _ctx.Animator.SetBool(_ctx.IsFallingHash, true);
+        _ctx.Animator.SetBool("ledgeDetected", false);
     }
 
     public override void UpdateState()
@@ -19,6 +21,7 @@ public class PlayerFallingState : PlayerBaseState
 
         ShootRaycastsForLedgeClimb();
         RaycastDebug();
+
         RotateSprite();
     }
 
@@ -36,8 +39,7 @@ public class PlayerFallingState : PlayerBaseState
         else if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Idle());
-        }       
-
+        }  
     }
 
     private void ShootRaycastsForLedgeClimb()

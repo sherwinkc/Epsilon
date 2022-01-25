@@ -49,6 +49,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool _isJumpPressed = false;
     [SerializeField] float _jumpSpeed = 5f;
     [SerializeField] float _gravityScaleWhenFalling = 2.5f;
+    [SerializeField] float jumpReleaseDampener = 0.5f;
     //[SerializeField] float jumpReleasedMultiplier = 0.33f;
     public float jumpBufferCounter = 0f;
     public float jumpBufferTime = 0.2f;
@@ -57,7 +58,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     [Header("Falling & Velocity")]
     [SerializeField] float _fallingYAxisThreshold = -0.25f;
-    //[SerializeField] bool _isFalling;
+    public bool _hasLetGoOfLedge = false;
     [SerializeField] float _maxFallVelocity = 10f;
 
     [Header("Footsteps VFX")]    //Footsteps particle system
@@ -74,13 +75,15 @@ public class PlayerStateMachine : MonoBehaviour
     public bool isTouchingLedge;
     public float wallCheckDistance;
     //public bool ledgeDetected = false;
+    //public bool canDetectLedges = true;
 
     [Header("Acceleration & Deacceleration")]
     //public float fHorizontalDamping;
     //public float fHorizontalVelocity;
     [Tooltip("Default = 10f. Higher values result in faster acceleration")]
     public float accelerationRate = 10f;
-    public float deaccelerationRate = 0.5f;
+    [Tooltip("Default = 0.2f. Lower values result in faster deceleration")]
+    public float decelerationRate = 0.5f;
 
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
@@ -142,7 +145,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -156,6 +159,10 @@ public class PlayerStateMachine : MonoBehaviour
         PlayLandingImpactVFX();
 
         JumpLogic();
+
+        //if (IsGrounded) canDetectLedges = true;
+        if (_isGrounded) Animator.SetBool("isLettingGoLedge", false);
+        if (_isGrounded) _hasLetGoOfLedge = false;
     }
 
     void OnMovementInput(InputAction.CallbackContext ctx)
@@ -184,9 +191,11 @@ public class PlayerStateMachine : MonoBehaviour
 
         jumpBufferCounter = jumpBufferTime;
     }
+
     void OnJumpReleased()
     {
         _isJumpPressed = false;
+        Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, Rigidbody.velocity.y * jumpReleaseDampener);
     }
     private void JumpLogic()
     {
@@ -256,7 +265,7 @@ public class PlayerStateMachine : MonoBehaviour
         {
             transform.parent = null;
         }
-    }
+    }      
 
     private void OnEnable()
     {
@@ -266,5 +275,10 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnDisable()
     {
         _playerControls.Gameplay.Disable();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawSphere(groundCheck.transform.position, groundCheckRadius);
     }
 }

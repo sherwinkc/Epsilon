@@ -14,6 +14,7 @@ public class DebugManager : MonoBehaviour
 
     [Header("Player State")]
     public TMP_Text playerStateDebug;
+    public TMP_Text previousStateDebug;    
     //public TMP_Text standingOnWhatMaterial;
 
     [Header("Player Velocity")]
@@ -49,6 +50,10 @@ public class DebugManager : MonoBehaviour
     void Update()
     {
         if (playerStateDebug != null) playerStateDebug.text = "Player State: " + playerStateMachine.CurrentState.ToString();
+
+        //Previous State
+        //if (previousStateDebug != null) previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
+
         if (playerVelocityX != null) playerVelocityX.text = "Player Velocity X: " + playerStateMachine.Rigidbody.velocity.x.ToString("F2");
         if (playerVelocityY != null) playerVelocityY.text = "Player Velocity Y: " + playerStateMachine.Rigidbody.velocity.y.ToString("F2");
 
@@ -74,7 +79,7 @@ public class DebugManager : MonoBehaviour
 
         if (coyoteTime != null)
         {
-            if (playerStateMachine.coyoteTime >= 0 && playerStateMachine.coyoteTime <= playerStateMachine.coyoteTimeCounter)
+            if (playerStateMachine.coyoteTimeCounter >= 0 && playerStateMachine.coyoteTimeCounter <= playerStateMachine.coyoteTime)
             {
                 coyoteTime.text = "Coyote Time: " + playerStateMachine.coyoteTimeCounter.ToString("F2");
             }

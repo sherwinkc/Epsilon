@@ -43,8 +43,8 @@ public class PlayerVFXManager : MonoBehaviour
                 if (hitInfo) spriteRenderer = hitInfo.transform.GetComponent<SpriteRenderer>();
                 if (hitInfo) spriteShapeRenderer = hitInfo.transform.GetComponent<SpriteShapeRenderer>();
 
-                Debug.Log(spriteRenderer);
-                Debug.Log(spriteShapeRenderer);
+                //Debug.Log(spriteRenderer);
+                //Debug.Log(spriteShapeRenderer);
             }
         }
 

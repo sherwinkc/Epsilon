@@ -17,7 +17,7 @@ MonoBehaviour:
     m_To: CM vcam1 (Climb Cam)
     m_Blend:
       m_Style: 1
-      m_Time: 1.24
+      m_Time: 1.25
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -28,7 +28,7 @@ MonoBehaviour:
     m_To: CM vcam1 (Main Player Cam)
     m_Blend:
       m_Style: 1
-      m_Time: 2
+      m_Time: 3
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []

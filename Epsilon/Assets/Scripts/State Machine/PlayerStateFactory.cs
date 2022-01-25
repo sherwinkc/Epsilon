@@ -41,4 +41,9 @@ public class PlayerStateFactory
     {
         return new PlayerFallingState(_context, this);
     }
+
+    public PlayerBaseState LetGoOfLedge()
+    {
+        return new PlayerLetGoLedgeState(_context, this);
+    }
 }

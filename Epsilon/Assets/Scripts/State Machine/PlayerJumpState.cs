@@ -48,7 +48,7 @@ public class PlayerJumpState : PlayerBaseState
         {  
             SwitchState(_factory.LedgeHang());
         }
-        else if (_ctx.Rigidbody.velocity.y < -1f)
+        else if (_ctx.Rigidbody.velocity.y < -1f && !_ctx._hasLetGoOfLedge)
         {
             SwitchState(_factory.Falling());
         }
@@ -57,36 +57,23 @@ public class PlayerJumpState : PlayerBaseState
     void HandleJump()
     {
         _ctx.Animator.SetBool(_ctx.IsRunningHash, false);
-        _ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x, _ctx.JumpSpeed);
+
+        if (_ctx.IsJumpPressed)
+        {
+            _ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x, _ctx.JumpSpeed);
+        }
+        else if (!_ctx.IsJumpPressed) 
+        {
+            _ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x, _ctx.JumpSpeed);
+        }
+
         _ctx.Animator.SetTrigger(_ctx.JumpHash);
     }
 
-    /*void HandleFalling()
-    {
-        // if the player falling
-        if (_ctx.Rigidbody.velocity.y < _ctx.FallingYAxisThreshold)
-        {
-            _ctx.Rigidbody.gravityScale = _ctx.GravityScaleWhenFalling;
-        }
-        else
-        {
-            _ctx.Rigidbody.gravityScale = 1f;
-        }
-    }
-
-    else if (!isFalling)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * jumpReleasedMultiplier);
-        }
-
-        //Debug.Log("is Jump Pressed: " + _isJumpPressed);*/
-
     private void ShootRaycastsForLedgeClimb()
     {
-
         _ctx.isTouchingWall = Physics2D.Raycast(_ctx.wallCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
-        _ctx.isTouchingLedge = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
-
+        _ctx.isTouchingLedge = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);        
     }
 
     private void RaycastDebug()

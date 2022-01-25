@@ -16,7 +16,7 @@ public class Oscillator : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (period <= Mathf.Epsilon) // when comparing a float == 0 use <= mathf.epsilon;
         {

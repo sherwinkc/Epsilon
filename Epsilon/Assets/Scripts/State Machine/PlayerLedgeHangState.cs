@@ -9,7 +9,9 @@ public class PlayerLedgeHangState : PlayerBaseState
 
     public override void EnterState()
     { 
+        //set animator variables
         _ctx.Animator.SetBool("ledgeDetected", true);
+
         LedgeHang();
         _ctx.Rigidbody.velocity = new Vector2(0f, 0f);
     }
@@ -21,7 +23,7 @@ public class PlayerLedgeHangState : PlayerBaseState
 
     public override void ExitState()
     {
-        _ctx.Animator.SetBool("ledgeDetected", false);
+
     }
 
     public override void CheckSwitchStates()
@@ -30,22 +32,16 @@ public class PlayerLedgeHangState : PlayerBaseState
         {
             SwitchState(_factory.ClimbLedge());
         }
-        /*else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Joystick1Button1)) //TODO Let go of ledge
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
-            TurnOnRigidbodyOnExit();
-            _ctx.isTouchingWall = false;
-            SwitchState(_factory.Falling());
-        }*/
+            _ctx._hasLetGoOfLedge = true;
+            SwitchState(_factory.LetGoOfLedge());
+        }
     }
 
     public void LedgeHang()
     {
         _ctx.Rigidbody.simulated = false;
         _ctx.transform.position = _ctx.ledgeInfo._currentGrabPoint.transform.position; 
-    }
-
-    private void TurnOnRigidbodyOnExit()
-    {
-        _ctx.Rigidbody.simulated = true;
-    }
+    } 
 }

@@ -11,14 +11,17 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void EnterState()  
     {
+        //Set Animator        
         _ctx.Animator.SetBool(_ctx.IsRunningHash, false);
+        _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
+        _ctx.Animator.SetBool("isLettingGoLedge", false);
+        _ctx.Animator.SetBool("ledgeDetected", false);
 
         //stop foot emission VFX when entering Idle
         _ctx.FootEmission.Stop();
 
-        _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
-
-        _ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x * _ctx.deaccelerationRate, _ctx.Rigidbody.velocity.y);
+        //Deceleration when idling from moving
+        _ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x * _ctx.decelerationRate, _ctx.Rigidbody.velocity.y); 
     }
 
     public override void UpdateState()
@@ -34,15 +37,15 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.Rigidbody.velocity.y < -1f)
+        if (_ctx.Rigidbody.velocity.y < -3f && _ctx._hasLetGoOfLedge) //if y velocity is negative switch to falling
         {
             SwitchState(_factory.Falling());
         }
-        else if (_ctx.IsJumpPressed)
+        else if (_ctx.IsJumpPressed) //if jump pressed jump
         {
             SwitchState(_factory.Jump());
         }
-        else if (_ctx.IsMovementPressed && _ctx.IsGrounded)
+        else if (_ctx.IsMovementPressed && _ctx.IsGrounded) // if movement pressed and grounded run
         {
             SwitchState(_factory.Run());
         }      
