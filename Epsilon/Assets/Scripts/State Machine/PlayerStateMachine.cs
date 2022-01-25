@@ -153,6 +153,11 @@ public class PlayerStateMachine : MonoBehaviour
         //ground check bool
         _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
         _anim.SetBool(_isGroundedHash, _isGrounded);
+        //_anim.SetFloat("SpeedX", Mathf.Abs(CurrentMovement.x));
+        _anim.SetFloat("SpeedX", Mathf.Abs(Rigidbody.velocity.x));
+
+        _anim.SetFloat("PlayerVelocityX", Mathf.Abs(Rigidbody.velocity.x));
+        Debug.Log(_anim.GetFloat("SpeedX"));
 
         _currentState.UpdateStates();
 

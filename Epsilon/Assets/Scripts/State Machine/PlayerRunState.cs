@@ -85,7 +85,7 @@ public class PlayerRunState : PlayerBaseState
     }
     private void EmitFootstepVFX()
     {
-        if (!_ctx.FootEmission.isPlaying && _ctx.IsGrounded)
+        if (!_ctx.FootEmission.isPlaying && _ctx.IsGrounded && Mathf.Abs(_ctx.Rigidbody.velocity.x) > 1f)
         {
             _ctx.FootEmission.Play();
         }
