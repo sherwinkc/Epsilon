@@ -85,6 +85,15 @@ public class PlayerJumpState : PlayerBaseState
     void RotateSprite()
     {
         //rotate sprite when moving left and right
+        if (_ctx.Rigidbody.velocity.x > 0.5f)
+        {
+            _ctx.transform.localScale = new Vector3(_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
+        }
+        else if (_ctx.Rigidbody.velocity.x < -0.5f)
+        {
+            _ctx.transform.localScale = new Vector3(-_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
+        }
+        /*//rotate sprite when moving left and right
         if (_ctx.CurrentMovement.x > 0.1)
         {
             _ctx.transform.localScale = new Vector3(_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
@@ -92,6 +101,6 @@ public class PlayerJumpState : PlayerBaseState
         else if (_ctx.CurrentMovement.x < -0.1)
         {
             _ctx.transform.localScale = new Vector3(-_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
-        }
+        }*/
     }
 }

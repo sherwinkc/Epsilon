@@ -150,24 +150,20 @@ public class PlayerStateMachine : MonoBehaviour
 
     void Update()
     {
-        //ground check bool
+        //Ground Check
         _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        //Update Animator
         _anim.SetBool(_isGroundedHash, _isGrounded);
-        //_anim.SetFloat("SpeedX", Mathf.Abs(CurrentMovement.x));
         _anim.SetFloat("SpeedX", Mathf.Abs(Rigidbody.velocity.x));
-
-        _anim.SetFloat("PlayerVelocityX", Mathf.Abs(Rigidbody.velocity.x));
-        Debug.Log(_anim.GetFloat("SpeedX"));
+        if (_isGrounded) Animator.SetBool("isLettingGoLedge", false);
 
         _currentState.UpdateStates();
-
+        JumpLogic();
         PlayLandingImpactVFX();
 
-        JumpLogic();
-
-        //if (IsGrounded) canDetectLedges = true;
-        if (_isGrounded) Animator.SetBool("isLettingGoLedge", false);
         if (_isGrounded) _hasLetGoOfLedge = false;
+
+        //RotateSprite();
     }
 
     void OnMovementInput(InputAction.CallbackContext ctx)
@@ -285,5 +281,18 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawSphere(groundCheck.transform.position, groundCheckRadius);
+    }
+
+    void RotateSprite()
+    {
+        //rotate sprite when moving left and right
+        if (Rigidbody.velocity.x > 0.5f)
+        {
+            transform.localScale = new Vector3(RotationScaleAmount, RotationScaleAmount, transform.localScale.z);
+        }
+        else if (Rigidbody.velocity.x < -0.5f)
+        {
+            transform.localScale = new Vector3(-RotationScaleAmount, RotationScaleAmount, transform.localScale.z);
+        }
     }
 }

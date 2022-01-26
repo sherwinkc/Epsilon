@@ -64,7 +64,17 @@ public class DebugManager : MonoBehaviour
 
         DisplaJumpLogic();
 
+        ReloadScene();
+
         ExitGame();
+    }
+
+    private static void ReloadScene()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("MainLevel");
+        }
     }
 
     private void DisplaJumpLogic()

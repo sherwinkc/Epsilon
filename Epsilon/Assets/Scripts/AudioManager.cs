@@ -13,6 +13,10 @@ public class AudioManager : MonoBehaviour
     public AudioSource playerSFX_Jump;
     public AudioSource playerSFX_Land;
 
+    //Lift
+    public AudioSource liftButton, liftActiveLoop, liftStartStop;
+    public AudioClip liftButtonClip;
+
     void Start()
     {
         
@@ -48,6 +52,30 @@ public class AudioManager : MonoBehaviour
         {
             playerSFX_Land.pitch = Random.Range(pitchRangeLow, pitchRangeHigh);
             playerSFX_Land.Play();
+        }
+    }
+
+    public void Play_LiftButton()
+    {
+        if (liftButton != null)
+        {
+            liftButton.PlayOneShot(liftButtonClip, 0.5f);
+        }
+    }
+
+    public void PlayLiftLoop()
+    {
+        if (liftActiveLoop != null)
+        {
+            liftActiveLoop.Play();
+        }
+    }
+
+    public void PlayLiftStop()
+    {
+        if (liftStartStop != null)
+        {
+            liftStartStop.Play();
         }
     }
 }

@@ -93,11 +93,11 @@ public class PlayerRunState : PlayerBaseState
     void RotateSprite()
     {
         //rotate sprite when moving left and right
-        if (_ctx.CurrentMovement.x > 0.1)
+        if (_ctx.Rigidbody.velocity.x > 0.5f)
         {
             _ctx.transform.localScale = new Vector3(_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
         }
-        else if (_ctx.CurrentMovement.x < -0.1)
+        else if (_ctx.Rigidbody.velocity.x < -0.5f)
         {
             _ctx.transform.localScale = new Vector3(-_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
         }
