@@ -46,4 +46,14 @@ public class PlayerStateFactory
     {
         return new PlayerLetGoLedgeState(_context, this);
     }
+
+    public PlayerBaseState Mount()
+    {
+        return new PlayerMountState(_context, this);
+    }
+
+    public PlayerBaseState Jetpack()
+    {
+        return new PlayerJetpackState(_context, this);
+    }
 }

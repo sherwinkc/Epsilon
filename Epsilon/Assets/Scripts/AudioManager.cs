@@ -17,6 +17,9 @@ public class AudioManager : MonoBehaviour
     public AudioSource liftButton, liftActiveLoop, liftStartStop;
     public AudioClip liftButtonClip;
 
+    //Jetpack
+    [SerializeField] AudioSource jetpackStart, jetpackLoop;
+
     void Start()
     {
         
@@ -76,6 +79,22 @@ public class AudioManager : MonoBehaviour
         if (liftStartStop != null)
         {
             liftStartStop.Play();
+        }
+    }
+
+    public void PlayJetpackStart()
+    {
+        if (jetpackStart != null)
+        {
+            jetpackStart.Play();
+        }
+    }
+
+    public void PlayJetpackLoop()
+    {
+        if (jetpackStart != null)
+        {
+            jetpackLoop.Play();
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.U2D.Animation;
 
 public class PlayerRunState : PlayerBaseState
 {
@@ -47,6 +48,11 @@ public class PlayerRunState : PlayerBaseState
         RotateSprite();
     }
 
+    public override void FixedUpdate() 
+    { 
+
+    }
+
     public override void ExitState()
     {
 
@@ -64,6 +70,10 @@ public class PlayerRunState : PlayerBaseState
         else if (!_ctx.IsMovementPressed)
         {
             SwitchState(_factory.Idle());
+        }
+        else if (_ctx.isThrustPressed)
+        {
+            SwitchState(_factory.Jetpack());
         }
 
         /*else if(_ctx.IsMovementPressed)

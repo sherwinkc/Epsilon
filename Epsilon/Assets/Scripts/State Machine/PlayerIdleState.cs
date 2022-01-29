@@ -21,13 +21,20 @@ public class PlayerIdleState : PlayerBaseState
         _ctx.FootEmission.Stop();
 
         //Deceleration when idling from moving
-        _ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x * _ctx.decelerationRate, _ctx.Rigidbody.velocity.y); 
+        if(_ctx.IsGrounded) _ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x * _ctx.decelerationRate, _ctx.Rigidbody.velocity.y);
+
+        if (!_ctx.IsGrounded) _ctx.Rigidbody.velocity = Vector2.zero;
     }
 
     public override void UpdateState()
     {
         CheckSwitchStates();
         RotateSprite();
+    }
+
+    public override void FixedUpdate()
+    {
+
     }
 
     public override void ExitState()
@@ -48,7 +55,11 @@ public class PlayerIdleState : PlayerBaseState
         else if (_ctx.IsMovementPressed && _ctx.IsGrounded) // if movement pressed and grounded run
         {
             SwitchState(_factory.Run());
-        }      
+        }
+        else if (_ctx.isThrustPressed)
+        {
+            SwitchState(_factory.Jetpack());
+        }
     }
 
     void RotateSprite()

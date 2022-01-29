@@ -22,6 +22,8 @@ public abstract class PlayerBaseState
 
     public abstract void UpdateState();
 
+    public abstract void FixedUpdate();
+
     public abstract void ExitState();
 
     public abstract void CheckSwitchStates();
@@ -29,6 +31,11 @@ public abstract class PlayerBaseState
     public void UpdateStates()
     {
         UpdateState();
+    }
+
+    public void UpdateFixedUpdateStates()
+    {
+        FixedUpdate();
     }
 
     protected void SwitchState(PlayerBaseState newState)

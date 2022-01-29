@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerJumpState : PlayerBaseState
 {
     //constructor functions
-    // passes cocnrete state arguments directly to the base state constructor
+    // passes concrete state arguments directly to the base state constructor
 
     public PlayerJumpState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) 
         : base(currentContext, playerStateFactory) {
@@ -25,11 +25,16 @@ public class PlayerJumpState : PlayerBaseState
         CheckSwitchStates();
         _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * (_ctx.MoveSpeed * _ctx.InAirSpeedMultiplier)), _ctx.Rigidbody.velocity.y);
 
-        ShootRaycastsForLedgeClimb();
+        ShootRaycastsForClimbing();
         RaycastDebug();
         RotateSprite();
 
         //Debug.Log(_ctx.ledgeInfo.gameObject.tag);
+    }
+
+    public override void FixedUpdate()
+    {
+
     }
 
     public override void ExitState()
@@ -44,13 +49,21 @@ public class PlayerJumpState : PlayerBaseState
         {
             SwitchState(_factory.Idle());
         }
+        else if (_ctx.Rigidbody.velocity.y < -1f && !_ctx._hasLetGoOfLedge)
+        {
+            SwitchState(_factory.Falling());
+        }
+        else if (_ctx.isKneeTouchingLedge)
+        {
+            SwitchState(_factory.Mount());
+        } 
         else if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
         {  
             SwitchState(_factory.LedgeHang());
         }
-        else if (_ctx.Rigidbody.velocity.y < -1f && !_ctx._hasLetGoOfLedge)
+        else if (_ctx.isThrustPressed)
         {
-            SwitchState(_factory.Falling());
+            SwitchState(_factory.Jetpack());
         }
     }
 
@@ -70,16 +83,20 @@ public class PlayerJumpState : PlayerBaseState
         _ctx.Animator.SetTrigger(_ctx.JumpHash);
     }
 
-    private void ShootRaycastsForLedgeClimb()
+    private void ShootRaycastsForClimbing()
     {
         _ctx.isTouchingWall = Physics2D.Raycast(_ctx.wallCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
-        _ctx.isTouchingLedge = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);        
+        _ctx.isTouchingLedge = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
+
+        _ctx.isKneeTouchingLedge = Physics2D.Raycast(_ctx.kneeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance * 0.5f, _ctx.whatIsGround);
     }
 
     private void RaycastDebug()
     {
         Debug.DrawRay(_ctx.wallCheck.position, (Vector2.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
         Debug.DrawRay(_ctx.ledgeCheck.position, (Vector2.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
+
+        Debug.DrawRay(_ctx.kneeCheck.position, (Vector2.right * _ctx.wallCheckDistance * 0.8f) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
     }
 
     void RotateSprite()

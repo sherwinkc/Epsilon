@@ -21,6 +21,11 @@ public class PlayerLedgeHangState : PlayerBaseState
         CheckSwitchStates();
     }
 
+    public override void FixedUpdate()
+    {
+
+    }
+
     public override void ExitState()
     {
 

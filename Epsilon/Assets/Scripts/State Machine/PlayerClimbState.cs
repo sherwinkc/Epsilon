@@ -19,6 +19,11 @@ public class PlayerClimbState : PlayerBaseState
         CheckSwitchStates();
     }
 
+    public override void FixedUpdate()
+    {
+
+    }
+
     public override void ExitState()
     {
         _ctx.camManager.isCameraTargetPlayer = true;

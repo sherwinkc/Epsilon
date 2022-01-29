@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.U2D.Animation;
 
 public class PlayerFunctions : MonoBehaviour
 {
@@ -38,5 +39,15 @@ public class PlayerFunctions : MonoBehaviour
     public void ActivatePlayerCameraDuringClimb()
     {
         if(camManager != null) camManager.isCameraTargetPlayer = true;
+    }
+
+    public void PlayJetpackStart()
+    {
+        if (audioManager != null) audioManager.PlayJetpackStart();
+    }
+
+    public void PlayJetpackLoop()
+    {
+        if (audioManager != null) audioManager.PlayJetpackLoop();
     }
 }

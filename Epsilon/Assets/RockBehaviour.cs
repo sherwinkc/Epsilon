@@ -4,11 +4,27 @@ using UnityEngine;
 
 public class RockBehaviour : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    [SerializeField] bool isDecreasingInSize = false;
+    [SerializeField] float sizeDecreaseRate = 0.5f;
+
+    private void Update()
+    {
+        if (transform.localScale.x < 0)
+        {
+            Destroy(this.gameObject);
+        }
+
+        if (isDecreasingInSize)
+        {
+            transform.localScale = new Vector2(transform.localScale.x - sizeDecreaseRate, transform.localScale.y - sizeDecreaseRate);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            GetComponent<Rigidbody2D>().AddForce(transform.right * 100f);
+            isDecreasingInSize = true;
         }
     }
 }

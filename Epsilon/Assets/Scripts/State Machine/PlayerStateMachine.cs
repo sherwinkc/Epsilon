@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.U2D.Animation;
 using UnityEngine.InputSystem;
 
 public class PlayerStateMachine : MonoBehaviour
@@ -77,6 +78,12 @@ public class PlayerStateMachine : MonoBehaviour
     //public bool ledgeDetected = false;
     //public bool canDetectLedges = true;
 
+    [Header("Mount")]
+    public Transform kneeCheck;
+    public bool isKneeTouchingLedge;
+    public float mountPositionOffsetX;
+    public float mountPositionOffsetY = 1.5f;
+
     [Header("Acceleration & Deacceleration")]
     //public float fHorizontalDamping;
     //public float fHorizontalVelocity;
@@ -84,6 +91,14 @@ public class PlayerStateMachine : MonoBehaviour
     public float accelerationRate = 10f;
     [Tooltip("Default = 0.2f. Lower values result in faster deceleration")]
     public float decelerationRate = 0.5f;
+
+    [Header("Jetpack")]
+    public ParticleSystem _jetEmission;
+    public bool isThrustPressed = false;
+    public float thrustForce;
+    public float thrustCounter;
+    public float thrustTime;
+
 
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
@@ -111,7 +126,7 @@ public class PlayerStateMachine : MonoBehaviour
     //public bool IsFalling { get { return _isFalling;  } }
     #endregion
 
-    private void Awake()
+    void Awake()
     {
         _playerControls = new PlayerControls();
         _rb = GetComponent<Rigidbody2D>();
@@ -130,6 +145,9 @@ public class PlayerStateMachine : MonoBehaviour
         _playerControls.Gameplay.Jump.started += ctx => OnJump();
         _playerControls.Gameplay.Jump.canceled += ctx => OnJumpReleased();
 
+        _playerControls.Gameplay.Jetpack.started += ctx => Thrust();
+        _playerControls.Gameplay.Jetpack.canceled += ctx => ThrustReleased();
+
         //Converting strings to hash is more performant
         _isGroundedHash = Animator.StringToHash("isGrounded");
         _isRunningHash = Animator.StringToHash("isRunning");
@@ -145,7 +163,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     void Start()
     {
-
+        //experimenting - swapping out sprites programmatically
+        //GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOff"); //TODO strings bad slow
     }
 
     void Update()
@@ -161,9 +180,18 @@ public class PlayerStateMachine : MonoBehaviour
         JumpLogic();
         PlayLandingImpactVFX();
 
-        if (_isGrounded) _hasLetGoOfLedge = false;
+        if (_isGrounded) 
+        {
+            _hasLetGoOfLedge = false;
+            //thrustCounter = thrustTime;
+        } 
 
         //RotateSprite();
+    }
+
+    void FixedUpdate()
+    {
+        _currentState.UpdateFixedUpdateStates();
     }
 
     void OnMovementInput(InputAction.CallbackContext ctx)
@@ -192,7 +220,6 @@ public class PlayerStateMachine : MonoBehaviour
 
         jumpBufferCounter = jumpBufferTime;
     }
-
     void OnJumpReleased()
     {
         _isJumpPressed = false;
@@ -218,22 +245,15 @@ public class PlayerStateMachine : MonoBehaviour
             coyoteTimeCounter = coyoteTime;
         }
     }
-    //default way
-    /*void OnJump(InputAction.CallbackContext ctx)
-    {
-        _isJumpPressed = ctx.ReadValueAsButton();  
-    }*/
 
-    /*void OnJump()
+    private void Thrust()
     {
-        _isJumpPressed = true;
+        isThrustPressed = true;
     }
-
-    void OnJumpReleased()
+    private void ThrustReleased()
     {
-        //canJump = true;
-        _isJumpPressed = false;
-    }*/
+        isThrustPressed = false;
+    }
 
     private void PlayLandingImpactVFX()
     {

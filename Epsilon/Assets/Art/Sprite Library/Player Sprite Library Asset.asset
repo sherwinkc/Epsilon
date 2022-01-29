@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf7c34a0dc4e6348bea04faa70406ee, type: 3}
+  m_Name: Player Sprite Library Asset
+  m_EditorClassIdentifier: 
+  m_Labels:
+  - m_Name: Player
+    m_Hash: -1615495341
+    m_CategoryList:
+    - m_Name: JetpackOn
+      m_Hash: 840169301
+      m_Sprite: {fileID: 21300000, guid: 0450adb3eed8edd44a4f72412f6b28be, type: 3}
+    - m_Name: JetpackOff
+      m_Hash: -1522985116
+      m_Sprite: {fileID: 21300000, guid: 21b4467878a928648bd333d58985a9ee, type: 3}
+    - m_Name: LowHealth
+      m_Hash: -2044772471
+      m_Sprite: {fileID: 21300000, guid: 6e757bbbc5de1514aa59ef4e8e34ea6e, type: 3}

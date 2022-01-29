@@ -25,6 +25,11 @@ public class PlayerLetGoLedgeState : PlayerBaseState
         RotateSprite();
     }
 
+    public override void FixedUpdate()
+    {
+
+    }
+
     public override void ExitState()
     {
 
