@@ -56,4 +56,9 @@ public class PlayerFunctions : MonoBehaviour
     {
         if (audioManager != null) audioManager.PlayJetpackLoop();
     }
+
+    public void StopJetpackLoop()
+    {
+        if (audioManager != null) audioManager.PlayJetpackLoop();
+    }
 }

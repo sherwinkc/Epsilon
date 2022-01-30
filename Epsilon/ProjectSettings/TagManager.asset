@@ -15,6 +15,7 @@ TagManager:
   - ClimbableMesh
   - MovingPlatform
   - Lift
+  - ButtonTarget
   layers:
   - Default
   - TransparentFX

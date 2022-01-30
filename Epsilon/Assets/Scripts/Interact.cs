@@ -1,12 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D.IK;
 
 public class Interact : MonoBehaviour
 {
     AudioManager audioManager;
     [SerializeField] GameObject lift;
-    public bool isLiftOn = false;
+
+    [SerializeField] bool isCloseEnoughToLiftButton;
+    [SerializeField] bool isMovingTowardButton, isMovingAwayFromButton;
+    [SerializeField] float moveSpeedMultiplier = 10f;
+    public bool isLiftOn = false;   
+
+    //IK
+    [SerializeField] Solver2D solver;
 
     private void Awake()
     {
@@ -15,53 +23,61 @@ public class Interact : MonoBehaviour
 
     void Start()
     {
-        
+        solver.weight = 0f;
     }
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton2)) && isCloseEnoughToLiftButton)
         {
             isLiftOn = !isLiftOn;
         }
+
+        HandleIKMoveSpeed();
     }
 
-    /*private void OnTriggerEnter2D(Collider2D collision)
+    private void HandleIKMoveSpeed()
     {
-        if (isLiftOn)
+        if (isMovingTowardButton && solver.weight <= 1f)
         {
-            if (collision.gameObject.CompareTag("Lift"))
-            {
-                Debug.Log(collision.transform.name);
-                collision.GetComponentInParent<LiftManager>().isMoving = true;
-            }
+            solver.weight += Time.deltaTime * moveSpeedMultiplier;
         }
-    }*/
+        else if (isMovingAwayFromButton && solver.weight >= 0f)
+        {
+            solver.weight -= Time.deltaTime * moveSpeedMultiplier;
+        }
+    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (isLiftOn)
+        LiftManager liftManager = collision.GetComponentInParent<LiftManager>();
+        Transform buttonTarget = collision.GetComponentInChildren<Transform>();
+
+        if (collision.gameObject.CompareTag("Lift"))
         {
-            if (collision.gameObject.CompareTag("Lift"))
+            isCloseEnoughToLiftButton = true;
+
+            if (isLiftOn)
             {
-                //Debug.Log(collision.transform.name);
-                if (collision.GetComponentInParent<LiftManager>() != null) collision.GetComponentInParent<LiftManager>().isMoving = true;
-                //if (!audioManager.liftButton.isPlaying) audioManager.Play_LiftButton();
-                if (!audioManager.liftActiveLoop.isPlaying) audioManager.PlayLiftLoop();
-                //if (!audioManager.liftStartStop.isPlaying) audioManager.liftStartStop.Play();
+                if (liftManager != null) liftManager.isMoving = true;
+                isMovingTowardButton = true;
+                isMovingAwayFromButton = false;
             }
-        }
-        else if (!isLiftOn)
-        {
-            if (collision.GetComponentInParent<LiftManager>() != null) collision.GetComponentInParent<LiftManager>().isMoving = false;
-            if (audioManager.liftActiveLoop.isPlaying) audioManager.liftActiveLoop.Stop();
-            audioManager.liftStartStop.Stop();
-        }
+            else if (!isLiftOn)
+            {
+                if (liftManager != null) liftManager.isMoving = false;
+                isMovingTowardButton = false;
+                isMovingAwayFromButton = true;
+            }
+        }        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-
+        isCloseEnoughToLiftButton = false;
+        solver.weight = 0f;
+        isMovingTowardButton = false;
+        isMovingAwayFromButton = false;
     }
 }

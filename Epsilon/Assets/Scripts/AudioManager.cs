@@ -86,15 +86,29 @@ public class AudioManager : MonoBehaviour
     {
         if (jetpackStart != null)
         {
-            jetpackStart.Play();
+            //jetpackStart.Play();
         }
     }
 
     public void PlayJetpackLoop()
     {
-        if (jetpackStart != null)
+        if (jetpackLoop != null)
         {
-            jetpackLoop.Play();
+            if (!jetpackLoop.isPlaying)
+            {
+                jetpackLoop.Play();
+            }
+        }
+    }
+
+    public void StopJetpackLoop()
+    {
+        if (jetpackLoop != null)
+        {
+            if (jetpackLoop.isPlaying)
+            {
+                jetpackLoop.Stop();
+            }
         }
     }
 }

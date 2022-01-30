@@ -71,7 +71,7 @@ public class DebugManager : MonoBehaviour
 
     private static void ReloadScene()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton7))
         {
             SceneManager.LoadScene("MainLevel");
         }
@@ -98,7 +98,7 @@ public class DebugManager : MonoBehaviour
 
     private static void ExitGame()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton6))
         {
             Application.Quit();
         }

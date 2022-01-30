@@ -10,6 +10,7 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerControls _playerControls;
     Rigidbody2D _rb;
     Animator _anim;
+    public AudioManager audioManager;
 
     public LedgeInformation ledgeInfo;
 
@@ -132,6 +133,7 @@ public class PlayerStateMachine : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         ledgeInfo = GetComponent<LedgeInformation>();
+        audioManager = FindObjectOfType<AudioManager>();
 
         //camera test
         camManager = FindObjectOfType<CameraManager>();
@@ -266,7 +268,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void TeleportPlayerAfterLedgeClimb()
     {
-        if(ledgeInfo._currentEndPoint.position != null) transform.position = ledgeInfo._currentEndPoint.position;
+        if(ledgeInfo._currentEndPoint != null) transform.position = ledgeInfo._currentEndPoint.position;
         Rigidbody.simulated = true;
         Rigidbody.velocity = Vector2.zero;
     }
