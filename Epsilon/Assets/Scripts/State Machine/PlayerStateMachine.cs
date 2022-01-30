@@ -100,7 +100,6 @@ public class PlayerStateMachine : MonoBehaviour
     public float thrustCounter;
     public float thrustTime;
 
-
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }

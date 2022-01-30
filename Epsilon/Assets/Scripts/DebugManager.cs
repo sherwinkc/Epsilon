@@ -29,6 +29,15 @@ public class DebugManager : MonoBehaviour
     public TMP_Text jumpBuffer;
     public TMP_Text coyoteTime;
 
+    [Header("Jetpack")]
+    public TMP_Text jetpackTime;
+
+    [Header("Collisions")]
+    public TMP_Text collidingWith;
+    public TMP_Text standingOn;
+
+
+
     private void Awake()
     {
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
@@ -60,9 +69,15 @@ public class DebugManager : MonoBehaviour
         if (currentInputX != null) currentInputX.text = "Current Input X: " + playerStateMachine.CurrentMovement.x.ToString("F2");
         if (currentInputY != null) currentInputY.text = "Current Input Y: " + playerStateMachine.CurrentMovement.y.ToString("F2");
 
+        if (jetpackTime != null) jetpackTime.text = "Jetpack Time: " + playerStateMachine.thrustCounter.ToString("F2");
+
+        //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
+
+
+
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
 
-        DisplaJumpLogic();
+        DisplayJumpLogic();
 
         ReloadScene();
 
@@ -77,7 +92,7 @@ public class DebugManager : MonoBehaviour
         }
     }
 
-    private void DisplaJumpLogic()
+    private void DisplayJumpLogic()
     {
         if (jumpBuffer != null)
         {

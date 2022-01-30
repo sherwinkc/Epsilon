@@ -15,6 +15,7 @@ public class Interact : MonoBehaviour
 
     //IK
     [SerializeField] Solver2D solver;
+    [SerializeField] IKManager2D ikManager;
 
     private void Awake()
     {
@@ -52,7 +53,7 @@ public class Interact : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         LiftManager liftManager = collision.GetComponentInParent<LiftManager>();
-        Transform buttonTarget = collision.GetComponentInChildren<Transform>();
+        //Transform buttonTarget = collision.GetComponentInChildren<Transform>();
 
         if (collision.gameObject.CompareTag("Lift"))
         {
@@ -63,12 +64,16 @@ public class Interact : MonoBehaviour
                 if (liftManager != null) liftManager.isMoving = true;
                 isMovingTowardButton = true;
                 isMovingAwayFromButton = false;
+
+                //audioManager.liftActiveLoop.Play();
             }
             else if (!isLiftOn)
             {
                 if (liftManager != null) liftManager.isMoving = false;
                 isMovingTowardButton = false;
                 isMovingAwayFromButton = true;
+
+                //audioManager.liftActiveLoop.Stop();
             }
         }        
     }

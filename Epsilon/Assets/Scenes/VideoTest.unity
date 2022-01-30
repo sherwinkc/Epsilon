@@ -988,7 +988,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 51, y: -31}
+  m_AnchoredPosition: {x: 51, y: -31.000061}
   m_SizeDelta: {x: 59.922363, y: 68.30005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1012250518
@@ -2145,8 +2145,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2140998988}
   - component: {fileID: 2140998987}
+  - component: {fileID: 2140998989}
   m_Layer: 0
-  m_Name: Space Riddle 20 secs
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2162,9 +2163,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 48d75e1de5e95fa41ba2bd0124425ef4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1e41fa8c943572841b74047a68594e5d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2262,3 +2263,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!164 &2140998989
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140998986}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: -1000
+  m_RoomHF: 0
+  m_DecayTime: 8.39
+  m_DecayHFRatio: 1.39
+  m_ReflectionsLevel: -115
+  m_ReverbLevel: 985
+  m_ReverbDelay: 0.03
+  m_Diffusion: 100
+  m_Density: 100
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 24

@@ -70,7 +70,7 @@ public class AudioManager : MonoBehaviour
     {
         if (liftActiveLoop != null)
         {
-            liftActiveLoop.Play();
+            if(!liftActiveLoop.isPlaying) liftActiveLoop.Play();
         }
     }
 
@@ -78,7 +78,7 @@ public class AudioManager : MonoBehaviour
     {
         if (liftStartStop != null)
         {
-            liftStartStop.Play();
+            //liftStartStop.Stop();
         }
     }
 

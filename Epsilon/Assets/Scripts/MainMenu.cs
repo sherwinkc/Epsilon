@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
@@ -9,29 +10,57 @@ public class MainMenu : MonoBehaviour
 
     public AudioSource menuMusic;
 
+    GameObject currentSelected, previouslySelected;
+
     // Start is called before the first frame update
     void Start()
     {
+        //Cursor.visible = false;
         menuMusic.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Return))
+        HandleButtonScalingWhenSelected();
+
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             menuMusic.Stop();
             SceneManager.LoadScene(levelToLoad);
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             menuMusic.Stop();
             Application.Quit();
         }
+
+        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
+        {
+            menuMusic.Stop();
+            SceneManager.LoadScene(levelToLoad);
+        }
     }
 
-    public void PressEnter()
+    private void HandleButtonScalingWhenSelected()
+    {
+        currentSelected = EventSystem.current.currentSelectedGameObject;
+
+        currentSelected.gameObject.transform.localScale = new Vector3(1.1f, 1f, 1f);
+
+        if (previouslySelected != null)
+        {
+            if (currentSelected != previouslySelected)
+            {
+                previouslySelected.gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
+            }
+        }
+
+        previouslySelected = currentSelected;
+    }
+
+    public void StartGame()
     {
         menuMusic.Stop();
         SceneManager.LoadScene(levelToLoad);

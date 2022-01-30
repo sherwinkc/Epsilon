@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 2
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -208,7 +208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 658221497}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: PressEnter
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -572,8 +572,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
+    m_Mode: 2
+    m_WrapAround: 1
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -682,7 +682,7 @@ Transform:
   m_Children:
   - {fileID: 61706705}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &529162800
 GameObject:
@@ -1139,7 +1139,7 @@ Transform:
   - {fileID: 817304604}
   - {fileID: 989956844}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &666341302
 GameObject:
@@ -1187,7 +1187,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &817304603
 GameObject:
@@ -1365,7 +1365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 6280357}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &989619185
@@ -1380,7 +1380,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &989956843
 GameObject:
@@ -1543,7 +1543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 51, y: -31}
+  m_AnchoredPosition: {x: 51, y: -30.999939}
   m_SizeDelta: {x: 59.922363, y: 68.30005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1012250518
@@ -2062,7 +2062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 2
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -2095,7 +2095,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 658221497}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: QuitButton
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2265,7 +2265,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.12880918}
-  m_AnchoredPosition: {x: -0.010620117, y: 30}
+  m_AnchoredPosition: {x: -0.010620117, y: 30.000061}
   m_SizeDelta: {x: -0.021484, y: -16.5897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1253683712
@@ -2419,8 +2419,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 494, y: 257}
-  m_SizeDelta: {x: 319.6548, y: -758.0863}
+  m_AnchoredPosition: {x: 326.91, y: 236.889}
+  m_SizeDelta: {x: 653.83, y: -717.864}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1399724444
 Animator:
@@ -2488,8 +2488,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 111.35
-  m_fontSizeBase: 111.35
+  m_fontSize: 150
+  m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2524,7 +2524,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -335.52435, y: -120.26691, z: 504.69644, w: -98.64644}
+  m_margin: {x: -0.9650879, y: 0.4003754, z: -1.3773193, w: -1.2656555}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2880,7 +2880,7 @@ Transform:
   - {fileID: 2112062053}
   - {fileID: 625751275}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1884102529
 GameObject:
