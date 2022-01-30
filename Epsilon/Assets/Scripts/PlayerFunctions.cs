@@ -18,7 +18,13 @@ public class PlayerFunctions : MonoBehaviour
 
     public void PlayFootsteps()
     {
-        if(audioManager != null) audioManager.Play_playerSFX_footsteps_sand();
+        if (Mathf.Abs(playerStateMachine.Rigidbody.velocity.x) > 0.01f)
+        {
+            if (audioManager != null)
+            {
+                audioManager.Play_playerSFX_footsteps_sand();
+            }
+        }
     }
 
     public void PlayJumpSFX()
