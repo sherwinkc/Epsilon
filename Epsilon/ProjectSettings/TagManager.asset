@@ -59,6 +59,12 @@ TagManager:
   - name: Background1
     uniqueID: 2033000091
     locked: 0
+  - name: Layer2
+    uniqueID: 2079704005
+    locked: 0
+  - name: Layer1
+    uniqueID: 2178641771
+    locked: 0
   - name: Blur
     uniqueID: 1666759961
     locked: 0
@@ -70,6 +76,9 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 731452835
+    locked: 0
+  - name: Layer-1
+    uniqueID: 454505475
     locked: 0
   - name: Shadow
     uniqueID: 3815221785

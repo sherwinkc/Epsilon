@@ -47,7 +47,10 @@ public class MainMenu : MonoBehaviour
     {
         currentSelected = EventSystem.current.currentSelectedGameObject;
 
-        currentSelected.gameObject.transform.localScale = new Vector3(1.1f, 1f, 1f);
+        if (currentSelected != null)
+        {
+            currentSelected.gameObject.transform.localScale = new Vector3(1.05f, 1.2f, 1f);
+        }
 
         if (previouslySelected != null)
         {
