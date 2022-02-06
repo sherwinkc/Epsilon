@@ -165,7 +165,7 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         //experimenting - swapping out sprites programmatically
-        //GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOff"); //TODO strings bad slow
+        GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOff"); //TODO strings bad slow
     }
 
     void Update()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DebugManager : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class DebugManager : MonoBehaviour
     public TMP_Text collidingWith;
     public TMP_Text standingOn;
 
+    [SerializeField] Image constellationImage;
 
 
     private void Awake()
@@ -53,6 +55,8 @@ public class DebugManager : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
+
+        constellationImage.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -73,6 +77,18 @@ public class DebugManager : MonoBehaviour
 
         //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
 
+        //Turn off Constellation Image //TODO move to pause menu
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (!constellationImage.isActiveAndEnabled)
+            {
+                constellationImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                constellationImage.gameObject.SetActive(false);
+            }
+        }
 
 
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
