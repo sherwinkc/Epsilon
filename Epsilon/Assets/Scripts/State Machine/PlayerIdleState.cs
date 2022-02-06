@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,7 +44,7 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.Rigidbody.velocity.y < -3f && _ctx._hasLetGoOfLedge) //if y velocity is negative switch to falling
+        if (_ctx.Rigidbody.velocity.y < -2f) //if y velocity is negative switch to falling
         {
             SwitchState(_factory.Falling());
         }
@@ -59,6 +59,10 @@ public class PlayerIdleState : PlayerBaseState
         else if (_ctx.isThrustPressed)
         {
             SwitchState(_factory.Jetpack());
+        }
+        else if (_ctx._hasLetGoOfLedge && _ctx.Rigidbody.velocity.y < -3f)
+        {
+            SwitchState(_factory.Falling());
         }
     }
 

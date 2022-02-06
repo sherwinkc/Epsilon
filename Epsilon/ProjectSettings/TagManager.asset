@@ -16,6 +16,7 @@ TagManager:
   - MovingPlatform
   - Lift
   - ButtonTarget
+  - RoverStopPoint
   layers:
   - Default
   - TransparentFX

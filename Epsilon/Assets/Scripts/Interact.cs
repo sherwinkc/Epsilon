@@ -11,7 +11,8 @@ public class Interact : MonoBehaviour
     [SerializeField] bool isCloseEnoughToLiftButton;
     [SerializeField] bool isMovingTowardButton, isMovingAwayFromButton;
     [SerializeField] float moveSpeedMultiplier = 10f;
-    public bool isLiftOn = false;   
+    public bool isLiftOn = false;
+    public bool isLiftLoopPlaying = false;
 
     //IK
     [SerializeField] Solver2D solver;
@@ -61,20 +62,51 @@ public class Interact : MonoBehaviour
 
             if (isLiftOn)
             {
+                //move lift
+                if (liftManager != null) liftManager.isMoving = true;
+
+                //play audio
+                if (!isLiftLoopPlaying)
+                {
+                    audioManager.liftActiveLoop.Play();
+                    isLiftLoopPlaying = true;
+                }
+            }
+            else if (!isLiftOn)
+            {
+                //stop lift
+                if (liftManager != null) liftManager.isMoving = false;
+
+                //stop audio
+                if (isLiftLoopPlaying)
+                {
+                    audioManager.liftActiveLoop.Stop();
+                    isLiftLoopPlaying = false;
+                }
+            }
+
+
+            /*if (isLiftOn)
+            {
                 if (liftManager != null) liftManager.isMoving = true;
                 isMovingTowardButton = true;
                 isMovingAwayFromButton = false;
 
-                //audioManager.liftActiveLoop.Play();
-            }
-            else if (!isLiftOn)
-            {
-                if (liftManager != null) liftManager.isMoving = false;
-                isMovingTowardButton = false;
-                isMovingAwayFromButton = true;
-
-                //audioManager.liftActiveLoop.Stop();
-            }
+                if (!isLiftLoopPlaying)
+                {
+                    audioManager.liftActiveLoop.Play();
+                    isLiftLoopPlaying = true;
+                }
+                else if (!isLiftOn)
+                {
+                    if (liftManager != null) liftManager.isMoving = false;
+                    isMovingTowardButton = false;
+                    isMovingAwayFromButton = true;
+                }
+                
+                audioManager.liftActiveLoop.Stop();
+                isLiftLoopPlaying = false;
+            }*/
         }        
     }
 

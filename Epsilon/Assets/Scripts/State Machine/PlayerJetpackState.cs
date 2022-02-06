@@ -45,7 +45,7 @@ public class PlayerJetpackState : PlayerBaseState
 
         _ctx.thrustCounter = _ctx.thrustTime;
 
-        _ctx.audioManager.StopJetpackLoop();
+        //_ctx.audioManager.StopJetpackLoop();
     }
 
     public override void CheckSwitchStates()

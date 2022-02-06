@@ -38,7 +38,7 @@ public class PlayerVFXManager : MonoBehaviour
 
         if (hitInfo)
         {
-            if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Ground")) ;
+            if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 if (hitInfo) spriteRenderer = hitInfo.transform.GetComponent<SpriteRenderer>();
                 if (hitInfo) spriteShapeRenderer = hitInfo.transform.GetComponent<SpriteShapeRenderer>();

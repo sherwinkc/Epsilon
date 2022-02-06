@@ -5,25 +5,27 @@ using UnityEngine;
 public class PlayDistance : MonoBehaviour
 {
     public AudioSource audioSource;
-    public PlayerMovement playerMovement;
+    public PlayerStateMachine player;
+    public Transform objectTransform;
 
     public float distanceFromSound = 6;
 
     public float maxVolume;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        playerMovement = FindObjectOfType<PlayerMovement>();
+        player = FindObjectOfType<PlayerStateMachine>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector2.Distance(transform.position, playerMovement.transform.position) < distanceFromSound)
+        if (Vector2.Distance(objectTransform.transform.position, player.transform.position) < distanceFromSound)
         {
-            audioSource.volume += Time.deltaTime/30;
+            audioSource.volume += Time.deltaTime / 50f;
+
             if(audioSource.volume >= maxVolume)
             {
                 audioSource.volume = maxVolume;
@@ -33,7 +35,7 @@ public class PlayDistance : MonoBehaviour
         {
             if(audioSource.volume > 0)
             {
-                audioSource.volume -= Time.deltaTime/15;
+                audioSource.volume -= Time.deltaTime / 50f;
             }
 
             if (audioSource.volume <= 0)

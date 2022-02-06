@@ -20,6 +20,12 @@ public class AudioManager : MonoBehaviour
     //Jetpack
     [SerializeField] AudioSource jetpackStart, jetpackLoop;
 
+    //VO
+    public AudioSource helper;
+
+    //Rover
+    public AudioSource roverEngine;
+
     void Start()
     {
         
@@ -74,14 +80,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayLiftStop()
-    {
-        if (liftStartStop != null)
-        {
-            //liftStartStop.Stop();
-        }
-    }
-
     public void PlayJetpackStart()
     {
         if (jetpackStart != null)
@@ -110,5 +108,15 @@ public class AudioManager : MonoBehaviour
                 jetpackLoop.Stop();
             }
         }
+    }
+
+    public void PlayHelperAudio()
+    {
+        if(!helper.isPlaying) helper.Play();
+    }
+
+    public void PlayRoverEngine()
+    {
+        if (roverEngine != null) roverEngine.Play();
     }
 }
