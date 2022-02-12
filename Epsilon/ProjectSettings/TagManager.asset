@@ -17,6 +17,7 @@ TagManager:
   - Lift
   - ButtonTarget
   - RoverStopPoint
+  - DeathBox
   layers:
   - Default
   - TransparentFX

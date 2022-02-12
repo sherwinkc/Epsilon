@@ -4,10 +4,19 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 public class DebugManager : MonoBehaviour
 {
     PlayerStateMachine playerStateMachine;
+
+    [Header("Toggle Debug")]
+    public bool displayPlayerState;
+    public bool displayerPlayerVelocity;
+
+        public bool displayMovementInput;
+    public bool displayJumpLogic;
+    public bool displayJetpackValues;
 
     [Header("Change Game Time")]
     public bool timeScaleOn = false;
@@ -37,6 +46,11 @@ public class DebugManager : MonoBehaviour
     public TMP_Text collidingWith;
     public TMP_Text standingOn;
 
+    [Header("Timeline / Cinematics")]
+    public PlayableDirector[] playableDirectors;
+    public bool timelinesAreActive = true;
+
+    //TODO Move this
     [SerializeField] Image constellationImage;
 
 
@@ -57,25 +71,28 @@ public class DebugManager : MonoBehaviour
         }
 
         constellationImage.gameObject.SetActive(false);
+
+        playableDirectors = FindObjectsOfType<PlayableDirector>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerStateDebug != null) playerStateDebug.text = "Player State: " + playerStateMachine.CurrentState.ToString();
+        if (displayPlayerState) DisplayPlayerState();
 
-        //Previous State
-        //if (previousStateDebug != null) previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
+        if (displayerPlayerVelocity) DisplayPlayerVelocity();
 
-        if (playerVelocityX != null) playerVelocityX.text = "Player Velocity X: " + playerStateMachine.Rigidbody.velocity.x.ToString("F2");
-        if (playerVelocityY != null) playerVelocityY.text = "Player Velocity Y: " + playerStateMachine.Rigidbody.velocity.y.ToString("F2");
+        if (displayMovementInput) DisplayCurrentMovementInputValues();
 
-        if (currentInputX != null) currentInputX.text = "Current Input X: " + playerStateMachine.CurrentMovement.x.ToString("F2");
-        if (currentInputY != null) currentInputY.text = "Current Input Y: " + playerStateMachine.CurrentMovement.y.ToString("F2");
+        if (displayJumpLogic) DisplayJumpLogic();
 
-        if (jetpackTime != null) jetpackTime.text = "Jetpack Time: " + playerStateMachine.thrustCounter.ToString("F2");
+        if (displayJetpackValues) DisplayJetpackValues();
 
-        //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
+        CheckPlayableDirectorsEnabled();
+
+        ReloadScene();
+        ExitGame();
+
 
         //Turn off Constellation Image //TODO move to pause menu
         if (Input.GetKeyDown(KeyCode.I))
@@ -90,14 +107,53 @@ public class DebugManager : MonoBehaviour
             }
         }
 
+        //Previous State
+        //if (previousStateDebug != null) previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
+
+        //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
+
 
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
+    }
 
-        DisplayJumpLogic();
+    private void CheckPlayableDirectorsEnabled()
+    {
+        if (timelinesAreActive)
+        {
+            for (int i = 0; i < playableDirectors.Length; i++)
+            {
+                playableDirectors[i].enabled = true;
+            }
+        }
+        else if (!timelinesAreActive)
+        {
+            for (int i = 0; i < playableDirectors.Length; i++)
+            {
+                playableDirectors[i].enabled = false;
+            }
+        }
+    }
 
-        ReloadScene();
+    private void DisplayJetpackValues()
+    {
+        if (jetpackTime != null) jetpackTime.text = "Jetpack Time: " + playerStateMachine.thrustCounter.ToString("F2");
+    }
 
-        ExitGame();
+    private void DisplayCurrentMovementInputValues()
+    {
+        if (currentInputX != null) currentInputX.text = "Current Input X: " + playerStateMachine.CurrentMovement.x.ToString("F2");
+        if (currentInputY != null) currentInputY.text = "Current Input Y: " + playerStateMachine.CurrentMovement.y.ToString("F2");
+    }
+
+    private void DisplayPlayerVelocity()
+    {
+        if (playerVelocityX != null) playerVelocityX.text = "Player Velocity X: " + playerStateMachine.Rigidbody.velocity.x.ToString("F2");
+        if (playerVelocityY != null) playerVelocityY.text = "Player Velocity Y: " + playerStateMachine.Rigidbody.velocity.y.ToString("F2");
+    }
+
+    private void DisplayPlayerState()
+    {
+        if (playerStateDebug != null) playerStateDebug.text = "Player State: " + playerStateMachine.CurrentState.ToString();
     }
 
     private static void ReloadScene()
@@ -133,11 +189,6 @@ public class DebugManager : MonoBehaviour
         {
             Application.Quit();
         }
-    }
-
-    private void ShowPlayerState()
-    {
-
     }
 
     private void SetTimeScale()

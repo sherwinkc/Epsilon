@@ -16,6 +16,8 @@ public class PlayerJetpackState : PlayerBaseState
 ;
         _ctx._jetEmission.Play();
         _ctx.FootEmission.Stop();
+
+        _ctx.canJetpack = false;
     }
 
     public override void UpdateState()
@@ -25,7 +27,7 @@ public class PlayerJetpackState : PlayerBaseState
         //_ctx.Rigidbody.AddForce(new Vector2(0f, _ctx.thrust), ForceMode2D.Force);
         //_ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x, _ctx.Rigidbody.velocity.y + 0.15f);
 
-        _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx.MoveSpeed), _ctx.Rigidbody.velocity.y);
+        _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx._jetPackMoveSpeed), _ctx.Rigidbody.velocity.y);
 
         _ctx.thrustCounter -= Time.deltaTime;
 
@@ -43,7 +45,7 @@ public class PlayerJetpackState : PlayerBaseState
 
         _ctx._jetEmission.Stop();
 
-        _ctx.thrustCounter = _ctx.thrustTime;
+        //_ctx.thrustCounter = _ctx.thrustTime;
 
         //_ctx.audioManager.StopJetpackLoop();
     }
@@ -58,11 +60,10 @@ public class PlayerJetpackState : PlayerBaseState
         {
             SwitchState(_factory.Falling());
         }
-
-        /*else if (!_ctx.isThrustPressed)
+        else if (!_ctx.isThrustPressed)
         {
             SwitchState(_factory.Idle());
-        }*/
+        }
 
         /*if (_ctx.IsGrounded)
         {

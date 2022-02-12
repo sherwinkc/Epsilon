@@ -56,4 +56,9 @@ public class PlayerStateFactory
     {
         return new PlayerJetpackState(_context, this);
     }
+
+    public PlayerDeathState Death()
+    {
+        return new PlayerDeathState(_context, this);
+    }
 }

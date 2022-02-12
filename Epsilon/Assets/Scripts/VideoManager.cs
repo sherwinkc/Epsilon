@@ -19,6 +19,8 @@ public class VideoManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.JoystickButton7))
         {
+            AudioSource levelMusic = FindObjectOfType<AudioSource>();
+            if (levelMusic != null) levelMusic.Stop();
             SceneManager.LoadScene(levelToLoad);
         }
     }

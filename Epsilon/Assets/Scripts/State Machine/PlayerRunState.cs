@@ -57,6 +57,7 @@ public class PlayerRunState : PlayerBaseState
     {
 
     }
+
     public override void CheckSwitchStates()
     {
         if (_ctx.IsJumpPressed)
@@ -81,6 +82,7 @@ public class PlayerRunState : PlayerBaseState
             SwitchState(_factory.Run());
         }*/
     }
+
     private void ClampVelocity()
     {
         if (_ctx.Rigidbody.velocity.x > 4f)
@@ -93,6 +95,7 @@ public class PlayerRunState : PlayerBaseState
             _ctx.Rigidbody.velocity = new Vector2(-4f, _ctx.Rigidbody.velocity.y);
         }
     }
+
     private void EmitFootstepVFX()
     {
         if (!_ctx.FootEmission.isPlaying && _ctx.IsGrounded && Mathf.Abs(_ctx.Rigidbody.velocity.x) > 1f)
@@ -100,6 +103,7 @@ public class PlayerRunState : PlayerBaseState
             _ctx.FootEmission.Play();
         }
     }
+
     void RotateSprite()
     {
         //rotate sprite when moving left and right
@@ -112,4 +116,14 @@ public class PlayerRunState : PlayerBaseState
             _ctx.transform.localScale = new Vector3(-_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
         }
     }
+
+    /*private void OnTriggerEnter2D(BoxCollider2D collision)
+    {
+        Debug.Log(collision.gameObject.name);
+
+        if (collision.gameObject.CompareTag("Spikes"))
+        {
+            Debug.Log("Dead");
+        }
+    }*/
 }

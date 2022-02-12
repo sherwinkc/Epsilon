@@ -1,6 +1,6 @@
 //Not MonoBehaviour
 //abstract mean we cannot create an instance of this class, we only create instances of the concrete states idle, run etc
-using UnityEngine; //remove this if not debugging.
+//using UnityEngine; //remove this if not debugging.
 
 public abstract class PlayerBaseState 
 {

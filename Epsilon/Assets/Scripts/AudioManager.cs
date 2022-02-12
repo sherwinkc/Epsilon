@@ -26,6 +26,9 @@ public class AudioManager : MonoBehaviour
     //Rover
     public AudioSource roverEngine;
 
+    //Death
+    public AudioSource deathCrunch;
+
     void Start()
     {
         
@@ -118,5 +121,10 @@ public class AudioManager : MonoBehaviour
     public void PlayRoverEngine()
     {
         if (roverEngine != null) roverEngine.Play();
+    }
+
+    public void PlayDeathCrunchSFX()
+    {
+        if (deathCrunch != null) deathCrunch.Play();
     }
 }

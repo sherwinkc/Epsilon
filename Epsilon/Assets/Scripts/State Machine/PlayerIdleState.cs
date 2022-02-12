@@ -44,7 +44,11 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.Rigidbody.velocity.y < -2f) //if y velocity is negative switch to falling
+        if (_ctx.isThrustPressed && _ctx.canJetpack)
+        {
+            SwitchState(_factory.Jetpack());
+        }
+        else if (_ctx.Rigidbody.velocity.y < -2f) //if y velocity is negative switch to falling
         {
             SwitchState(_factory.Falling());
         }
@@ -55,14 +59,14 @@ public class PlayerIdleState : PlayerBaseState
         else if (_ctx.IsMovementPressed && _ctx.IsGrounded) // if movement pressed and grounded run
         {
             SwitchState(_factory.Run());
-        }
-        else if (_ctx.isThrustPressed)
-        {
-            SwitchState(_factory.Jetpack());
-        }
+        }        
         else if (_ctx._hasLetGoOfLedge && _ctx.Rigidbody.velocity.y < -3f)
         {
             SwitchState(_factory.Falling());
+        }
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            SwitchState(_factory.Death());
         }
     }
 

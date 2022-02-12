@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.U2D.Animation;
 using UnityEngine.InputSystem;
+//using UnityEngine.SceneManagement;
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerStateMachine : MonoBehaviour
     Rigidbody2D _rb;
     Animator _anim;
     public AudioManager audioManager;
+    public RagdollController ragdoll;
 
     public LedgeInformation ledgeInfo;
 
@@ -95,10 +97,16 @@ public class PlayerStateMachine : MonoBehaviour
 
     [Header("Jetpack")]
     public ParticleSystem _jetEmission;
+    public float _jetPackMoveSpeed = 2f;
     public bool isThrustPressed = false;
     public float thrustForce;
     public float thrustCounter;
     public float thrustTime;
+    public bool canJetpack = true;
+
+    [Header("Player Health & Death")]
+    public int playerHealth = 1;
+    public float deadTimeBeforeRestart = 5f;
 
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
@@ -133,6 +141,7 @@ public class PlayerStateMachine : MonoBehaviour
         _anim = GetComponent<Animator>();
         ledgeInfo = GetComponent<LedgeInformation>();
         audioManager = FindObjectOfType<AudioManager>();
+        ragdoll = FindObjectOfType<RagdollController>();
 
         //camera test
         camManager = FindObjectOfType<CameraManager>();
@@ -146,7 +155,7 @@ public class PlayerStateMachine : MonoBehaviour
         _playerControls.Gameplay.Jump.started += ctx => OnJump();
         _playerControls.Gameplay.Jump.canceled += ctx => OnJumpReleased();
 
-        _playerControls.Gameplay.Jetpack.started += ctx => Thrust();
+        _playerControls.Gameplay.Jetpack.performed += ctx => Thrust();
         _playerControls.Gameplay.Jetpack.canceled += ctx => ThrustReleased();
 
         //Converting strings to hash is more performant
@@ -165,13 +174,14 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         //experimenting - swapping out sprites programmatically
-        GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOff"); //TODO strings bad slow
+        GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOn"); //TODO strings bad slow
     }
 
     void Update()
     {
         //Ground Check
         _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+
         //Update Animator
         _anim.SetBool(_isGroundedHash, _isGrounded);
         _anim.SetFloat("SpeedX", Mathf.Abs(Rigidbody.velocity.x));
@@ -184,7 +194,10 @@ public class PlayerStateMachine : MonoBehaviour
         if (_isGrounded) 
         {
             _hasLetGoOfLedge = false;
-            //thrustCounter = thrustTime;
+
+
+            canJetpack = true;
+            thrustCounter = thrustTime;
         } 
 
         //RotateSprite();
@@ -221,11 +234,13 @@ public class PlayerStateMachine : MonoBehaviour
 
         jumpBufferCounter = jumpBufferTime;
     }
+
     void OnJumpReleased()
     {
         _isJumpPressed = false;
         Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, Rigidbody.velocity.y * jumpReleaseDampener);
     }
+
     private void JumpLogic()
     {
         jumpBufferCounter -= Time.deltaTime;
@@ -251,6 +266,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         isThrustPressed = true;
     }
+
     private void ThrustReleased()
     {
         isThrustPressed = false;
@@ -270,6 +286,23 @@ public class PlayerStateMachine : MonoBehaviour
         if(ledgeInfo._currentEndPoint != null) transform.position = ledgeInfo._currentEndPoint.position;
         Rigidbody.simulated = true;
         Rigidbody.velocity = Vector2.zero;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Player hit collider: " + collision.gameObject.name);
+
+        //if we hit spikes, change, update state and enter death state
+        if (collision.gameObject.CompareTag("Spikes"))
+        {
+            _currentState = _states.Death();
+            _currentState.EnterState();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Debug.Log("Player exit collider: " + collision.gameObject.name);
     }
 
     //make player a child of moving platforms
@@ -304,7 +337,7 @@ public class PlayerStateMachine : MonoBehaviour
         Gizmos.DrawSphere(groundCheck.transform.position, groundCheckRadius);
     }
 
-    void RotateSprite()
+    /*void RotateSprite()
     {
         //rotate sprite when moving left and right
         if (Rigidbody.velocity.x > 0.5f)
@@ -315,5 +348,5 @@ public class PlayerStateMachine : MonoBehaviour
         {
             transform.localScale = new Vector3(-RotationScaleAmount, RotationScaleAmount, transform.localScale.z);
         }
-    }
+    }*/
 }
