@@ -9,14 +9,14 @@ using UnityEngine.Playables;
 public class DebugManager : MonoBehaviour
 {
     PlayerStateMachine playerStateMachine;
+    Collector collector;
 
     [Header("Toggle Debug")]
     public bool displayPlayerState;
     public bool displayerPlayerVelocity;
-
-        public bool displayMovementInput;
+    public bool displayMovementInput;
     public bool displayJumpLogic;
-    public bool displayJetpackValues;
+    public bool displayJetpackValues;    
 
     [Header("Change Game Time")]
     public bool timeScaleOn = false;
@@ -50,6 +50,9 @@ public class DebugManager : MonoBehaviour
     public PlayableDirector[] playableDirectors;
     public bool timelinesAreActive = true;
 
+    [Header("Collectibles")]
+    public TMP_Text orbCount;
+
     //TODO Move this
     [SerializeField] Image constellationImage;
 
@@ -57,6 +60,7 @@ public class DebugManager : MonoBehaviour
     private void Awake()
     {
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
+        collector = FindObjectOfType<Collector>();
     }
 
     void Start()
@@ -90,6 +94,8 @@ public class DebugManager : MonoBehaviour
 
         CheckPlayableDirectorsEnabled();
 
+        DisplayOrbCount();
+
         ReloadScene();
         ExitGame();
 
@@ -116,6 +122,12 @@ public class DebugManager : MonoBehaviour
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
     }
 
+    
+    private void DisplayOrbCount()
+    {
+        if (orbCount != null) orbCount.text = "Orb Count: " + collector.orbs.ToString();
+    }
+    
     private void CheckPlayableDirectorsEnabled()
     {
         if (timelinesAreActive)

@@ -9,6 +9,9 @@ public class PlayerFunctions : MonoBehaviour
     PlayerStateMachine playerStateMachine;
     CameraManager camManager;
 
+    public GameObject powerBeams;
+    public float xOffset, yOffset;
+
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -20,7 +23,7 @@ public class PlayerFunctions : MonoBehaviour
     {
         if (Mathf.Abs(playerStateMachine.Rigidbody.velocity.x) > 0.01f)
         {
-            if (audioManager != null)
+            if (audioManager != null && !playerStateMachine.inCinematic) //Prevents playing footsteps in cutscenes
             {
                 audioManager.Play_playerSFX_footsteps_sand();
             }
@@ -61,4 +64,28 @@ public class PlayerFunctions : MonoBehaviour
     {
         if (audioManager != null) audioManager.PlayJetpackLoop();
     }
+
+    public void TriggerInCinematicState()
+    {
+        playerStateMachine.inCinematic = true;
+    }
+
+    public void StopInCinematicState()
+    {
+        playerStateMachine.inCinematic = false;
+    }
+
+    public void PlayPowerUpSFX()
+    {
+        audioManager.PlayPowerUpSFX();
+    }
+
+    public void SpawnPlayerBeams()
+    {
+
+        Instantiate(powerBeams, new Vector2(playerStateMachine.transform.position.x + xOffset, playerStateMachine.transform.position.y + yOffset), 
+            playerStateMachine.transform.rotation);
+    }
+
+
 }

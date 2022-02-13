@@ -18,6 +18,9 @@ TagManager:
   - ButtonTarget
   - RoverStopPoint
   - DeathBox
+  - StationCam1
+  - Orb
+  - Battery
   layers:
   - Default
   - TransparentFX

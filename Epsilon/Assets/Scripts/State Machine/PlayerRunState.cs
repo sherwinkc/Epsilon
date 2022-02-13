@@ -60,7 +60,11 @@ public class PlayerRunState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.IsJumpPressed)
+        if (_ctx.inCinematic)
+        {
+            SwitchState(_factory.InCinematic());
+        }
+        else if(_ctx.IsJumpPressed)
         {
             SwitchState(_factory.Jump());
         }

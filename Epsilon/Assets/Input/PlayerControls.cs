@@ -62,6 +62,24 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LookUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""eabfdfbd-af22-411a-b381-b35401a1494e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LookDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""edf756cd-688e-4154-8250-0e198eb778c0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -207,6 +225,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Jetpack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be64b8b8-3796-4b0c-8155-cfd1e6ed9879"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c715fea1-0204-443e-8010-57f4accdc5ac"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -219,6 +259,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_Jetpack = m_Gameplay.FindAction("Jetpack", throwIfNotFound: true);
+        m_Gameplay_LookUp = m_Gameplay.FindAction("LookUp", throwIfNotFound: true);
+        m_Gameplay_LookDown = m_Gameplay.FindAction("LookDown", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -282,6 +324,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_Jetpack;
+    private readonly InputAction m_Gameplay_LookUp;
+    private readonly InputAction m_Gameplay_LookDown;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -290,6 +334,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @Jetpack => m_Wrapper.m_Gameplay_Jetpack;
+        public InputAction @LookUp => m_Wrapper.m_Gameplay_LookUp;
+        public InputAction @LookDown => m_Wrapper.m_Gameplay_LookDown;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -311,6 +357,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Jetpack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJetpack;
                 @Jetpack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJetpack;
                 @Jetpack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJetpack;
+                @LookUp.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookUp;
+                @LookUp.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookUp;
+                @LookUp.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookUp;
+                @LookDown.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookDown;
+                @LookDown.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookDown;
+                @LookDown.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLookDown;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -327,6 +379,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Jetpack.started += instance.OnJetpack;
                 @Jetpack.performed += instance.OnJetpack;
                 @Jetpack.canceled += instance.OnJetpack;
+                @LookUp.started += instance.OnLookUp;
+                @LookUp.performed += instance.OnLookUp;
+                @LookUp.canceled += instance.OnLookUp;
+                @LookDown.started += instance.OnLookDown;
+                @LookDown.performed += instance.OnLookDown;
+                @LookDown.canceled += instance.OnLookDown;
             }
         }
     }
@@ -337,5 +395,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnJetpack(InputAction.CallbackContext context);
+        void OnLookUp(InputAction.CallbackContext context);
+        void OnLookDown(InputAction.CallbackContext context);
     }
 }

@@ -108,6 +108,9 @@ public class PlayerStateMachine : MonoBehaviour
     public int playerHealth = 1;
     public float deadTimeBeforeRestart = 5f;
 
+    [Header("Timeline & Cinematics")]
+    public bool inCinematic = false;
+
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -167,6 +170,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         // setup state
         _states = new PlayerStateFactory(this); // passes this PlayerStateMachine instance. PlayerStateFactory is expecting a PlayerStateMachine 
+                
         _currentState = _states.Idle();
         _currentState.EnterState();
     }

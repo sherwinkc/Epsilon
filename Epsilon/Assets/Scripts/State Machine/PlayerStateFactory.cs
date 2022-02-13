@@ -61,4 +61,9 @@ public class PlayerStateFactory
     {
         return new PlayerDeathState(_context, this);
     }
+
+    public PlayerInCinematicState InCinematic()
+    {
+        return new PlayerInCinematicState(_context, this);
+    }
 }

@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
+    //Input
+    PlayerControls controls;
+
     [Header("Player Climbing Camera")]
     public CinemachineVirtualCamera cam1; 
     public CinemachineVirtualCamera camTarget;
@@ -21,11 +25,19 @@ public class CameraManager : MonoBehaviour
     public bool isCameraTargetPlayer = true;
     public bool isFocusingOnHelper;
 
+    private void Awake()
+    {
+        controls = new PlayerControls();
+
+        controls.Gameplay.LookUp.performed += ctx => LookUp();
+        controls.Gameplay.LookUp.canceled += ctx => LookUpReleased();
+        controls.Gameplay.LookDown.performed += ctx => LookDown();
+        controls.Gameplay.LookDown.canceled += ctx => LookDownReleased();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        //cam1.gameObject.SetActive(true);
-
         helperCam.Priority = 10;
     }
 
@@ -33,8 +45,8 @@ public class CameraManager : MonoBehaviour
     void Update()
     {
         SetCamerasDuringLedgeClimb();
-        SetPlayerLookCameras();
 
+        //Debug for Helper cam TODO rework this
         if (Input.GetKeyDown(KeyCode.H))
         {
             helperCam.Priority = 100;
@@ -42,34 +54,56 @@ public class CameraManager : MonoBehaviour
             isFocusingOnHelper = true;
             FindObjectOfType<AudioManager>().PlayHelperAudio(); //TODO audio - this needs to move
         }
-
-        if (Input.GetKeyDown(KeyCode.J))
+        else if (Input.GetKeyDown(KeyCode.J))
         {
             helperCam.Priority = 10;
             cam1.Priority = 100;
             isFocusingOnHelper = false;
         }
+
+        //mouse and keyboard
+        //CheckKeyboardInputs(); //TODO this is overriding the controller inputs
     }
 
-    private void SetPlayerLookCameras()
+    private void CheckKeyboardInputs()
     {
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            camLookUp.Priority = 100;
+            LookUp();
         }
         else
         {
-            camLookUp.Priority = 10;
+            LookUpReleased();
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            camLookDown.Priority = 100;
+            LookDown();
         }
         else
         {
-            camLookDown.Priority = 10;
+            LookDownReleased();
         }
+    }
+
+    private void LookUp()
+    {
+        camLookUp.Priority = 100;
+    }
+
+    private void LookUpReleased()
+    {
+        camLookUp.Priority = 10;
+    }
+
+    private void LookDown()
+    {
+        camLookDown.Priority = 100;
+    }
+
+    private void LookDownReleased()
+    {
+        camLookDown.Priority = 10;
     }
 
     private void SetCamerasDuringLedgeClimb()
@@ -94,5 +128,15 @@ public class CameraManager : MonoBehaviour
                 camTarget.Priority = 100;
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        controls.Gameplay.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Gameplay.Disable();
     }
 }

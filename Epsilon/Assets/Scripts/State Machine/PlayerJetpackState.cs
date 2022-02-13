@@ -52,7 +52,11 @@ public class PlayerJetpackState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.thrustCounter <= 0f)
+        if (_ctx.inCinematic)
+        {
+            SwitchState(_factory.InCinematic());
+        }
+        else if(_ctx.thrustCounter <= 0f)
         {
             SwitchState(_factory.Falling());
         }

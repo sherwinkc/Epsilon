@@ -44,7 +44,11 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.isThrustPressed && _ctx.canJetpack)
+        if (_ctx.inCinematic)
+        {
+            SwitchState(_factory.InCinematic());
+        }
+        else if (_ctx.isThrustPressed && _ctx.canJetpack)
         {
             SwitchState(_factory.Jetpack());
         }
@@ -63,10 +67,6 @@ public class PlayerIdleState : PlayerBaseState
         else if (_ctx._hasLetGoOfLedge && _ctx.Rigidbody.velocity.y < -3f)
         {
             SwitchState(_factory.Falling());
-        }
-        else if (Input.GetKeyDown(KeyCode.K))
-        {
-            SwitchState(_factory.Death());
         }
     }
 

@@ -29,6 +29,10 @@ public class AudioManager : MonoBehaviour
     //Death
     public AudioSource deathCrunch;
 
+    //Collect
+    public AudioSource collectSFX;
+    public AudioSource powerUpSFX;
+
     void Start()
     {
         
@@ -127,4 +131,15 @@ public class AudioManager : MonoBehaviour
     {
         if (deathCrunch != null) deathCrunch.Play();
     }
+
+    public void PlayCollectSFX()
+    {
+        collectSFX.Play();
+    }
+
+    public void PlayPowerUpSFX()
+    {
+        powerUpSFX.Play();
+    }
+
 }

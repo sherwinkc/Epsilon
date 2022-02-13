@@ -29,10 +29,14 @@ public class RoverBehaviour : MonoBehaviour
 
 
         }
-        else if (collision.gameObject.CompareTag("Player"))
+
+        //TODO If player collects all batteries the rover start moving
+
+
+        /*else if (collision.gameObject.CompareTag("Player"))
         {
             canMove = true;
             FindObjectOfType<AudioManager>().roverEngine.Play(); //TODO cache audio manager
-        }
+        }*/
     }
 }
