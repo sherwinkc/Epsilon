@@ -274,6 +274,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void ThrustReleased()
     {
         isThrustPressed = false;
+        if (audioManager != null) audioManager.jetpackLoop.Stop();
     }
 
     private void PlayLandingImpactVFX()

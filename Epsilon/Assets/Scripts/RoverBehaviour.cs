@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class RoverBehaviour : MonoBehaviour
 {
+    [SerializeField] int batteryCount = 0;
+    [SerializeField] int batteriesRequired = 1;
+
     public float moveSpeed = 1f;
+
 
     bool canMove = false;
 
@@ -26,17 +30,19 @@ public class RoverBehaviour : MonoBehaviour
             canMove = false;
             FindObjectOfType<AudioManager>().roverEngine.Stop(); //TODO cache audio manager
             GetComponent<BoxCollider2D>().enabled = false;
-
-
         }
-
-        //TODO If player collects all batteries the rover start moving
-
-
-        /*else if (collision.gameObject.CompareTag("Player"))
+        
+        if (collision.gameObject.CompareTag("Battery"))
         {
+            //Debug.Log("Rover Hit Battery");
             canMove = true;
             FindObjectOfType<AudioManager>().roverEngine.Play(); //TODO cache audio manager
-        }*/
+
+            if (batteryCount >= batteriesRequired)
+            {
+                //TODO Require a battery count
+            }
+            //batteryCount++;
+        }
     }
 }

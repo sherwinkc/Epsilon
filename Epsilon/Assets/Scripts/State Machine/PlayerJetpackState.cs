@@ -18,6 +18,8 @@ public class PlayerJetpackState : PlayerBaseState
         _ctx.FootEmission.Stop();
 
         _ctx.canJetpack = false;
+
+        if (_ctx.audioManager != null) _ctx.audioManager.jetpackLoop.Play();
     }
 
     public override void UpdateState()
@@ -42,6 +44,8 @@ public class PlayerJetpackState : PlayerBaseState
     public override void ExitState()
     {
         _ctx.Animator.SetBool("isJetpacking", false);
+
+        if (_ctx.audioManager != null) _ctx.audioManager.jetpackLoop.Stop();
 
         _ctx._jetEmission.Stop();
 

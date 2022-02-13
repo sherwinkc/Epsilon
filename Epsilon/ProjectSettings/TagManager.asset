@@ -21,6 +21,8 @@ TagManager:
   - StationCam1
   - Orb
   - Battery
+  - Helper
+  - Rover
   layers:
   - Default
   - TransparentFX

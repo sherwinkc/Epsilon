@@ -18,13 +18,17 @@ public class AudioManager : MonoBehaviour
     public AudioClip liftButtonClip;
 
     //Jetpack
-    [SerializeField] AudioSource jetpackStart, jetpackLoop;
+    public AudioSource jetpackStart, jetpackLoop;
 
     //VO
     public AudioSource helper;
 
     //Rover
     public AudioSource roverEngine;
+    public AudioSource roverGreenLightSFX;
+
+    //Helper
+    public AudioSource helperCollectSFX;
 
     //Death
     public AudioSource deathCrunch;
@@ -84,36 +88,6 @@ public class AudioManager : MonoBehaviour
         if (liftActiveLoop != null)
         {
             if(!liftActiveLoop.isPlaying) liftActiveLoop.Play();
-        }
-    }
-
-    public void PlayJetpackStart()
-    {
-        if (jetpackStart != null)
-        {
-            //jetpackStart.Play();
-        }
-    }
-
-    public void PlayJetpackLoop()
-    {
-        if (jetpackLoop != null)
-        {
-            if (!jetpackLoop.isPlaying)
-            {
-                jetpackLoop.Play();
-            }
-        }
-    }
-
-    public void StopJetpackLoop()
-    {
-        if (jetpackLoop != null)
-        {
-            if (jetpackLoop.isPlaying)
-            {
-                jetpackLoop.Stop();
-            }
         }
     }
 

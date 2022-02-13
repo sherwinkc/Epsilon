@@ -50,19 +50,19 @@ public class PlayerFunctions : MonoBehaviour
         if(camManager != null) camManager.isCameraTargetPlayer = true;
     }
 
-    public void PlayJetpackStart()
+    /*public void PlayJetpackStart()
     {
         if (audioManager != null) audioManager.PlayJetpackStart();
-    }
+    }*/
 
     public void PlayJetpackLoop()
     {
-        if (audioManager != null) audioManager.PlayJetpackLoop();
+        if (audioManager != null) audioManager.jetpackLoop.Play();
     }
 
     public void StopJetpackLoop()
     {
-        if (audioManager != null) audioManager.PlayJetpackLoop();
+        if (audioManager != null) audioManager.jetpackLoop.Stop();
     }
 
     public void TriggerInCinematicState()
