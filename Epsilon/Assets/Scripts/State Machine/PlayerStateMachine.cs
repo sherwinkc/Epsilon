@@ -295,7 +295,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Player hit collider: " + collision.gameObject.name);
+        //Debug.Log("Player hit collider: " + collision.gameObject.name);
 
         //if we hit spikes, change, update state and enter death state
         if (collision.gameObject.CompareTag("Spikes"))
@@ -307,7 +307,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Player exit collider: " + collision.gameObject.name);
+        //Debug.Log("Player exit collider: " + collision.gameObject.name);
     }
 
     //make player a child of moving platforms
