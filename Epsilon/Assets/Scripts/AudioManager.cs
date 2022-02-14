@@ -37,6 +37,12 @@ public class AudioManager : MonoBehaviour
     public AudioSource collectSFX;
     public AudioSource powerUpSFX;
 
+    //Button Puzzle
+    public AudioSource puzzleError;
+    public AudioSource puzzleCorrect;
+    public AudioSource puzzleCorrect2;
+
+
     void Start()
     {
         
