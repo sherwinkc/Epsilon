@@ -9,9 +9,12 @@ public class CameraManager : MonoBehaviour
     //Input
     PlayerControls controls;
 
+    [SerializeField] Transform playerTransform;
+
     [Header("Player Climbing Camera")]
     public CinemachineVirtualCamera cam1; 
     public CinemachineVirtualCamera camTarget;
+    public CinemachineTargetGroup targetGroup;
 
     [Header("Player Look Camera")]
     public CinemachineVirtualCamera camLookUp;
@@ -59,7 +62,7 @@ public class CameraManager : MonoBehaviour
             helperCam.Priority = 10;
             cam1.Priority = 100;
             isFocusingOnHelper = false;
-        }
+        }         
 
         //mouse and keyboard
         //CheckKeyboardInputs(); //TODO this is overriding the controller inputs

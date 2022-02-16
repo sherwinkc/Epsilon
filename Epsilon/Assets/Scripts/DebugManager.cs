@@ -197,10 +197,10 @@ public class DebugManager : MonoBehaviour
 
     private static void ExitGame()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton6))
+        /*if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton6))
         {
             Application.Quit();
-        }
+        }*/
     }
 
     private void SetTimeScale()

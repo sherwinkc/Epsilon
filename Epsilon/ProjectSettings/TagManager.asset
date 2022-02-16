@@ -23,6 +23,7 @@ TagManager:
   - Battery
   - Helper
   - Rover
+  - GroupCam
   layers:
   - Default
   - TransparentFX

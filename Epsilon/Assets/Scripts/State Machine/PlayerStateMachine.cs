@@ -329,10 +329,19 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerControls.Gameplay.Enable();
+        EnableGameplayControls();
     }
 
     private void OnDisable()
+    {
+        DisableGameplayControls();
+    }
+    public void EnableGameplayControls()
+    {
+        _playerControls.Gameplay.Enable();
+    }
+
+    public void DisableGameplayControls()
     {
         _playerControls.Gameplay.Disable();
     }
