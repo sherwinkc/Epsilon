@@ -51,7 +51,7 @@ public class PlayerFallingState : PlayerBaseState
         {
             SwitchState(_factory.Idle());
         }
-        else if (_ctx.isThrustPressed && _ctx.thrustCounter > 0)
+        else if (_ctx.isThrustPressed && _ctx.thrustCounter > 0 && _ctx.isJetpackOn)
         {
             SwitchState(_factory.Jetpack());
         }

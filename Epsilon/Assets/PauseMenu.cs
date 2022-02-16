@@ -22,19 +22,39 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && pauseMenuCanvas.gameObject.activeSelf == true)
+        EnableDisablePauseMenu();
+    }
+
+    private void EnableDisablePauseMenu()
+    {
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && pauseMenuCanvas.gameObject.activeSelf == true)
         {
             playerStateMachine.EnableGameplayControls();
             pauseMenuCanvas.gameObject.SetActive(false);
 
             Time.timeScale = 1f; //TODO get rid
         }
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
         {
-            playerStateMachine.DisableGameplayControls();            
+            playerStateMachine.DisableGameplayControls();
             pauseMenuCanvas.gameObject.SetActive(true);
 
             Time.timeScale = 0f; //TODO get rid
-        } 
+        }
+    }
+
+    public void GotoMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("MainLevel");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

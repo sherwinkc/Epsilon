@@ -76,7 +76,7 @@ public class PlayerRunState : PlayerBaseState
         {
             SwitchState(_factory.Idle());
         }
-        else if (_ctx.isThrustPressed)
+        else if (_ctx.isThrustPressed && _ctx.isJetpackOn)
         {
             SwitchState(_factory.Jetpack());
         }

@@ -31,8 +31,8 @@ public class Battery : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Rover"))
         {
-            helper.isPickingUpItem = false;
             helper.isDepositingToRover = false;
+            helper.isCarryingBattery = false;
             audioManager.helperCollectSFX.Play();
             Destroy(this.gameObject);
         }
@@ -40,7 +40,7 @@ public class Battery : MonoBehaviour
         {
             collision.transform.position = helperTransform.transform.position;
             isMovingWithHelper = true;
-
+            helper.isCarryingBattery = true;
             helper.isPickingUpItem = false;
             helper.isDepositingToRover = false;
 

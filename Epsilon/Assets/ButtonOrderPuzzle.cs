@@ -6,19 +6,24 @@ public class ButtonOrderPuzzle : MonoBehaviour
 {
     AudioManager audioManager;
 
-    bool isPuzzleComplete = false;
+    [SerializeField] Animator safeAnimator;
 
-    public bool correctHasPlayed = false;
-    public bool correct1HasPlayed = false;
-    public bool correct2HasPlayed = false;
-    public bool errorHasPlayed = false;
+    bool isPuzzleComplete = false;
+    bool correctHasPlayed = false;
+    bool correct1HasPlayed = false;
+    bool correct2HasPlayed = false;
+    bool errorHasPlayed = false;
 
     public JumpButton[] buttons;
     public SpriteRenderer[] spriteRenderers;
 
+    [SerializeField] GameObject cameraTrigger;
+
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
+
+        if (cameraTrigger != null) cameraTrigger.SetActive(true);
     }
 
     // Update is called once per frame
@@ -98,7 +103,9 @@ public class ButtonOrderPuzzle : MonoBehaviour
                     correct2HasPlayed = true;
                 }
 
+                if (cameraTrigger != null) cameraTrigger.SetActive(false);
                 isPuzzleComplete = true;
+                if (safeAnimator != null) safeAnimator.SetTrigger("Open");
             }
         }       
     }

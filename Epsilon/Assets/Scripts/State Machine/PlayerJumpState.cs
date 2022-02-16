@@ -61,7 +61,7 @@ public class PlayerJumpState : PlayerBaseState
         {  
             SwitchState(_factory.LedgeHang());
         }
-        else if (_ctx.isThrustPressed)
+        else if (_ctx.isThrustPressed && _ctx.isJetpackOn)
         {
             SwitchState(_factory.Jetpack());
         }

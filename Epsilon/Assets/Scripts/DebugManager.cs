@@ -53,10 +53,6 @@ public class DebugManager : MonoBehaviour
     [Header("Collectibles")]
     public TMP_Text orbCount;
 
-    //TODO Move this
-    [SerializeField] Image constellationImage;
-
-
     private void Awake()
     {
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
@@ -73,8 +69,6 @@ public class DebugManager : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
-
-        constellationImage.gameObject.SetActive(false);
 
         playableDirectors = FindObjectsOfType<PlayableDirector>();
     }
@@ -98,20 +92,6 @@ public class DebugManager : MonoBehaviour
 
         ReloadScene();
         ExitGame();
-
-
-        //Turn off Constellation Image //TODO move to pause menu
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            if (!constellationImage.isActiveAndEnabled)
-            {
-                constellationImage.gameObject.SetActive(true);
-            }
-            else
-            {
-                constellationImage.gameObject.SetActive(false);
-            }
-        }
 
         //Previous State
         //if (previousStateDebug != null) previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
@@ -170,7 +150,7 @@ public class DebugManager : MonoBehaviour
 
     private static void ReloadScene()
     {
-        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton7))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("MainLevel");
         }

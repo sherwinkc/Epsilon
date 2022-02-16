@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Experimental.U2D.Animation;
 using UnityEngine.InputSystem;
 //using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerControls _playerControls;
     Rigidbody2D _rb;
     Animator _anim;
+
     public AudioManager audioManager;
     public RagdollController ragdoll;
 
@@ -96,6 +98,7 @@ public class PlayerStateMachine : MonoBehaviour
     public float decelerationRate = 0.5f;
 
     [Header("Jetpack")]
+    public Slider thrustImage;
     public ParticleSystem _jetEmission;
     public float _jetPackMoveSpeed = 2f;
     public bool isThrustPressed = false;
@@ -103,6 +106,8 @@ public class PlayerStateMachine : MonoBehaviour
     public float thrustCounter;
     public float thrustTime;
     public bool canJetpack = true;
+    public bool isJetpackOn = true; //this is for preventing player using jetpack totally
+    public bool isJetpackVisible = true;
 
     [Header("Player Health & Death")]
     public int playerHealth = 1;
@@ -177,8 +182,20 @@ public class PlayerStateMachine : MonoBehaviour
 
     void Start()
     {
+        EnableDisableJetpackSprite();
+    }
+
+    private void EnableDisableJetpackSprite()
+    {
         //experimenting - swapping out sprites programmatically
-        GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOn"); //TODO strings bad slow
+        if (isJetpackVisible)
+        {
+            GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOn"); //TODO strings bad slow        
+        }
+        else
+        {
+            GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOff"); //TODO strings bad slow   
+        }
     }
 
     void Update()
@@ -202,9 +219,10 @@ public class PlayerStateMachine : MonoBehaviour
 
             canJetpack = true;
             thrustCounter = thrustTime;
-        } 
+        }
 
-        //RotateSprite();
+        //UI
+        thrustImage.value = thrustCounter * 100;
     }
 
     void FixedUpdate()

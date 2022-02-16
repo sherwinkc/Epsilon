@@ -2,59 +2,96 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.IK;
+using UnityEngine.UI;
 
 public class Interact : MonoBehaviour
 {
     AudioManager audioManager;
+    HelperMovement helper;
+    Collider2D colliderToPickUp;
+    RoverBehaviour rover;
+
+    [SerializeField] GameObject interactHUD;
+
+    //lift
     [SerializeField] GameObject lift;
-
     [SerializeField] bool isCloseEnoughToLiftButton;
-    [SerializeField] bool isMovingTowardButton, isMovingAwayFromButton;
-    [SerializeField] float moveSpeedMultiplier = 10f;
-    public bool isLiftOn = false;
-    public bool isLiftLoopPlaying = false;
+    [SerializeField] bool isLiftOn = false;
+    [SerializeField] bool isLiftLoopPlaying = false;
 
-    //IK
-    [SerializeField] Solver2D solver;
-    [SerializeField] IKManager2D ikManager;
+    //battery
+    [SerializeField] bool isCloseEnoughToBattery = false;
+
+    //rover
+    [SerializeField] bool isCloseEnoughToRover = false;
+
 
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        helper = FindObjectOfType<HelperMovement>();
+        rover = FindObjectOfType<RoverBehaviour>();
     }
 
     void Start()
     {
-        solver.weight = 0f;
+        interactHUD.SetActive(false);
     }
 
 
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton2)) && isCloseEnoughToLiftButton)
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton2))
         {
-            isLiftOn = !isLiftOn;
-        }
+            //check if close to lift
+            if (isCloseEnoughToLiftButton)
+            {
+                isLiftOn = !isLiftOn;
+            }
 
-        HandleIKMoveSpeed();
-    }
+            //check if close to battery
+            else if (isCloseEnoughToBattery)
+            {
+                helper.objectToPickUp = colliderToPickUp.gameObject;
+                //helper.objectToPickUp.GetComponent<Collider2D>().enabled = false;
+                helper.isPickingUpItem = true;
+                isCloseEnoughToBattery = false;
+                interactHUD.SetActive(false);
+            }
 
-    private void HandleIKMoveSpeed()
-    {
-        if (isMovingTowardButton && solver.weight <= 1f)
-        {
-            solver.weight += Time.deltaTime * moveSpeedMultiplier;
-        }
-        else if (isMovingAwayFromButton && solver.weight >= 0f)
-        {
-            solver.weight -= Time.deltaTime * moveSpeedMultiplier;
-        }
+            //check if close enough to rover && holding a battery
+            else if (isCloseEnoughToRover && helper.isCarryingBattery)
+            {
+                //helper.objectToPickUp = colliderToPickUp.gameObject;
+                helper.isDepositingToRover = true;
+                isCloseEnoughToRover = false;
+                interactHUD.SetActive(false);
+            }
+        } 
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        HandleLiftLogic(collision);
+
+        if (collision.gameObject.CompareTag("Battery") && !helper.isCarryingBattery)
+        {
+            isCloseEnoughToBattery = true;
+            colliderToPickUp = collision;
+            interactHUD.SetActive(true);
+        }
+
+        if (collision.gameObject.CompareTag("Rover") && !rover.canMove && helper.isCarryingBattery)
+        {
+            isCloseEnoughToRover= true;
+            interactHUD.SetActive(true);
+            //colliderToPickUp = collision;
+        }
+    }
+
+    private void HandleLiftLogic(Collider2D collision)
+    {
         LiftManager liftManager = collision.GetComponentInParent<LiftManager>();
-        //Transform buttonTarget = collision.GetComponentInChildren<Transform>();
 
         if (collision.gameObject.CompareTag("Lift"))
         {
@@ -84,37 +121,14 @@ public class Interact : MonoBehaviour
                     isLiftLoopPlaying = false;
                 }
             }
-
-
-            /*if (isLiftOn)
-            {
-                if (liftManager != null) liftManager.isMoving = true;
-                isMovingTowardButton = true;
-                isMovingAwayFromButton = false;
-
-                if (!isLiftLoopPlaying)
-                {
-                    audioManager.liftActiveLoop.Play();
-                    isLiftLoopPlaying = true;
-                }
-                else if (!isLiftOn)
-                {
-                    if (liftManager != null) liftManager.isMoving = false;
-                    isMovingTowardButton = false;
-                    isMovingAwayFromButton = true;
-                }
-                
-                audioManager.liftActiveLoop.Stop();
-                isLiftLoopPlaying = false;
-            }*/
-        }        
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         isCloseEnoughToLiftButton = false;
-        solver.weight = 0f;
-        isMovingTowardButton = false;
-        isMovingAwayFromButton = false;
+        isCloseEnoughToBattery = false;
+        isCloseEnoughToRover = false;
+        interactHUD.SetActive(false);
     }
 }

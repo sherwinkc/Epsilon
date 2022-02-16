@@ -48,7 +48,7 @@ public class PlayerIdleState : PlayerBaseState
         {
             SwitchState(_factory.InCinematic());
         }
-        else if (_ctx.isThrustPressed && _ctx.canJetpack)
+        else if (_ctx.isThrustPressed && _ctx.canJetpack && _ctx.isJetpackOn)
         {
             SwitchState(_factory.Jetpack());
         }

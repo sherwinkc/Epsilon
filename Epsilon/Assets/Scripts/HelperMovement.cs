@@ -5,18 +5,21 @@ using UnityEngine;
 public class HelperMovement : MonoBehaviour
 {
     Vector2 destination;
-    [SerializeField] GameObject destinationTransform;
-    [SerializeField] GameObject objectToPickUp;
+    [SerializeField] GameObject idleDestinationTransform;
+
+    //Pickup
+    public GameObject objectToPickUp;
     [SerializeField] GameObject roverPosition;
 
+    //move speed
     [Tooltip("Lower numbers result in a longer easing time")]
     [SerializeField] float moveSpeed;
     [SerializeField] float movePickupSpeed = 0.1f;
 
     public bool isPickingUpItem = false;
     public bool isDepositingToRover = false;
+    public bool isCarryingBattery = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         
@@ -24,15 +27,15 @@ public class HelperMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
+        /*if (Input.GetKeyDown(KeyCode.V))
         {
             isPickingUpItem = !isPickingUpItem;
-        }
+        }*/
 
-        if (Input.GetKeyDown(KeyCode.B))
+        /*if (Input.GetKeyDown(KeyCode.B))
         {
             isDepositingToRover = !isDepositingToRover;
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -55,8 +58,8 @@ public class HelperMovement : MonoBehaviour
     private void StayWithPlayerLerpFunction()
     {
         //poisiton above player head
-        destination.x = destinationTransform.transform.position.x;
-        destination.y = destinationTransform.transform.position.y;
+        destination.x = idleDestinationTransform.transform.position.x;
+        destination.y = idleDestinationTransform.transform.position.y;
         transform.position = Vector3.Lerp(transform.position, destination, moveSpeed * Time.deltaTime);
     }
 }

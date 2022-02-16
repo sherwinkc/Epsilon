@@ -8,6 +8,9 @@ public class StationCamera : MonoBehaviour
     public CinemachineVirtualCamera mainPlayerCam;
     public CinemachineVirtualCamera stationCam;
 
+    //TODO disable trigger when puzzle is complete
+    //[SerializeField] bool disableTriggerOncePuzzleIsComplete;
+
     void Start()
     {
         

@@ -10,7 +10,7 @@ public class RoverBehaviour : MonoBehaviour
     public float moveSpeed = 1f;
 
 
-    bool canMove = false;
+    public bool canMove = false;
 
     void Start()
     {
