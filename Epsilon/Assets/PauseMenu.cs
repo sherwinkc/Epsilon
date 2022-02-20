@@ -45,11 +45,13 @@ public class PauseMenu : MonoBehaviour
 
     public void GotoMainMenu()
     {
+        Time.timeScale = 1f; //TODO get rid
         SceneManager.LoadScene("MainMenu");
     }
 
     public void Restart()
     {
+        Time.timeScale = 1f; //TODO get rid
         SceneManager.LoadScene("MainLevel");
     }
 

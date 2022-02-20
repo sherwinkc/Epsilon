@@ -14,6 +14,8 @@ public class PlayerDeathState : PlayerBaseState
         _ctx.StartCoroutine(Die());
 
         _ctx.audioManager.PlayDeathCrunchSFX();
+
+        _ctx.ActivateDeathCam();
     }
 
     public override void UpdateState()
@@ -32,6 +34,10 @@ public class PlayerDeathState : PlayerBaseState
         _ctx.ragdoll.EnableRagdoll();
 
         yield return new WaitForSeconds(_ctx.deadTimeBeforeRestart);
+
+        _ctx.FadeScreen();
+
+        yield return new WaitForSeconds(0.5f);
 
         string scene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(scene);

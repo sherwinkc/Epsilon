@@ -328,6 +328,21 @@ public class PlayerStateMachine : MonoBehaviour
         //Debug.Log("Player exit collider: " + collision.gameObject.name);
     }
 
+    public void FadeScreen()
+    {
+        ScreenFadeManager screenFadeManager = FindObjectOfType<ScreenFadeManager>();
+
+        if (screenFadeManager != null)
+        {
+            screenFadeManager.TurnOnAnimatorAndFadeOut();
+        }
+    }
+
+    public void ActivateDeathCam()
+    {
+        FindObjectOfType<CameraManager>().deathCam.Priority = 500;
+    }
+
     //make player a child of moving platforms
     private void OnCollisionEnter2D(Collision2D collision)
     {

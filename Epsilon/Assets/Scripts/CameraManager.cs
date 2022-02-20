@@ -28,6 +28,8 @@ public class CameraManager : MonoBehaviour
     public bool isCameraTargetPlayer = true;
     public bool isFocusingOnHelper;
 
+    public CinemachineVirtualCamera deathCam;
+
     private void Awake()
     {
         controls = new PlayerControls();
@@ -41,7 +43,7 @@ public class CameraManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        helperCam.Priority = 10;
+        
     }
 
     // Update is called once per frame

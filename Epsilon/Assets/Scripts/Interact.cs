@@ -96,6 +96,7 @@ public class Interact : MonoBehaviour
         if (collision.gameObject.CompareTag("Lift"))
         {
             isCloseEnoughToLiftButton = true;
+            interactHUD.SetActive(true);
 
             if (isLiftOn)
             {
@@ -129,6 +130,7 @@ public class Interact : MonoBehaviour
         isCloseEnoughToLiftButton = false;
         isCloseEnoughToBattery = false;
         isCloseEnoughToRover = false;
+        interactHUD.SetActive(false);
         interactHUD.SetActive(false);
     }
 }

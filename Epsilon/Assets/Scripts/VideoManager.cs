@@ -8,6 +8,14 @@ public class VideoManager : MonoBehaviour
     [SerializeField] string levelToLoad;
     [SerializeField] float waitTimeToLoadLevel = 25f;
 
+    ScreenFadeManager screenFadeManager;
+    [SerializeField] float timeToLoadGame = 0.25f;
+
+    private void Awake()
+    {
+        screenFadeManager = FindObjectOfType<ScreenFadeManager>();   
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,16 +25,25 @@ public class VideoManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.JoystickButton7))
+        if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.Return))
         {
-            AudioSource levelMusic = FindObjectOfType<AudioSource>();
-            if (levelMusic != null) levelMusic.Stop();
-            SceneManager.LoadScene(levelToLoad);
+            StartCoroutine(StartGameCoroutine());
         }
     }
 
     void LoadNextScene()
     {
+        StartCoroutine(StartGameCoroutine());
+    }
+
+    private IEnumerator StartGameCoroutine()
+    {
+        screenFadeManager.TurnOnAnimatorAndFadeOut();
+
+        yield return new WaitForSeconds(timeToLoadGame);
+
+        AudioSource levelMusic = FindObjectOfType<AudioSource>();
+        if (levelMusic != null) levelMusic.Stop();
         SceneManager.LoadScene(levelToLoad);
     }
 }
