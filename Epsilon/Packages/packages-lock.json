@@ -1,11 +1,5 @@
 {
   "dependencies": {
-    "com.traggett.unityspriteshaders": {
-      "version": "file:C:/Users/sherw/Desktop/DoF/UnitySpriteShaders-master",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {}
-    },
     "com.unity.2d.animation": {
       "version": "5.0.10",
       "depth": 0,
