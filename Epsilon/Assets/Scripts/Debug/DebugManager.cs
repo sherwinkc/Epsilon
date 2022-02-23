@@ -53,6 +53,15 @@ public class DebugManager : MonoBehaviour
     [Header("Collectibles")]
     public TMP_Text orbCount;
 
+    [Header("Ledge Climb Checks")]
+    public Animator animator;
+    public TMP_Text ledgeDetectedAnimator;
+    public TMP_Text isTouchingWall;
+    public TMP_Text isTouchingLedge;
+    public TMP_Text isMountDetected;
+    public TMP_Text isLettingGoOfLedgeAnimator;
+
+
     private void Awake()
     {
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
@@ -95,14 +104,18 @@ public class DebugManager : MonoBehaviour
 
         //Previous State
         //if (previousStateDebug != null) previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
-
         //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
-
-
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
+
+        ledgeDetectedAnimator.text = "Ledge Detected: " + animator.GetBool("ledgeDetected").ToString();
+        isTouchingWall.text = "isTouchingWall: " + playerStateMachine.isTouchingWall.ToString();
+        isTouchingLedge.text = "isTouchingLedge: " + playerStateMachine.isTouchingLedge.ToString();
+
+        isMountDetected.text = "Is Mount Detected: " + animator.GetBool("mountDetected").ToString();
+        isLettingGoOfLedgeAnimator.text = "Is Letting Go Of Ledge: " + animator.GetBool("isLettingGoLedge").ToString();
     }
 
-    
+
     private void DisplayOrbCount()
     {
         if (orbCount != null) orbCount.text = "Orb Count: " + collector.orbs.ToString();

@@ -52,11 +52,7 @@ public class PlayerJumpState : PlayerBaseState
         else if (_ctx.Rigidbody.velocity.y < -1f && !_ctx._hasLetGoOfLedge)
         {
             SwitchState(_factory.Falling());
-        }
-        else if (_ctx.isKneeTouchingLedge)
-        {
-            SwitchState(_factory.Mount());
-        } 
+        }  
         else if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
         {  
             SwitchState(_factory.LedgeHang());
@@ -65,6 +61,11 @@ public class PlayerJumpState : PlayerBaseState
         {
             SwitchState(_factory.Jetpack());
         }
+
+        /*else if (_ctx.isKneeTouchingLedge)
+        {
+            SwitchState(_factory.Mount());
+        }*/
     }
 
     void HandleJump()
@@ -88,7 +89,7 @@ public class PlayerJumpState : PlayerBaseState
         _ctx.isTouchingWall = Physics2D.Raycast(_ctx.wallCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
         _ctx.isTouchingLedge = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
 
-        _ctx.isKneeTouchingLedge = Physics2D.Raycast(_ctx.kneeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance * 0.5f, _ctx.whatIsGround);
+        //_ctx.isKneeTouchingLedge = Physics2D.Raycast(_ctx.kneeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance * 0.5f, _ctx.whatIsGround);
     }
 
     private void RaycastDebug()
@@ -96,7 +97,7 @@ public class PlayerJumpState : PlayerBaseState
         Debug.DrawRay(_ctx.wallCheck.position, (Vector2.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
         Debug.DrawRay(_ctx.ledgeCheck.position, (Vector2.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
 
-        Debug.DrawRay(_ctx.kneeCheck.position, (Vector2.right * _ctx.wallCheckDistance * 0.8f) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
+        //Debug.DrawRay(_ctx.kneeCheck.position, (Vector2.right * _ctx.wallCheckDistance * 0.8f) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
     }
 
     void RotateSprite()

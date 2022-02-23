@@ -57,4 +57,10 @@ public class LedgeInformation : MonoBehaviour
             isPlayerRightSideOfMesh = false;
         }
     }
+
+    public void MakeGrabPointsNull()
+    {
+        //_currentGrabPoint = null;
+        //_currentEndPoint = null;
+    }
 }

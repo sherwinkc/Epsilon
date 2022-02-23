@@ -120,7 +120,7 @@ public class PlayerRunState : PlayerBaseState
         Physics2D.queriesStartInColliders = false;
         _ctx.hit = Physics2D.Raycast(_ctx.wallCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.boxCheckDistance, _ctx.whatIsGround);
 
-        if (_ctx.hit.collider != null)
+        if (_ctx.hit.collider != null && _ctx.hit.collider.CompareTag("MovableBox"))
         {
             _ctx.interact.interactHUD.SetActive(true); //TODO - Don't like accessing interact script just to display HUD tooltip 
         }
