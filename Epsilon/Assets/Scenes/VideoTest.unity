@@ -1321,7 +1321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelToLoad: MainLevel
   waitTimeToLoadLevel: 20
-  timeToLoadGame: 0.35
+  timeToLoadGame: 0.45
 --- !u!1 &1251903676
 GameObject:
   m_ObjectHideFlags: 3

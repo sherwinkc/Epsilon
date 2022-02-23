@@ -12,10 +12,10 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerControls _playerControls;
     Rigidbody2D _rb;
     Animator _anim;
-
+    
+    public Interact interact; //TODO - This is for playeridlestate when raycast hits box. Don't like accessing interact script just to display HUD tooltip 
     public AudioManager audioManager;
     public RagdollController ragdoll;
-
     public LedgeInformation ledgeInfo;
 
     // state variables
@@ -116,6 +116,13 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Timeline & Cinematics")]
     public bool inCinematic = false;
 
+    [Header("Push & Pull Boxes")]
+    public GameObject box;
+    public RaycastHit2D hit;
+    public float moveSpeedWhileGrabbing = 2f;
+    public float boxCheckDistance;
+
+
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -150,6 +157,7 @@ public class PlayerStateMachine : MonoBehaviour
         ledgeInfo = GetComponent<LedgeInformation>();
         audioManager = FindObjectOfType<AudioManager>();
         ragdoll = FindObjectOfType<RagdollController>();
+        interact = GetComponent<Interact>();
 
         //camera test
         camManager = FindObjectOfType<CameraManager>();

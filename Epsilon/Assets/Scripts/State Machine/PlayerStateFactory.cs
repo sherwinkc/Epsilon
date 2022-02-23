@@ -66,4 +66,9 @@ public class PlayerStateFactory
     {
         return new PlayerInCinematicState(_context, this);
     }
+
+    public PlayerGrabbingBoxState GrabbingBox()
+    {
+        return new PlayerGrabbingBoxState(_context, this);
+    }
 }

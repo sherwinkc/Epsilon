@@ -6,6 +6,7 @@ public class ScreenFadeManager : MonoBehaviour
 {
     Animator animator;
 
+    //[SerializeField] bool turnOffCompletelyWhenNotRun = false;
 
     private void Awake()
     {
@@ -19,12 +20,13 @@ public class ScreenFadeManager : MonoBehaviour
         if (animator != null) 
         {
             animator.enabled = true;
-            animator.Play("BlackScreenFadeOut");    
+            animator.Play("BlackScreenFadeOut");
         }
     }
 
     public void TurnOffAnimator()
     {
         if (animator != null) animator.enabled = false;
+        //if (turnOffCompletelyWhenNotRun) this.gameObject.SetActive(false);
     }
 }

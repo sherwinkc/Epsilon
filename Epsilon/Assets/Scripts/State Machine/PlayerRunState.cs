@@ -46,6 +46,9 @@ public class PlayerRunState : PlayerBaseState
 
         EmitFootstepVFX();
         RotateSprite();
+
+        ShootRaycastsForBox();
+        RaycastDebug();
     }
 
     public override void FixedUpdate() 
@@ -80,6 +83,10 @@ public class PlayerRunState : PlayerBaseState
         {
             SwitchState(_factory.Jetpack());
         }
+        else if (_ctx.hit.collider != null && _ctx.hit.collider.gameObject.CompareTag("MovableBox") && Input.GetKeyDown(KeyCode.E))
+        {
+            SwitchState(_factory.GrabbingBox());
+        }
 
         /*else if(_ctx.IsMovementPressed)
         {
@@ -106,6 +113,26 @@ public class PlayerRunState : PlayerBaseState
         {
             _ctx.FootEmission.Play();
         }
+    }
+
+    private void ShootRaycastsForBox()
+    {
+        Physics2D.queriesStartInColliders = false;
+        _ctx.hit = Physics2D.Raycast(_ctx.wallCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.boxCheckDistance, _ctx.whatIsGround);
+
+        if (_ctx.hit.collider != null)
+        {
+            _ctx.interact.interactHUD.SetActive(true); //TODO - Don't like accessing interact script just to display HUD tooltip 
+        }
+        else if (_ctx.hit.collider == null)
+        {
+            _ctx.interact.interactHUD.SetActive(false);
+        }
+    }
+
+    private void RaycastDebug()
+    {
+        Debug.DrawRay(_ctx.wallCheck.position, (Vector2.right * _ctx.boxCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.yellow);
     }
 
     void RotateSprite()

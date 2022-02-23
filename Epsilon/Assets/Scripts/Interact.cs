@@ -11,7 +11,7 @@ public class Interact : MonoBehaviour
     Collider2D colliderToPickUp;
     RoverBehaviour rover;
 
-    [SerializeField] GameObject interactHUD;
+    public GameObject interactHUD; 
 
     //lift
     [SerializeField] GameObject lift;

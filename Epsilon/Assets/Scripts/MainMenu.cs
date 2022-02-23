@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
     {
         HandleButtonScalingWhenSelected();
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        /*if (Input.GetKeyDown(KeyCode.Return))
         {
             selectUI.Play();
             StartCoroutine(StartGameCoroutine());
@@ -52,7 +52,7 @@ public class MainMenu : MonoBehaviour
             selectUI.Play();
             menuMusic.Stop();
             SceneManager.LoadScene(levelToLoad);
-        }
+        }*/
     }
 
     private void HandleButtonScalingWhenSelected()
@@ -82,6 +82,16 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         StartCoroutine(StartGameCoroutine());
+    }
+
+    public void SelectedOptions()
+    {
+
+    }
+
+    public void SelectedBack()
+    {
+
     }
 
     public void QuitButton()

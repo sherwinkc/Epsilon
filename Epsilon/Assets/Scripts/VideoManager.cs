@@ -16,13 +16,11 @@ public class VideoManager : MonoBehaviour
         screenFadeManager = FindObjectOfType<ScreenFadeManager>();   
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         Invoke("LoadNextScene", waitTimeToLoadLevel);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.Return))
