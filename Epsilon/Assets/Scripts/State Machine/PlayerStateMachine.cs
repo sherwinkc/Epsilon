@@ -106,8 +106,10 @@ public class PlayerStateMachine : MonoBehaviour
     public float thrustCounter;
     public float thrustTime;
     public bool canJetpack = true;
-    public bool isJetpackOn = true; //this is for preventing player using jetpack totally
+    public bool isJetpackOn = true; //this is used for preventing player using jetpack totally
     public bool isJetpackVisible = true;
+    public bool regenerateThrust;
+    public float regenerateThrustSpeed;
 
     [Header("Player Health & Death")]
     public int playerHealth = 1;
@@ -119,6 +121,7 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Push & Pull Boxes")]
     public GameObject box;
     public RaycastHit2D hit;
+    public Transform wallCheckForBox;
     public float moveSpeedWhileGrabbing = 2f;
     public float boxCheckDistance;
 
@@ -223,13 +226,23 @@ public class PlayerStateMachine : MonoBehaviour
         if (_isGrounded) 
         {
             _hasLetGoOfLedge = false;
-
-
             canJetpack = true;
-            thrustCounter = thrustTime;
+            regenerateThrust = true;
+        }
+        else
+        {
+            regenerateThrust = false; //TODO player only regenerates thrust when on the ground? Yay or Nay
         }
 
-        //UI
+        //Thrust Logic
+        if (regenerateThrust)
+        {
+            if (thrustCounter < thrustTime)
+            {
+                thrustCounter += Time.deltaTime * regenerateThrustSpeed;
+            }
+        }
+
         thrustImage.value = thrustCounter * 100;
     }
 
@@ -245,15 +258,6 @@ public class PlayerStateMachine : MonoBehaviour
         _currentMovement.y = _currentMovementInput.y;
         isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
     }
-
-    /*void OnJump(InputAction.CallbackContext ctx)
-    {
-        if (jumpBufferTime > 0f && IsGrounded)
-        {
-            _isJumpPressed = ctx.ReadValueAsButton();
-        }
-        jumpBuffer = jumpBufferTime;
-    }*/
 
     void OnJump()
     {

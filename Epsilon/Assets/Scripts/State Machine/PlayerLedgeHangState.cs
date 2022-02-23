@@ -33,11 +33,11 @@ public class PlayerLedgeHangState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Joystick1Button3))
+        if (Input.GetKeyDown(KeyCode.W) || _ctx.CurrentMovementInput.y > 0.5f || Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
             SwitchState(_factory.ClimbLedge());
         }
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Joystick1Button1))
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Joystick1Button1) || _ctx.CurrentMovementInput.y < -0.5f)
         {
             _ctx._hasLetGoOfLedge = true;
             SwitchState(_factory.LetGoOfLedge());

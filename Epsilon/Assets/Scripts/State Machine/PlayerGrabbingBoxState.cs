@@ -45,7 +45,7 @@ public class PlayerGrabbingBoxState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Joystick1Button2))
         {
             SwitchState(_factory.Idle());
         }

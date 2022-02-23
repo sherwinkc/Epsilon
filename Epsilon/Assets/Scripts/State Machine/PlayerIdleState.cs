@@ -71,7 +71,7 @@ public class PlayerIdleState : PlayerBaseState
         {
             SwitchState(_factory.Falling());
         }
-        else if (_ctx.hit.collider != null && _ctx.hit.collider.gameObject.CompareTag("MovableBox") && Input.GetKeyDown(KeyCode.E))
+        else if (_ctx.hit.collider != null && _ctx.hit.collider.gameObject.CompareTag("MovableBox") && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Joystick1Button2)))
         {
             SwitchState(_factory.GrabbingBox());
         }
@@ -80,7 +80,7 @@ public class PlayerIdleState : PlayerBaseState
     private void ShootRaycastsForBox()
     {
         Physics2D.queriesStartInColliders = false;
-        _ctx.hit = Physics2D.Raycast(_ctx.wallCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.boxCheckDistance, _ctx.whatIsGround);
+        _ctx.hit = Physics2D.Raycast(_ctx.wallCheckForBox.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.boxCheckDistance, _ctx.whatIsGround);
 
         if (_ctx.hit.collider != null && _ctx.hit.collider.CompareTag("MovableBox"))
         { 
@@ -94,7 +94,7 @@ public class PlayerIdleState : PlayerBaseState
 
     private void RaycastDebug()
     {
-        Debug.DrawRay(_ctx.wallCheck.position, (Vector2.right * _ctx.boxCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.yellow);
+        Debug.DrawRay(_ctx.wallCheckForBox.position, (Vector2.right * _ctx.boxCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.yellow);
     }
 
     void RotateSprite()

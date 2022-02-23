@@ -7,6 +7,7 @@ public class ButtonOrderPuzzle : MonoBehaviour
     AudioManager audioManager;
 
     [SerializeField] Animator safeAnimator;
+    [SerializeField] float timeToReset = 0.5f;
 
     bool isPuzzleComplete = false;
     bool correctHasPlayed = false;
@@ -48,7 +49,7 @@ public class ButtonOrderPuzzle : MonoBehaviour
                 spriteRenderers[0].color = Color.red;
                 spriteRenderers[1].color = Color.red;
                 spriteRenderers[2].color = Color.red;
-                Invoke("ResetColors", 1f);
+                Invoke("ResetColors", timeToReset);
                 if (!errorHasPlayed)
                 {
                     audioManager.puzzleError.Play();
@@ -62,7 +63,7 @@ public class ButtonOrderPuzzle : MonoBehaviour
                 spriteRenderers[0].color = Color.red;
                 spriteRenderers[1].color = Color.red;
                 spriteRenderers[2].color = Color.red;
-                Invoke("ResetColors", 1f);
+                Invoke("ResetColors", timeToReset);
                 if (!errorHasPlayed)
                 {
                     audioManager.puzzleError.Play();
@@ -76,7 +77,7 @@ public class ButtonOrderPuzzle : MonoBehaviour
                 spriteRenderers[0].color = Color.red;
                 spriteRenderers[1].color = Color.red;
                 spriteRenderers[2].color = Color.red;
-                Invoke("ResetColors", 1f);
+                Invoke("ResetColors", timeToReset);
                 if (!errorHasPlayed)
                 {
                     audioManager.puzzleError.Play();
