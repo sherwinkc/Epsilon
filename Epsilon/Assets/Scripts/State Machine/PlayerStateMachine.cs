@@ -227,11 +227,14 @@ public class PlayerStateMachine : MonoBehaviour
         {
             _hasLetGoOfLedge = false;
             canJetpack = true;
-            regenerateThrust = true;
+            StopCoroutine(DelayThrustRegen());
+            StartCoroutine(DelayThrustRegen());
+
         }
         else
         {
             regenerateThrust = false; //TODO player only regenerates thrust when on the ground? Yay or Nay
+            StopCoroutine(DelayThrustRegen());
         }
 
         //Thrust Logic
@@ -305,6 +308,13 @@ public class PlayerStateMachine : MonoBehaviour
     {
         isThrustPressed = false;
         if (audioManager != null) audioManager.jetpackLoop.Stop();
+    }
+
+    private IEnumerator DelayThrustRegen()
+    {
+        yield return new WaitForSeconds(1f);
+
+        regenerateThrust = true;
     }
 
     private void PlayLandingImpactVFX()
