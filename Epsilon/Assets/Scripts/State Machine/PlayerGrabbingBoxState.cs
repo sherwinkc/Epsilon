@@ -18,7 +18,9 @@ public class PlayerGrabbingBoxState : PlayerBaseState
         boxComponents.enabled = true;
         boxComponents.connectedBody = this._ctx.GetComponent<Rigidbody2D>();
 
-        _ctx.Animator.SetBool("isPushing", true);
+        _ctx.Animator.SetBool("isGrabbing", true);
+
+
     }
 
     public override void UpdateState()
@@ -39,12 +41,13 @@ public class PlayerGrabbingBoxState : PlayerBaseState
     {
         _ctx.hit.rigidbody.velocity = Vector2.zero;
         //_ctx.hit.collider.GetComponent<Rigidbody2D>().isKinematic = true;
-        _ctx.hit.collider.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
+        _ctx.hit.collider.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         FixedJoint2D boxComponents = _ctx.box.GetComponent<FixedJoint2D>();
         boxComponents.enabled = false;
         boxComponents.connectedBody = null;
 
         _ctx.Animator.SetBool("isPushing", false);
+        _ctx.Animator.SetBool("isGrabbing", false);
     }
 
     public override void CheckSwitchStates()

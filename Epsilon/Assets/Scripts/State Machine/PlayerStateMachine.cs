@@ -214,16 +214,20 @@ public class PlayerStateMachine : MonoBehaviour
         //Ground Check
         _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
+        CheckWhichWayPlayerIsFacing();
+
         //Update Animator
         _anim.SetBool(_isGroundedHash, _isGrounded);
         _anim.SetFloat("SpeedX", Mathf.Abs(Rigidbody.velocity.x));
+        _anim.SetFloat("VelocityX", Rigidbody.velocity.x);
+
         if (_isGrounded) Animator.SetBool("isLettingGoLedge", false);
 
         _currentState.UpdateStates();
         JumpLogic();
         PlayLandingImpactVFX();
 
-        if (_isGrounded) 
+        if (_isGrounded)
         {
             _hasLetGoOfLedge = false;
             canJetpack = true;
@@ -247,6 +251,18 @@ public class PlayerStateMachine : MonoBehaviour
         }
 
         thrustImage.value = thrustCounter * 100;
+    }
+
+    private void CheckWhichWayPlayerIsFacing()
+    {
+        if (transform.localScale.x > 0)
+        {
+            _anim.SetBool("isLookingRight", true);
+        }
+        else
+        {
+            _anim.SetBool("isLookingRight", false);
+        }
     }
 
     void FixedUpdate()
