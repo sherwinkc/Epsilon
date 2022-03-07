@@ -9,22 +9,24 @@ public class PlayDistance : MonoBehaviour
     public Transform objectTransform;
 
     public float distanceFromSound = 6;
+    [SerializeField] float maxVolume;
+    [SerializeField] float fadeUpRate = 0.25f;
+    [SerializeField] float fadeDownRate = 0.25f;
 
-    public float maxVolume;
 
-    // Start is called before the first frame update
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         player = FindObjectOfType<PlayerStateMachine>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+
+
         if (Vector2.Distance(objectTransform.transform.position, player.transform.position) < distanceFromSound)
         {
-            audioSource.volume += Time.deltaTime / 50f;
+            audioSource.volume += Time.deltaTime * fadeUpRate;
 
             if(audioSource.volume >= maxVolume)
             {
@@ -35,7 +37,7 @@ public class PlayDistance : MonoBehaviour
         {
             if(audioSource.volume > 0)
             {
-                audioSource.volume -= Time.deltaTime / 50f;
+                audioSource.volume -= Time.deltaTime * fadeDownRate;
             }
 
             if (audioSource.volume <= 0)

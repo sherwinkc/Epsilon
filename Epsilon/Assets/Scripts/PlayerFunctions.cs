@@ -82,10 +82,7 @@ public class PlayerFunctions : MonoBehaviour
 
     public void SpawnPlayerBeams()
     {
-
         Instantiate(powerBeams, new Vector2(playerStateMachine.transform.position.x + xOffset, playerStateMachine.transform.position.y + yOffset), 
-            playerStateMachine.transform.rotation);
+        playerStateMachine.transform.rotation);
     }
-
-
 }
