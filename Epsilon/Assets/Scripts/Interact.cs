@@ -47,8 +47,8 @@ public class Interact : MonoBehaviour
             if (isCloseEnoughToLiftButton)
             {
                 isLiftOn = !isLiftOn;
+                audioManager.helperInteractSFX.Play();
             }
-
             //check if close to battery
             else if (isCloseEnoughToBattery)
             {
@@ -57,8 +57,8 @@ public class Interact : MonoBehaviour
                 helper.isPickingUpItem = true;
                 isCloseEnoughToBattery = false;
                 interactHUD.SetActive(false);
+                audioManager.helperInteractSFX.Play();
             }
-
             //check if close enough to rover && holding a battery
             else if (isCloseEnoughToRover && helper.isCarryingBattery)
             {
@@ -66,6 +66,7 @@ public class Interact : MonoBehaviour
                 helper.isDepositingToRover = true;
                 isCloseEnoughToRover = false;
                 interactHUD.SetActive(false);
+                audioManager.helperInteractSFX.Play();
             }
         } 
     }

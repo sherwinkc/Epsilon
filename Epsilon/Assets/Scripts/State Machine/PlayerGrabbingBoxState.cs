@@ -48,6 +48,8 @@ public class PlayerGrabbingBoxState : PlayerBaseState
 
         _ctx.Animator.SetBool("isPushing", false);
         _ctx.Animator.SetBool("isGrabbing", false);
+
+        _ctx.audioManager.frictionSFX.Stop();
     }
 
     public override void CheckSwitchStates()
