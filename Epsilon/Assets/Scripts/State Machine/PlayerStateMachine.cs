@@ -125,6 +125,9 @@ public class PlayerStateMachine : MonoBehaviour
     public float moveSpeedWhileGrabbing = 2f;
     public float boxCheckDistance;
 
+    //For Collision Debug
+    public Transform collisionTransform;
+
 
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
@@ -351,7 +354,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log("Player hit collider: " + collision.gameObject.name);
+        Debug.Log("Player hit collider: " + collision.gameObject.tag);
 
         //if we hit spikes, change, update state and enter death state
         if (collision.gameObject.CompareTag("Spikes"))
@@ -384,6 +387,10 @@ public class PlayerStateMachine : MonoBehaviour
     //make player a child of moving platforms
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //Remove me in final Builds
+        //Debug.Log(collision.transform.name);
+        collisionTransform = collision.transform; //Debug Only Remove me TODO
+
         if (collision.gameObject.CompareTag("MovingPlatform"))
         {
             transform.parent = collision.transform;
