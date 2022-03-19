@@ -48,11 +48,6 @@ public class AudioManager : MonoBehaviour
     //Rock
     public AudioSource rockSFX;
 
-    //Interact
-    public AudioSource helperInteractSFX;
-
-    public AudioSource frictionSFX;
-
     void Start()
     {
         
