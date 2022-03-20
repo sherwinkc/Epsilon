@@ -19,6 +19,7 @@ public class PlayerGrabbingBoxState : PlayerBaseState
         boxComponents.connectedBody = this._ctx.GetComponent<Rigidbody2D>();
 
         _ctx.Animator.SetBool("isGrabbing", true);
+        _ctx.Animator.SetBool("isRunning", false);
     }
 
     public override void UpdateState()
