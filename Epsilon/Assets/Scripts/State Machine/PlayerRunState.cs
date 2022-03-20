@@ -124,12 +124,8 @@ public class PlayerRunState : PlayerBaseState
         {
             _ctx.interact.interactHUD.SetActive(true); //TODO - Don't like accessing interact script just to display HUD tooltip 
         }
-<<<<<<< HEAD
 
         if (_ctx.hit.collider == null && !_ctx.interact.isCloseEnoughToBattery && !_ctx.interact.isCloseEnoughToRover)
-=======
-        else if (_ctx.hit.collider == null)
->>>>>>> parent of cc0cdbd (0088)
         {
             _ctx.interact.interactHUD.SetActive(false);
         }

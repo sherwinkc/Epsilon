@@ -17,13 +17,10 @@ public class PlayerGrabbingBoxState : PlayerBaseState
         FixedJoint2D boxComponents = _ctx.box.GetComponent<FixedJoint2D>();
         boxComponents.enabled = true;
         boxComponents.connectedBody = this._ctx.GetComponent<Rigidbody2D>();
-<<<<<<< HEAD
 
         _ctx.Animator.SetBool("isGrabbing", true);
 
 
-=======
->>>>>>> parent of cc0cdbd (0088)
     }
 
     public override void UpdateState()
@@ -48,12 +45,9 @@ public class PlayerGrabbingBoxState : PlayerBaseState
         FixedJoint2D boxComponents = _ctx.box.GetComponent<FixedJoint2D>();
         boxComponents.enabled = false;
         boxComponents.connectedBody = null;
-<<<<<<< HEAD
 
         _ctx.Animator.SetBool("isPushing", false);
         _ctx.Animator.SetBool("isGrabbing", false);
-=======
->>>>>>> parent of cc0cdbd (0088)
     }
 
     public override void CheckSwitchStates()
