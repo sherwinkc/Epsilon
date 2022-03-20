@@ -124,6 +124,10 @@ public class PlayerRunState : PlayerBaseState
         {
             _ctx.interact.interactHUD.SetActive(true); //TODO - Don't like accessing interact script just to display HUD tooltip 
         }
+        else if (_ctx.hit.collider == null)
+        {
+            _ctx.interact.interactHUD.SetActive(false);
+        }
     }
 
     private void RaycastDebug()

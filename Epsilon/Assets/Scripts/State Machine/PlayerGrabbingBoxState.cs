@@ -17,8 +17,6 @@ public class PlayerGrabbingBoxState : PlayerBaseState
         FixedJoint2D boxComponents = _ctx.box.GetComponent<FixedJoint2D>();
         boxComponents.enabled = true;
         boxComponents.connectedBody = this._ctx.GetComponent<Rigidbody2D>();
-
-        _ctx.Animator.SetBool("isPushing", true);
     }
 
     public override void UpdateState()
@@ -43,8 +41,6 @@ public class PlayerGrabbingBoxState : PlayerBaseState
         FixedJoint2D boxComponents = _ctx.box.GetComponent<FixedJoint2D>();
         boxComponents.enabled = false;
         boxComponents.connectedBody = null;
-
-        _ctx.Animator.SetBool("isPushing", false);
     }
 
     public override void CheckSwitchStates()
