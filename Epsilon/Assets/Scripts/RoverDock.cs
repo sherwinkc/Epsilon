@@ -7,8 +7,6 @@ public class RoverDock : MonoBehaviour
     AudioManager audioManager;
     [SerializeField] SpriteRenderer greenLight, redLight;
 
-    public Animator animToOpen;
-
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -32,8 +30,6 @@ public class RoverDock : MonoBehaviour
         {
             redLight.enabled = false;
             greenLight.enabled = true;
-
-            if(animToOpen != null) animToOpen.SetTrigger("Open"); //TODO Animator is being called 60fps
 
             audioManager.roverGreenLightSFX.Play();
         }

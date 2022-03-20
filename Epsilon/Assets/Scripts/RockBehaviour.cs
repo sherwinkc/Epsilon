@@ -4,17 +4,8 @@ using UnityEngine;
 
 public class RockBehaviour : MonoBehaviour
 {
-    AudioManager audioManager;
-
     [SerializeField] bool isDecreasingInSize = false;
     [SerializeField] float sizeDecreaseRate = 0.5f;
-
-    bool hasPlayedSFX = false;
-
-    private void Awake()
-    {
-        audioManager = FindObjectOfType<AudioManager>();
-    }
 
     private void Update()
     {
@@ -34,21 +25,6 @@ public class RockBehaviour : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isDecreasingInSize = true;
-
-            if (!hasPlayedSFX) PlayRockSFX();
         }
-    }
-
-    //Audio
-    //Audio
-    private void PlayRockSFX()
-    {
-        if (audioManager != null)
-        {
-            audioManager.rockSFX.pitch = Random.Range(0.8f, 1f);
-            audioManager.rockSFX.Play();
-        }
-
-        hasPlayedSFX = true;
     }
 }

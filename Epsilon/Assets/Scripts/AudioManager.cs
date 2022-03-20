@@ -42,11 +42,6 @@ public class AudioManager : MonoBehaviour
     public AudioSource puzzleCorrect;
     public AudioSource puzzleCorrect2;
 
-    //Bridge / Doors
-    public AudioSource bridgeOpenSFX;
-
-    //Rock
-    public AudioSource rockSFX;
 
     void Start()
     {
@@ -126,4 +121,5 @@ public class AudioManager : MonoBehaviour
     {
         powerUpSFX.Play();
     }
+
 }
