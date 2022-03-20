@@ -105,7 +105,7 @@ public class DebugManager : MonoBehaviour
 
         //Previous State
         //if (previousStateDebug != null) previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
-        if (collidingWith != null && playerStateMachine.collisionTransform != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionTransform.name.ToString();
+        //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
 
         ledgeDetectedAnimator.text = "Ledge Detected: " + animator.GetBool("ledgeDetected").ToString();

@@ -11,10 +11,6 @@ public class CameraManager : MonoBehaviour
 
     [SerializeField] Transform playerTransform;
 
-    [Header("Starting Wide Cam")]
-    public CinemachineVirtualCamera startingWideCam;
-    public bool isWideCamActive = true;
-
     [Header("Player Climbing Camera")]
     public CinemachineVirtualCamera cam1; 
     public CinemachineVirtualCamera camTarget;
@@ -125,7 +121,7 @@ public class CameraManager : MonoBehaviour
                 //cam1.gameObject.SetActive(true);
                 //camTarget.gameObject.SetActive(false);
 
-                if (!isWideCamActive) cam1.Priority = 100;
+                cam1.Priority = 100;
                 camTarget.Priority = 10;
             }
             else if (!isCameraTargetPlayer)
