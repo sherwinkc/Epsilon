@@ -125,6 +125,8 @@ public class PlayerStateMachine : MonoBehaviour
     public float moveSpeedWhileGrabbing = 2f;
     public float boxCheckDistance;
 
+    //For Collision Debug
+    public Transform collisionTransform;
 
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
@@ -214,9 +216,13 @@ public class PlayerStateMachine : MonoBehaviour
         //Ground Check
         _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
+        CheckWhichWayPlayerIsFacing(); //TODO we don't need to check which way player is facing every frame. Only when player actually changes direction.
+
         //Update Animator
         _anim.SetBool(_isGroundedHash, _isGrounded);
         _anim.SetFloat("SpeedX", Mathf.Abs(Rigidbody.velocity.x));
+        _anim.SetFloat("VelocityX", Rigidbody.velocity.x);
+
         if (_isGrounded) Animator.SetBool("isLettingGoLedge", false);
 
         _currentState.UpdateStates();
@@ -247,6 +253,18 @@ public class PlayerStateMachine : MonoBehaviour
         }
 
         thrustImage.value = thrustCounter * 100;
+    }
+
+    private void CheckWhichWayPlayerIsFacing()
+    {
+        if (transform.localScale.x > 0)
+        {
+            _anim.SetBool("isLookingRight", true);
+        }
+        else
+        {
+            _anim.SetBool("isLookingRight", false);
+        }
     }
 
     void FixedUpdate()
@@ -368,6 +386,10 @@ public class PlayerStateMachine : MonoBehaviour
     //make player a child of moving platforms
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //Remove me in final Builds
+        //Debug.Log(collision.transform.name);
+        //collisionTransform = collision.transform; //Debug Only Remove me TODO
+
         if (collision.gameObject.CompareTag("MovingPlatform"))
         {
             transform.parent = collision.transform;
