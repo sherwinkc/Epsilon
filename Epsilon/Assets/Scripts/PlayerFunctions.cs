@@ -85,16 +85,4 @@ public class PlayerFunctions : MonoBehaviour
         Instantiate(powerBeams, new Vector2(playerStateMachine.transform.position.x + xOffset, playerStateMachine.transform.position.y + yOffset), 
         playerStateMachine.transform.rotation);
     }
-
-    public void PlaySurfaceFrictionSFX()
-    {
-        //audioManager.frictionSFX.Stop();
-        audioManager.frictionSFX.pitch = Random.Range(0.9f, 1f);
-        audioManager.frictionSFX.Play();
-    }
-
-    public void StopSurfaceFrictionSFX()
-    {
-        audioManager.frictionSFX.Stop();
-    }
 }
