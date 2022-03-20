@@ -23,7 +23,7 @@ public class VideoManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.Return))
         {
             StartCoroutine(StartGameCoroutine());
         }

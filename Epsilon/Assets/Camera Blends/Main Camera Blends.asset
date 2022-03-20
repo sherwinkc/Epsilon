@@ -68,6 +68,7 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
+<<<<<<< HEAD
   - m_From: CM vcam1 (Main Player Cam)
     m_To: CM vcam1 (Stationairy Cam 2) (1)
     m_Blend:
@@ -112,3 +113,5 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
+=======
+>>>>>>> parent of cc0cdbd (0088)

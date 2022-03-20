@@ -4,32 +4,17 @@ using UnityEngine;
 
 public class DebugController : MonoBehaviour
 {
-    [SerializeField] GameObject debug;
-    public bool enableDebug;
+    public Transform spaceManPosition;
 
+    // Start is called before the first frame update
     void Start()
     {
-        EnableOrDisableDebug();
+        //spaceManPosition = GetComponent<Transform>();
     }
 
+    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            enableDebug = !enableDebug;
-            EnableOrDisableDebug();
-        }
-    }
 
-    private void EnableOrDisableDebug()
-    {
-        if (enableDebug)
-        {
-            debug.SetActive(true);
-        }
-        else
-        {
-            debug.SetActive(false);
-        }
     }
 }
