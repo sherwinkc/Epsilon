@@ -20,10 +20,10 @@ public class Interact : MonoBehaviour
     [SerializeField] bool isLiftLoopPlaying = false;
 
     //battery
-    [SerializeField] bool isCloseEnoughToBattery = false;
+    public bool isCloseEnoughToBattery = false;
 
     //rover
-    [SerializeField] bool isCloseEnoughToRover = false;
+    public bool isCloseEnoughToRover = false;
 
 
     private void Awake()
