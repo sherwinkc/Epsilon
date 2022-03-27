@@ -51,7 +51,7 @@ public class CameraManager : MonoBehaviour
     {
         SetCamerasDuringLedgeClimb();
 
-        //Debug for Helper cam TODO rework this
+        /*//Debug for Helper cam TODO rework this
         if (Input.GetKeyDown(KeyCode.H))
         {
             helperCam.Priority = 100;
@@ -64,7 +64,7 @@ public class CameraManager : MonoBehaviour
             helperCam.Priority = 10;
             cam1.Priority = 100;
             isFocusingOnHelper = false;
-        }         
+        }*/         
 
         //mouse and keyboard
         //CheckKeyboardInputs(); //TODO this is overriding the controller inputs
