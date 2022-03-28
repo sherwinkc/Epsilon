@@ -1,21 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Collapse : MonoBehaviour
 {
-    Rigidbody2D rb;
-    BoxCollider2D boxCollider;
+    [SerializeField] Rigidbody2D[] rbs;
+    [SerializeField] DestroyOverTime[] destroy;
 
-    [SerializeField] float destroyTime = 5f;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        boxCollider = GetComponent<BoxCollider2D>();
-
-        //rb.simulated = false;
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        for (int i = 0; i < rbs.Length; i++)
+        {
+            rbs[i].constraints = RigidbodyConstraints2D.FreezeAll;
+        }
     }
 
 
@@ -30,7 +29,24 @@ public class Collapse : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            ReleaseRocks();
+            ActivateDestroyMethod();
+        }
+    }
+
+    private void ActivateDestroyMethod()
+    {
+        for (int i = 0; i < destroy.Length; i++)
+        {
+            destroy[i].Destroy();
+        }
+    }
+
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -38,10 +54,13 @@ public class Collapse : MonoBehaviour
             rb.constraints = RigidbodyConstraints2D.None;
             Invoke("DestroyThis", destroyTime);
         }
-    }
+    }*/
 
-    private void DestroyThis()
+    void ReleaseRocks()
     {
-        Destroy(this.gameObject);
+        for (int i = 0; i < rbs.Length; i++)
+        {
+            rbs[i].constraints = RigidbodyConstraints2D.None;
+        }
     }
 }

@@ -11,7 +11,8 @@ public class Interact : MonoBehaviour
     Collider2D colliderToPickUp;
     RoverBehaviour rover;
 
-    public GameObject interactHUD; 
+    public GameObject interactHUD;
+    public LiftManager liftManager;
 
     //lift
     [SerializeField] GameObject lift;
@@ -46,7 +47,7 @@ public class Interact : MonoBehaviour
             //check if close to lift
             if (isCloseEnoughToLiftButton)
             {
-                isLiftOn = !isLiftOn;
+                if (liftManager != null) liftManager.moveLift = !liftManager.moveLift;
             }
 
             //check if close to battery
@@ -91,9 +92,15 @@ public class Interact : MonoBehaviour
 
     private void HandleLiftLogic(Collider2D collision)
     {
-        LiftManager liftManager = collision.GetComponentInParent<LiftManager>();
+        liftManager = collision.GetComponentInParent<LiftManager>();
 
         if (collision.gameObject.CompareTag("Lift"))
+        {
+            isCloseEnoughToLiftButton = true;
+        }
+
+
+        /*if (collision.gameObject.CompareTag("Lift"))
         {
             isCloseEnoughToLiftButton = true;
             interactHUD.SetActive(true);
@@ -101,7 +108,7 @@ public class Interact : MonoBehaviour
             if (isLiftOn)
             {
                 //move lift
-                if (liftManager != null) liftManager.isMoving = true;
+               // if (liftManager != null) liftManager.isMovingUp = true;
 
                 //play audio
                 if (!isLiftLoopPlaying)
@@ -113,7 +120,7 @@ public class Interact : MonoBehaviour
             else if (!isLiftOn)
             {
                 //stop lift
-                if (liftManager != null) liftManager.isMoving = false;
+                //if (liftManager != null) liftManager.isMovingUp = false;
 
                 //stop audio
                 if (isLiftLoopPlaying)
@@ -122,7 +129,7 @@ public class Interact : MonoBehaviour
                     isLiftLoopPlaying = false;
                 }
             }
-        }
+        }*/
     }
 
     private void OnTriggerExit2D(Collider2D collision)
