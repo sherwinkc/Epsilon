@@ -24,6 +24,7 @@ TagManager:
   - Helper
   - Rover
   - GroupCam
+  - Jetpack
   layers:
   - Default
   - TransparentFX
