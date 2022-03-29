@@ -42,6 +42,16 @@ public class AudioManager : MonoBehaviour
     public AudioSource puzzleCorrect;
     public AudioSource puzzleCorrect2;
 
+    //Bridge / Doors
+    public AudioSource bridgeOpenSFX; //TODO
+
+    //Rock
+    public AudioSource rockSFX;
+
+    //Interact
+    public AudioSource helperInteractSFX; //TODO
+
+    public AudioSource frictionSFX; //TODO
 
     void Start()
     {

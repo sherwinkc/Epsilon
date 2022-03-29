@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3780047592953443821}
-  m_LocalRotation: {x: -0, y: -0, z: -0.03848909, w: 0.99925905}
+  m_LocalRotation: {x: 0, y: 0, z: -0.03849243, w: 0.99925894}
   m_LocalPosition: {x: -34.293, y: -0.6095, z: 0}
   m_LocalScale: {x: 0.10000002, y: 0.10000002, z: 1}
   m_Children: []
@@ -53,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1255947111
-  m_SortingLayer: 5
-  m_SortingOrder: 0
+  m_SortingLayer: 7
+  m_SortingOrder: -2
   m_Sprite: {fileID: 1887494081247492234, guid: 0cbbafb43ef9a3c449b34e3c2e0f3840, type: 3}
   m_Color: {r: 0.1509434, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDecreasingInSize: 0
-  sizeDecreaseRate: 0.0001
+  sizeDecreaseRate: 0.001
 --- !u!60 &3780047592953443815
 PolygonCollider2D:
   m_ObjectHideFlags: 0
