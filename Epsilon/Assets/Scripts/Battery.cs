@@ -10,6 +10,8 @@ public class Battery : MonoBehaviour
 
     [SerializeField] bool isMovingWithHelper = false;
 
+    public RoverBehaviour roverBehaviour;
+
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -29,11 +31,13 @@ public class Battery : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Rover"))
+        if (collision.gameObject.CompareTag("BatteryDeposit"))
         {
             helper.isDepositingToRover = false;
             helper.isCarryingBattery = false;
             audioManager.helperCollectSFX.Play();
+            roverBehaviour.MoveRover();
+            collision.gameObject.GetComponent<DepositManager>().ChangeDepositState();
             Destroy(this.gameObject);
         }
         else if (collision.gameObject.CompareTag("Helper"))

@@ -82,7 +82,7 @@ public class Interact : MonoBehaviour
             interactHUD.SetActive(true);
         }
 
-        if (collision.gameObject.CompareTag("Rover") && !rover.canMove && helper.isCarryingBattery)
+        if (collision.gameObject.CompareTag("BatteryDeposit") && !rover.canMove && helper.isCarryingBattery)
         {
             isCloseEnoughToRover= true;
             interactHUD.SetActive(true);

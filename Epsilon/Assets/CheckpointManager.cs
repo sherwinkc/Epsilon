@@ -6,7 +6,7 @@ public class CheckpointManager : MonoBehaviour
 {
     PlayerStateMachine playerStateMachine;
 
-    [SerializeField] int checkpointNumber = 0;
+    [SerializeField] int checkpointNumber;
 
     public Transform[] checkpoints;
     public Transform activeTransform;
@@ -28,7 +28,7 @@ public class CheckpointManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
         {
 
-            if (checkpointNumber < checkpoints.Length - 1) 
+            if (checkpointNumber < checkpoints.Length) 
             {
                 playerStateMachine.transform.position = activeTransform.position;
                 checkpointNumber++;

@@ -32,9 +32,8 @@ public class RoverBehaviour : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = false;
         }
         
-        if (collision.gameObject.CompareTag("Battery"))
+        /*if (collision.gameObject.CompareTag("Battery"))
         {
-            //Debug.Log("Rover Hit Battery");
             canMove = true;
             FindObjectOfType<AudioManager>().roverEngine.Play(); //TODO cache audio manager
 
@@ -43,6 +42,18 @@ public class RoverBehaviour : MonoBehaviour
                 //TODO Require a battery count
             }
             //batteryCount++;
+        }*/
+    }
+
+    public void MoveRover()
+    {
+        canMove = true;
+        FindObjectOfType<AudioManager>().roverEngine.Play(); //TODO cache audio manager
+
+        if (batteryCount >= batteriesRequired)
+        {
+            //TODO Require a battery count
         }
+        //batteryCount++;
     }
 }

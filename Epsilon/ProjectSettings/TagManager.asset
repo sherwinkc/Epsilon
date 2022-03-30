@@ -25,6 +25,7 @@ TagManager:
   - Rover
   - GroupCam
   - Jetpack
+  - BatteryDeposit
   layers:
   - Default
   - TransparentFX
