@@ -53,15 +53,28 @@ public class LiftManager : MonoBehaviour
             isMovingUp = true;
             isMovingDown = false;
         }
-    }
 
-    void Timer()
-    {
-        timer += Time.deltaTime;
+        if (!moveLift && transform.position.y > startPoint.transform.position.y)
+        {
+            timer += Time.deltaTime;
+        }
+
+        if (moveLift)
+        {
+            timer = 0f;
+        }
+
+        if (timer >= timeToReset)
+        {
+            ResetLift();
+        }
     }
 
     void ResetLift()
     {
-        transform.position = new Vector2(transform.position.x, transform.position.y - moveSpeed);
+        isMovingUp = false;
+        isMovingDown = true;
+        moveLift = true;
+        //transform.position = new Vector2(transform.position.x, transform.position.y - moveSpeed);
     }
 }

@@ -75,6 +75,11 @@ public class Interact : MonoBehaviour
     {
         HandleLiftLogic(collision);
 
+        if (collision.gameObject.CompareTag("BatteryDeposit"))
+        {
+            FindObjectOfType<HelperMovement>().depositTransform = collision.transform;
+        }
+
         if (collision.gameObject.CompareTag("Battery") && !helper.isCarryingBattery)
         {
             isCloseEnoughToBattery = true;
@@ -84,9 +89,14 @@ public class Interact : MonoBehaviour
 
         if (collision.gameObject.CompareTag("BatteryDeposit") && !rover.canMove && helper.isCarryingBattery)
         {
-            isCloseEnoughToRover= true;
-            interactHUD.SetActive(true);
-            //colliderToPickUp = collision;
+            DepositManager depositManager = collision.gameObject.GetComponent<DepositManager>();
+
+            if (depositManager != null && depositManager.isRoverDockedHere)
+            {
+                isCloseEnoughToRover= true;
+                interactHUD.SetActive(true);
+                //colliderToPickUp = collision;
+            }
         }
     }
 
@@ -139,5 +149,10 @@ public class Interact : MonoBehaviour
         isCloseEnoughToRover = false;
         interactHUD.SetActive(false);
         interactHUD.SetActive(false);
+
+        if (collision.gameObject.CompareTag("BatteryDeposit"))
+        {
+            FindObjectOfType<HelperMovement>().depositTransform = null;
+        }
     }
 }

@@ -10,7 +10,7 @@ public class Battery : MonoBehaviour
 
     [SerializeField] bool isMovingWithHelper = false;
 
-    public RoverBehaviour roverBehaviour;
+    //public RoverBehaviour roverBehaviour;
 
     private void Awake()
     {
@@ -36,8 +36,14 @@ public class Battery : MonoBehaviour
             helper.isDepositingToRover = false;
             helper.isCarryingBattery = false;
             audioManager.helperCollectSFX.Play();
-            roverBehaviour.MoveRover();
-            collision.gameObject.GetComponent<DepositManager>().ChangeDepositState();
+
+            //Turn on rover and other things
+            DepositManager depManager = collision.gameObject.GetComponent<DepositManager>();
+
+            depManager.ChangeDepositState();
+            depManager.rover.MoveRover();
+            depManager.isRoverDockedHere = false;
+
             Destroy(this.gameObject);
         }
         else if (collision.gameObject.CompareTag("Helper"))

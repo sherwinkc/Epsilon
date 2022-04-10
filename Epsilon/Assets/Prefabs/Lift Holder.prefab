@@ -87,7 +87,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9067901727043145905}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.26, z: 0}
+  m_LocalPosition: {x: 0, y: 14.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6021123303193139170}
@@ -106,7 +106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2650982100542685306, guid: d8e8ff1329641884ca24d485c51612ef, type: 3}
       propertyPath: m_InstanceId
-      value: -111354
+      value: -908004
       objectReference: {fileID: 0}
     - target: {fileID: 7925293245730715946, guid: d8e8ff1329641884ca24d485c51612ef, type: 3}
       propertyPath: endPoint
@@ -116,6 +116,14 @@ PrefabInstance:
       propertyPath: startPoint
       value: 
       objectReference: {fileID: 1109746704602092278}
+    - target: {fileID: 7925293245730715946, guid: d8e8ff1329641884ca24d485c51612ef, type: 3}
+      propertyPath: timeToReset
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7925293245730715948, guid: d8e8ff1329641884ca24d485c51612ef, type: 3}
+      propertyPath: m_UsedByEffector
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7925293245730715949, guid: d8e8ff1329641884ca24d485c51612ef, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -166,8 +174,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8e8ff1329641884ca24d485c51612ef, type: 3}
+--- !u!1 &8182421741190489111 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7925293245730715951, guid: d8e8ff1329641884ca24d485c51612ef, type: 3}
+  m_PrefabInstance: {fileID: 2049561207568031032}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8182421741190489109 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7925293245730715949, guid: d8e8ff1329641884ca24d485c51612ef, type: 3}
   m_PrefabInstance: {fileID: 2049561207568031032}
   m_PrefabAsset: {fileID: 0}
+--- !u!251 &1641944540
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8182421741190489111}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1

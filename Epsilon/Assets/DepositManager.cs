@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class DepositManager : MonoBehaviour
 {
+    public RoverBehaviour rover;
     public GameObject redLines, greenLines, batterySprite;
-
     public BoxCollider2D boxCollider;
+
+    public bool isRoverDockedHere;
 
     private void Awake()
     {
@@ -19,7 +21,7 @@ public class DepositManager : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -32,11 +34,20 @@ public class DepositManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Battery"))
         {
+            //Debug.Log("Deposit COllided with Battery");
+
             boxCollider.enabled = false;
             redLines.SetActive(false);
             greenLines.SetActive(true);
             batterySprite.SetActive(true);
+
+            //Debug.Log("Deposit COllided with Battery");
+
+            //start Rover
+            //if (rover != null) rover.MoveRover();
         }
+
+        //Debug.Log("Deposit Manager collided with " + collision.gameObject.name);
     }
 
     public void ChangeDepositState()

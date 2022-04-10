@@ -7,8 +7,9 @@ public class RoverBehaviour : MonoBehaviour
     [SerializeField] int batteryCount = 0;
     [SerializeField] int batteriesRequired = 1;
 
-    public float moveSpeed = 1f;
+    [SerializeField] BoxCollider2D refillStationEndPoint;
 
+    public float moveSpeed = 1f;
 
     public bool canMove = false;
 
@@ -29,9 +30,16 @@ public class RoverBehaviour : MonoBehaviour
         {
             canMove = false;
             FindObjectOfType<AudioManager>().roverEngine.Stop(); //TODO cache audio manager
-            GetComponent<BoxCollider2D>().enabled = false;
+
+            if (refillStationEndPoint != null) refillStationEndPoint.enabled = false;
         }
-        
+
+        if (collision.gameObject.CompareTag("BatteryDeposit"))
+        {
+            collision.gameObject.GetComponent<DepositManager>().isRoverDockedHere = true;
+        }
+
+
         /*if (collision.gameObject.CompareTag("Battery"))
         {
             canMove = true;

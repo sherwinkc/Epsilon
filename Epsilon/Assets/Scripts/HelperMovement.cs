@@ -9,7 +9,8 @@ public class HelperMovement : MonoBehaviour
 
     //Pickup
     public GameObject objectToPickUp;
-    [SerializeField] GameObject depositPosition;
+    //[SerializeField] GameObject depositPosition;
+    public Transform depositTransform;
 
     //move speed
     [Tooltip("Lower numbers result in a longer easing time")]
@@ -22,7 +23,7 @@ public class HelperMovement : MonoBehaviour
 
     void Start()
     {
-        
+        depositTransform = null;
     }
 
     private void Update()
@@ -45,9 +46,9 @@ public class HelperMovement : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, objectToPickUp.transform.position, movePickupSpeed);
         }
-        else if (isDepositingToRover && depositPosition != null)
+        else if (isDepositingToRover && depositTransform != null)
         {
-            transform.position = Vector2.MoveTowards(transform.position, depositPosition.transform.position, movePickupSpeed);
+            transform.position = Vector2.MoveTowards(transform.position, depositTransform.position, movePickupSpeed);
         }
         else
         {
