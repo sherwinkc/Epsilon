@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Bridge : MonoBehaviour
 {
-    //AudioManager audioManager;
+    AudioManager audioManager;
 
     private void Awake()
     {
-        //audioManager = FindObjectOfType<AudioManager>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     public void PlayBridgeOpenSFX()
     {
-        //if (audioManager != null) audioManager.bridgeOpenSFX.Play();
+        if (audioManager != null) audioManager.bridgeOpenSFX.Play();
     }
 }

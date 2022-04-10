@@ -35,6 +35,7 @@ public class Collapse : MonoBehaviour
         {
             ReleaseRocks();
             ActivateDestroyMethod();
+            FindObjectOfType<AudioManager>().rockfallSFX.Play();
         }
     }
 
