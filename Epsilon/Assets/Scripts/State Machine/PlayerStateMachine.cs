@@ -110,6 +110,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool isJetpackVisible = true;
     public bool regenerateThrust;
     public float regenerateThrustSpeed;
+    [SerializeField] float delayThrustRegenerationSpeed = 1f;
 
     [Header("Player Health & Death")]
     public int playerHealth = 1;
@@ -330,7 +331,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private IEnumerator DelayThrustRegen()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(delayThrustRegenerationSpeed);
 
         regenerateThrust = true;
     }

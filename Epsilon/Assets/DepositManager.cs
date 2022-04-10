@@ -45,7 +45,7 @@ public class DepositManager : MonoBehaviour
         redLines.SetActive(false);
         greenLines.SetActive(true);
         batterySprite.SetActive(true);
-        //FindObjectOfType<DepositFlash>().StopAllCoroutines(); //TODO Nast horrible find another way of disabling the deposit flash script
+        //FindObjectOfType<DepositFlash>().StopAllCoroutines(); //TODO Nasty horrible find another way of disabling the deposit flash script
         //FindObjectOfType<DepositFlash>().enabled = false; //TODO Nast horrible find another way of disabling the deposit flash script
     }
 }

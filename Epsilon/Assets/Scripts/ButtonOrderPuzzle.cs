@@ -124,6 +124,11 @@ public class ButtonOrderPuzzle : MonoBehaviour
         correct2HasPlayed = false;
         errorHasPlayed = false;
 
+        ResetAnimations();
+    }
+
+    void ResetAnimations()
+    {
         JumpButton[] buttonList = FindObjectsOfType<JumpButton>();
 
         for (int i = 0; i < buttonList.Length; i++)
