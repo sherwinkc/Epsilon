@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class RoverBehaviour : MonoBehaviour
 {
+    AudioManager audioManager;
     [SerializeField] int batteryCount = 0;
     [SerializeField] int batteriesRequired = 1;
 
     [SerializeField] BoxCollider2D refillStationEndPoint;
 
     public float moveSpeed = 1f;
-
     public bool canMove = false;
+
+    private void Awake()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+    }
 
     void Start()
     {
@@ -29,7 +34,8 @@ public class RoverBehaviour : MonoBehaviour
         if (collision.gameObject.CompareTag("RoverStopPoint"))
         {
             canMove = false;
-            FindObjectOfType<AudioManager>().roverEngine.Stop(); //TODO cache audio manager
+            audioManager.roverEngine.Stop();
+            audioManager.roverEngine2.Stop();
 
             if (refillStationEndPoint != null) refillStationEndPoint.enabled = false;
         }
@@ -56,7 +62,8 @@ public class RoverBehaviour : MonoBehaviour
     public void MoveRover()
     {
         canMove = true;
-        FindObjectOfType<AudioManager>().roverEngine.Play(); //TODO cache audio manager
+        audioManager.roverEngine.Play();
+        audioManager.roverEngine2.Play();
 
         if (batteryCount >= batteriesRequired)
         {

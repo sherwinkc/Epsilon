@@ -7,9 +7,7 @@ public class CheckpointManager : MonoBehaviour
     PlayerStateMachine playerStateMachine;
 
     [SerializeField] int checkpointNumber;
-
     public Transform[] checkpoints;
-    public Transform activeTransform;
 
     private void Awake()
     {
@@ -19,33 +17,29 @@ public class CheckpointManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        activeTransform = checkpoints[checkpointNumber];
+        //activeTransform = checkpoints[checkpointNumber];
+
+        checkpointNumber = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.J))
-        {
-
-            if (checkpointNumber < checkpoints.Length) 
+        {   
+            if (checkpointNumber < checkpoints.Length)
             {
-                playerStateMachine.transform.position = activeTransform.position;
+                playerStateMachine.transform.position = checkpoints[checkpointNumber].position;
                 checkpointNumber++;
-                activeTransform = checkpoints[checkpointNumber];
-            } 
+            }
         }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.H))
+        else if (Input.GetKeyDown(KeyCode.H))
             {
-                if (checkpointNumber != 0)
+                if (checkpointNumber > 0)
                 {
-                    playerStateMachine.transform.position = activeTransform.position;
+                    playerStateMachine.transform.position = checkpoints[checkpointNumber].position;
                     checkpointNumber--;
-                    activeTransform = checkpoints[checkpointNumber];
-                }  
+                }
             }
         }
     }
-}

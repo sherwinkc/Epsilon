@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource helper;
 
     //Rover
-    public AudioSource roverEngine;
+    public AudioSource roverEngine, roverEngine2;
     public AudioSource roverGreenLightSFX;
 
     //Helper
