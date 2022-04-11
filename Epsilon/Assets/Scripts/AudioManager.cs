@@ -54,6 +54,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource frictionSFX; //TODO
 
+    public AudioSource crashSFX;
+
     void Start()
     {
         
