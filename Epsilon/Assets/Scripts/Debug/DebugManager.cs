@@ -96,7 +96,7 @@ public class DebugManager : MonoBehaviour
 
         if (displayJetpackValues) DisplayJetpackValues();
 
-        CheckPlayableDirectorsEnabled();
+        CheckPlayableDirectorsEnabled(); //Turn this on or off to activate timelines
 
         DisplayOrbCount();
 

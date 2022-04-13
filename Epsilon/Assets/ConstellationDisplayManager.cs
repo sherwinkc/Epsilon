@@ -10,6 +10,8 @@ public class ConstellationDisplayManager : MonoBehaviour
     public GameObject blackBackground;
     public GameObject constellation0, constellation1, constellation2, constellation3;
 
+    public float displayWaitTime, turnOffDisplayTime;
+
     private void Awake()
     {
         collector = FindObjectOfType<Collector>();
@@ -58,14 +60,14 @@ public class ConstellationDisplayManager : MonoBehaviour
 
     public IEnumerator SwitchOutConstellation1()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(displayWaitTime);
 
         constellation0.SetActive(false);
         constellation1.SetActive(true);
 
         FindObjectOfType<AudioManager>().PlayCollectSFX();
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(turnOffDisplayTime);
 
         blackBackground.SetActive(false);
         constellation1.SetActive(false);
@@ -81,14 +83,14 @@ public class ConstellationDisplayManager : MonoBehaviour
 
     public IEnumerator SwitchOutConstellation2()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(displayWaitTime);
 
         constellation1.SetActive(false);
         constellation2.SetActive(true);
 
         FindObjectOfType<AudioManager>().PlayCollectSFX();
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(turnOffDisplayTime);
 
         blackBackground.SetActive(false);
         constellation2.SetActive(false);
@@ -104,14 +106,14 @@ public class ConstellationDisplayManager : MonoBehaviour
 
     public IEnumerator SwitchOutConstellation3()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(displayWaitTime);
 
         constellation2.SetActive(false);
         constellation3.SetActive(true);
 
         FindObjectOfType<AudioManager>().PlayCollectSFX();
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(turnOffDisplayTime);
 
         blackBackground.SetActive(false);
         constellation3.SetActive(false);

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class Collapse : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class Collapse : MonoBehaviour
     [SerializeField] float timeScaleFactor = 0.25f;
     [SerializeField] float blackScreenWaitTime = 2f;
     [SerializeField] float blackScreenTime = 10f;
+
+    [SerializeField] PlayableDirector playableDirector;
 
 
     private void Awake()
@@ -98,8 +101,12 @@ public class Collapse : MonoBehaviour
             destroy[i].Destroy();
         }
 
+        FindObjectOfType<PlayerStateMachine>().inCinematic = true;
+
         //teleport player
         playerStateMachine.transform.position = wakeUpLocation.position;
+
+
 
         //play audio
         //stop music
@@ -107,6 +114,8 @@ public class Collapse : MonoBehaviour
         //hold player in place
 
         yield return new WaitForSeconds(blackScreenTime);
+
+        playableDirector.Play();
 
         blackScreen.SetActive(false);
 
