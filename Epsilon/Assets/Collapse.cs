@@ -103,10 +103,6 @@ public class Collapse : MonoBehaviour
 
         FindObjectOfType<PlayerStateMachine>().inCinematic = true;
 
-        //teleport player
-        playerStateMachine.transform.position = wakeUpLocation.position;
-
-
 
         //play audio
         //stop music
@@ -114,6 +110,9 @@ public class Collapse : MonoBehaviour
         //hold player in place
 
         yield return new WaitForSeconds(blackScreenTime);
+
+        //teleport player
+        playerStateMachine.transform.position = wakeUpLocation.position;
 
         playableDirector.Play();
 

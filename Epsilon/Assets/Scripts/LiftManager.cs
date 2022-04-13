@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LiftManager : MonoBehaviour
 {
+    AudioManager audioManager;
+
     [SerializeField] float moveSpeed = 0.01f;
 
     public Transform startPoint;
@@ -75,6 +77,7 @@ public class LiftManager : MonoBehaviour
         isMovingUp = false;
         isMovingDown = true;
         moveLift = true;
+        audioManager.liftActiveLoop.Stop();
         //transform.position = new Vector2(transform.position.x, transform.position.y - moveSpeed);
     }
 }

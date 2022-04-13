@@ -87,7 +87,7 @@ public class PlayerIdleState : PlayerBaseState
             _ctx.interact.interactHUD.SetActive(true); //TODO - Don't like accessing interact script just to display HUD tooltip 
         }
 
-        if (_ctx.hit.collider == null && !_ctx.interact.isCloseEnoughToBattery && !_ctx.interact.isCloseEnoughToRover)
+        if (_ctx.hit.collider == null && !_ctx.interact.isCloseEnoughToBattery && !_ctx.interact.isCloseEnoughToRover && !_ctx.interact.isCloseEnoughToLiftButton)
         {
             _ctx.interact.interactHUD.SetActive(false);
         }

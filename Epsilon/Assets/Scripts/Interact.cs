@@ -16,8 +16,8 @@ public class Interact : MonoBehaviour
 
     //lift
     [SerializeField] GameObject lift;
-    [SerializeField] bool isCloseEnoughToLiftButton;
-    [SerializeField] bool isLiftOn = false;
+    public bool isCloseEnoughToLiftButton;
+    //[SerializeField] bool isLiftOn = false;
     [SerializeField] bool isLiftLoopPlaying = false;
 
     //battery
@@ -102,45 +102,19 @@ public class Interact : MonoBehaviour
 
     private void HandleLiftLogic(Collider2D collision)
     {
+        Debug.Log("HandleLiftLogic");
+
         liftManager = collision.GetComponentInParent<LiftManager>();
 
         if (collision.gameObject.CompareTag("Lift"))
         {
             isCloseEnoughToLiftButton = true;
-        }
-
-
-        /*if (collision.gameObject.CompareTag("Lift"))
-        {
-            isCloseEnoughToLiftButton = true;
             interactHUD.SetActive(true);
 
-            if (isLiftOn)
-            {
-                //move lift
-               // if (liftManager != null) liftManager.isMovingUp = true;
-
-                //play audio
-                if (!isLiftLoopPlaying)
-                {
-                    audioManager.liftActiveLoop.Play();
-                    isLiftLoopPlaying = true;
-                }
-            }
-            else if (!isLiftOn)
-            {
-                //stop lift
-                //if (liftManager != null) liftManager.isMovingUp = false;
-
-                //stop audio
-                if (isLiftLoopPlaying)
-                {
-                    audioManager.liftActiveLoop.Stop();
-                    isLiftLoopPlaying = false;
-                }
-            }
-        }*/
+            PlayLiftAudio();
+        }
     }
+
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -148,11 +122,33 @@ public class Interact : MonoBehaviour
         isCloseEnoughToBattery = false;
         isCloseEnoughToRover = false;
         interactHUD.SetActive(false);
-        interactHUD.SetActive(false);
 
-        if (collision.gameObject.CompareTag("BatteryDeposit"))
+        /*if (collision.gameObject.CompareTag("BatteryDeposit"))
         {
             FindObjectOfType<HelperMovement>().depositTransform = null;
+        }*/
+    }
+    private void PlayLiftAudio()
+    {
+        //if lift is moving
+        if (liftManager.moveLift)
+        {
+            //play audio
+            if (!isLiftLoopPlaying)
+            {
+                audioManager.liftActiveLoop.Play();
+                isLiftLoopPlaying = true;
+            }
+        }
+        //if lift is not moving
+        else if (!liftManager.moveLift) 
+        {
+            //stop audio
+            if (isLiftLoopPlaying)
+            {
+                audioManager.liftActiveLoop.Stop();
+                isLiftLoopPlaying = false;
+            }
         }
     }
 }
