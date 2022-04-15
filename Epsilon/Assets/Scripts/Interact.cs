@@ -102,7 +102,7 @@ public class Interact : MonoBehaviour
 
     private void HandleLiftLogic(Collider2D collision)
     {
-        Debug.Log("HandleLiftLogic");
+        //Debug.Log("HandleLiftLogic");
 
         liftManager = collision.GetComponentInParent<LiftManager>();
 

@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioSource playerSFX_footsteps_sand;
-    [Range(0f,1.5f)]
-    public float pitchRangeLow = 0.75f;
-    [Range(0f, 1.5f)]
-    public float pitchRangeHigh = 1.2f;
+    public AudioSource SFX_footsteps_sand;
+    public AudioSource SFX_footsteps_metal;
+
+    float pitchRangeLow = 0.8f, pitchRangeHigh = 1f;
 
     public AudioSource playerSFX_Jump;
     public AudioSource playerSFX_Land;
@@ -56,6 +55,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource crashSFX;
 
+    public AudioSource playerBreathingSFX;
+
     void Start()
     {
         
@@ -67,12 +68,26 @@ public class AudioManager : MonoBehaviour
         
     }
 
-    public void Play_playerSFX_footsteps_sand()
+    /*public void Play_playerSFX_footsteps_sand()
     {
-        if (playerSFX_footsteps_sand != null)
+        if (SFX_footsteps_sand != null)
         {
-            playerSFX_footsteps_sand.pitch = Random.Range(pitchRangeLow, pitchRangeHigh);
-            playerSFX_footsteps_sand.Play();
+            SFX_footsteps_sand.pitch = Random.Range(pitchRangeLow, pitchRangeHigh);
+            SFX_footsteps_sand.Play();
+        }
+    }*/
+
+    public void PlayFootstepsSFX(AudioMaterial material)
+    {
+        if (material == AudioMaterial.Sand || material == AudioMaterial.None)
+        {
+            SFX_footsteps_sand.pitch = Random.Range(pitchRangeLow, pitchRangeHigh);
+            SFX_footsteps_sand.Play();
+        }
+        else if (material == AudioMaterial.Metal)
+        {
+            SFX_footsteps_metal.pitch = Random.Range(0.7f, 0.9f);
+            SFX_footsteps_metal.Play();
         }
     }
 

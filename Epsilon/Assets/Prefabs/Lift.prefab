@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 2650982100542685306}
   m_Layer: 8
   m_Name: Lift
-  m_TagString: Untagged
+  m_TagString: Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -327,7 +327,7 @@ MonoBehaviour:
   - {x: -1.9903784, y: -0.11877537, z: 0}
   m_ShapePathHash: -648816579
   m_Mesh: {fileID: 0}
-  m_InstanceId: 289474
+  m_InstanceId: 675748
 --- !u!1 &7925293246302214320
 GameObject:
   m_ObjectHideFlags: 0

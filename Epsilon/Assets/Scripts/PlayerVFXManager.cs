@@ -5,17 +5,15 @@ using UnityEngine.U2D;
 
 public class PlayerVFXManager : MonoBehaviour
 {
-    //PlayerStateMachine playerStateMachine;
-    [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] SpriteShapeRenderer spriteShapeRenderer;
-
     public Transform feetPosition;
     public float distance;
-    public bool isReturningGround;
+    public AudioMaterial material;
+
+    public RaycastHit2D hitInfo;
 
     private void Awake()
     {
-        //playerStateMachine = GetComponent<PlayerStateMachine>();
+
     }
 
     void Start()
@@ -26,34 +24,46 @@ public class PlayerVFXManager : MonoBehaviour
 
     void Update()
     {
-        ShootRaycastForMaterialDetector();
+        Invoke("ShootRaycastDownToDetectMaterial", 0.5f);
         RaycastDebug();
     }
 
-    private void ShootRaycastForMaterialDetector()
+    private void ShootRaycastDownToDetectMaterial()
     {
-        RaycastHit2D hitInfo = Physics2D.Raycast(feetPosition.position, -transform.up, distance);
-        //if (hitInfo) Debug.Log("name: " + hitInfo.transform.name);
-        //if (hitInfo) Debug.Log("tag: " + hitInfo.transform.tag);
+        hitInfo = Physics2D.Raycast(feetPosition.position, -transform.up, distance);
 
-        if (hitInfo)
+        //If the collider of the object hit is not NUll
+        if (hitInfo.collider != null)
         {
-            if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            if (hitInfo.collider.gameObject.CompareTag("Sand"))
             {
-                if (hitInfo) spriteRenderer = hitInfo.transform.GetComponent<SpriteRenderer>();
-                if (hitInfo) spriteShapeRenderer = hitInfo.transform.GetComponent<SpriteShapeRenderer>();
-
-                //Debug.Log(spriteRenderer);
-                //Debug.Log(spriteShapeRenderer);
+                material = AudioMaterial.Sand;
+            }
+            else if (hitInfo.collider.gameObject.CompareTag("Metal"))
+            {
+                material = AudioMaterial.Metal;
+            }
+            else if (hitInfo.collider.gameObject.CompareTag("ClimbableMesh"))
+            {
+                material = AudioMaterial.Metal;
+            }
+            else if (hitInfo.collider.gameObject.CompareTag("Lift"))
+            {
+                material = AudioMaterial.Metal;
+            }
+            else
+            {
+                material = AudioMaterial.Sand;
             }
         }
 
+        //Debug.Log(hitInfo.collider);
+        //Debug.Log(hitInfo.collider.name);
 
-
-        //isReturningGround = Physics2D.Raycast(feetPosition.position, -transform.up, distance, playerStateMachine.whatIsGround);
-        //_ctx.isTouchingWall = Physics2D.Raycast(_ctx.wallCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
-        //_ctx.isTouchingLedge = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
-
+        /*if (hitInfo.collider.GetComponent<MaterialType>() != null)
+        {
+            material = hitInfo.collider.gameObject.GetComponent<MaterialType>().audioMaterial;
+        }*/
     }
 
     private void RaycastDebug()

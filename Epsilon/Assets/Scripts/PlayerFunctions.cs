@@ -19,15 +19,20 @@ public class PlayerFunctions : MonoBehaviour
         camManager = FindObjectOfType<CameraManager>();
     }
 
-    public void PlayFootsteps()
+    // A U D I O
+    public void PlayFootstepsSFX()
     {
-        if (Mathf.Abs(playerStateMachine.Rigidbody.velocity.x) > 0.01f)
+        if (Mathf.Abs(playerStateMachine.Rigidbody.velocity.x) > 0.01f && playerStateMachine.IsGrounded) // Play if moving
         {
             if (audioManager != null && !playerStateMachine.inCinematic) //Prevents playing footsteps in cutscenes
             {
-                audioManager.Play_playerSFX_footsteps_sand();
+                audioManager.PlayFootstepsSFX(GetComponent<PlayerVFXManager>().material);
             }
         }
+    }
+    public void PlayPowerUpSFX()
+    {
+        audioManager.PlayPowerUpSFX();
     }
 
     public void PlayJumpSFX()
@@ -44,17 +49,6 @@ public class PlayerFunctions : MonoBehaviour
     {
         if(playerStateMachine != null) playerStateMachine._impactEffect.Play();
     }
-
-    public void ActivatePlayerCameraDuringClimb()
-    {
-        if(camManager != null) camManager.isCameraTargetPlayer = true;
-    }
-
-    /*public void PlayJetpackStart()
-    {
-        if (audioManager != null) audioManager.PlayJetpackStart();
-    }*/
-
     public void PlayJetpackLoop()
     {
         if (audioManager != null) audioManager.jetpackLoop.Play();
@@ -65,6 +59,18 @@ public class PlayerFunctions : MonoBehaviour
         if (audioManager != null) audioManager.jetpackLoop.Stop();
     }
 
+    // C A M E R A
+    public void ActivatePlayerCameraDuringClimb()
+    {
+        if(camManager != null) camManager.isCameraTargetPlayer = true;
+    }
+
+    /*public void PlayJetpackStart()
+    {
+        if (audioManager != null) audioManager.PlayJetpackStart();
+    }*/
+
+    // S T A T E S
     public void TriggerInCinematicState()
     {
         playerStateMachine.inCinematic = true;
@@ -75,17 +81,10 @@ public class PlayerFunctions : MonoBehaviour
         playerStateMachine.inCinematic = false;
     }
 
-    public void PlayPowerUpSFX()
-    {
-        audioManager.PlayPowerUpSFX();
-    }
-
+    // V F X
     public void SpawnPlayerBeams()
     {
-
         Instantiate(powerBeams, new Vector2(playerStateMachine.transform.position.x + xOffset, playerStateMachine.transform.position.y + yOffset), 
             playerStateMachine.transform.rotation);
     }
-
-
 }

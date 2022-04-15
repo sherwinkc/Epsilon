@@ -26,6 +26,9 @@ TagManager:
   - GroupCam
   - Jetpack
   - BatteryDeposit
+  - Trigger_FinalRoom
+  - Sand
+  - Metal
   layers:
   - Default
   - TransparentFX

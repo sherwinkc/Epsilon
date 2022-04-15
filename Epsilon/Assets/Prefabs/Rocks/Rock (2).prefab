@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7241873582382728350}
   - component: {fileID: 7241873582382728339}
   - component: {fileID: 7241873582382728351}
+  - component: {fileID: 2987479162381201030}
   m_Layer: 0
   m_Name: Rock (2)
   m_TagString: Untagged
@@ -168,3 +169,16 @@ PolygonCollider2D:
       - {x: 0.14, y: -0.53}
       - {x: 0.58, y: -0.41}
       - {x: 0.72999996, y: -0.39}
+--- !u!114 &2987479162381201030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7241873582382728348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e40320ae3d19a4fb1e381be2ef209d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMaterial: 0

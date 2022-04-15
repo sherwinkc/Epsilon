@@ -86,6 +86,7 @@ public class Collapse : MonoBehaviour
     {
         Time.timeScale = timeScaleFactor;
         levelMusicManager.music4.Stop();
+        audioManager.playerBreathingSFX.Stop();
         yield return new WaitForSeconds(blackScreenWaitTime);
 
         //black screen
@@ -118,6 +119,7 @@ public class Collapse : MonoBehaviour
 
         blackScreen.SetActive(false);
 
+        audioManager.playerBreathingSFX.Play();
         levelMusicManager.music4.Play();
 
         //Initate cinematic state
