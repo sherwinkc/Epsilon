@@ -87,4 +87,9 @@ public class PlayerFunctions : MonoBehaviour
         Instantiate(powerBeams, new Vector2(playerStateMachine.transform.position.x + xOffset, playerStateMachine.transform.position.y + yOffset), 
             playerStateMachine.transform.rotation);
     }
+
+    public void SFX_PlayGrab()
+    {
+        audioManager.grabSFX.Play();
+    }
 }

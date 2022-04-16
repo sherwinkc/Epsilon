@@ -395,11 +395,21 @@ public class PlayerStateMachine : MonoBehaviour
         {
             transform.parent = collision.transform;
         }
+
+        if (collision.gameObject.CompareTag("Lift"))
+        {
+            transform.parent = collision.transform;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            transform.parent = null;
+        }
+
+        if (collision.gameObject.CompareTag("Lift"))
         {
             transform.parent = null;
         }

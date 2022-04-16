@@ -20,6 +20,15 @@ public class LiftManager : MonoBehaviour
     public float timeToReset = 10f;
     public float timer = 0f;
 
+    [SerializeField] bool isLiftLoopPlaying = false;
+
+    public float distanceFromSound = 15f;
+
+    private void Awake()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+    }
+
     private void Start()
     {
         isMovingUp = true;
@@ -33,11 +42,12 @@ public class LiftManager : MonoBehaviour
             {
                 transform.position = new Vector2(transform.position.x, transform.position.y + moveSpeed);
             }
-        
-            if(isMovingDown)
+            else if (isMovingDown)
             {
                 transform.position = new Vector2(transform.position.x, transform.position.y - moveSpeed);
             }
+
+            timer = 0f; // if lift is moving timer is zero;
         }
 
         if (transform.position.y >= endPoint.transform.position.y)
@@ -61,15 +71,18 @@ public class LiftManager : MonoBehaviour
             timer += Time.deltaTime;
         }
 
-        if (moveLift)
-        {
-            timer = 0f;
-        }
-
         if (timer >= timeToReset)
         {
             ResetLift();
+            StopAudio();
         }
+
+        PlayLiftAudio();
+    }
+
+    private void StopAudio()
+    {
+        audioManager.liftActiveLoop.Stop(); //TODO being called every second when lift is not moving BAD
     }
 
     void ResetLift()
@@ -77,7 +90,33 @@ public class LiftManager : MonoBehaviour
         isMovingUp = false;
         isMovingDown = true;
         moveLift = true;
-        audioManager.liftActiveLoop.Stop();
         //transform.position = new Vector2(transform.position.x, transform.position.y - moveSpeed);
+    }
+
+    private void PlayLiftAudio()
+    {
+        //if lift is moving
+        if (moveLift)
+        {
+            if(Vector2.Distance(transform.position, FindObjectOfType<PlayerStateMachine>().transform.position) < distanceFromSound)
+            {
+                //play audio
+                if (!isLiftLoopPlaying)
+                {
+                    audioManager.liftActiveLoop.Play();
+                    isLiftLoopPlaying = true;
+                }
+            }
+        }
+        //if lift is not moving
+        else if (!moveLift)
+        {
+            //stop audio
+            if (isLiftLoopPlaying)
+            {
+                audioManager.liftActiveLoop.Stop();
+                isLiftLoopPlaying = false;
+            }
+        }
     }
 }

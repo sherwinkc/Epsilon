@@ -20,6 +20,8 @@ public class PlayerGrabbingBoxState : PlayerBaseState
 
         _ctx.Animator.SetBool("isGrabbing", true);
         _ctx.Animator.SetBool("isRunning", false);
+
+        _ctx.audioManager.grabSFX.Play();
     }
 
     public override void UpdateState()

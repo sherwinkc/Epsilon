@@ -57,6 +57,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource playerBreathingSFX;
 
+    public AudioSource grabSFX;
+
     void Start()
     {
         

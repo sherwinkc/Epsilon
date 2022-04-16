@@ -19,7 +19,11 @@ public class PlayerJetpackState : PlayerBaseState
 
         _ctx.canJetpack = false;
 
-        if (_ctx.audioManager != null) _ctx.audioManager.jetpackLoop.Play();
+        if (_ctx.audioManager != null) 
+        { 
+            _ctx.audioManager.jetpackLoop.Play();
+            //if(!_ctx.audioManager.jetpackStart.isPlaying) _ctx.audioManager.jetpackStart.Play();        
+        }
     }
 
     public override void UpdateState()

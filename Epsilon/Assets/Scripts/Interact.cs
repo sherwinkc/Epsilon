@@ -18,7 +18,6 @@ public class Interact : MonoBehaviour
     [SerializeField] GameObject lift;
     public bool isCloseEnoughToLiftButton;
     //[SerializeField] bool isLiftOn = false;
-    [SerializeField] bool isLiftLoopPlaying = false;
 
     //battery
     public bool isCloseEnoughToBattery = false;
@@ -29,7 +28,7 @@ public class Interact : MonoBehaviour
 
     private void Awake()
     {
-        audioManager = FindObjectOfType<AudioManager>();
+        //audioManager = FindObjectOfType<AudioManager>();
         helper = FindObjectOfType<HelperMovement>();
         rover = FindObjectOfType<RoverBehaviour>();
     }
@@ -111,7 +110,7 @@ public class Interact : MonoBehaviour
             isCloseEnoughToLiftButton = true;
             interactHUD.SetActive(true);
 
-            PlayLiftAudio();
+            //PlayLiftAudio();
         }
     }
 
@@ -128,7 +127,7 @@ public class Interact : MonoBehaviour
             FindObjectOfType<HelperMovement>().depositTransform = null;
         }*/
     }
-    private void PlayLiftAudio()
+    /*private void PlayLiftAudio()
     {
         //if lift is moving
         if (liftManager.moveLift)
@@ -150,5 +149,5 @@ public class Interact : MonoBehaviour
                 isLiftLoopPlaying = false;
             }
         }
-    }
+    }*/
 }
