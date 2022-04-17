@@ -27,13 +27,13 @@ public class RagdollController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
+        /*if (Input.GetKeyDown(KeyCode.Y))
         {
             EnableRagdoll();
-        }
+        }*/
     }
 
-    private void DisableRagdoll()
+    public void DisableRagdoll()
     {
         TurnOnPlayerComponents();
         TurnOffRagdollComponents();
@@ -81,7 +81,7 @@ public class RagdollController : MonoBehaviour
             }             
         }
 
-        playerStateMachine._jetEmission.Play();
+        //playerStateMachine._jetEmission.Play();
         playerStateMachine.FootEmission.Stop();
     }
 

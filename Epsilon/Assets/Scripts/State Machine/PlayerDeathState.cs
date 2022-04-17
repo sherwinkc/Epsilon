@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public class PlayerDeathState : PlayerBaseState
 {
@@ -35,11 +35,15 @@ public class PlayerDeathState : PlayerBaseState
 
         yield return new WaitForSeconds(_ctx.deadTimeBeforeRestart);
 
-        _ctx.FadeScreen();
+        //_ctx.FadeScreen();
 
         yield return new WaitForSeconds(0.5f);
 
-        string scene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(scene);
+        _ctx.ragdoll.DisableRagdoll();
+
+        _ctx.Respawn();
+
+        //string scene = SceneManager.GetActiveScene().name;
+        //SceneManager.LoadScene(scene);
     }
 }

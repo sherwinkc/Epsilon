@@ -44,8 +44,11 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        //if is grounded (from PlayerStateMachine) switch state to the PlayerIdle
-        if (_ctx.IsGrounded)
+        if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
+        {
+            SwitchState(_factory.LedgeHang());
+        }
+        else if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Idle());
         }
@@ -53,15 +56,10 @@ public class PlayerJumpState : PlayerBaseState
         {
             SwitchState(_factory.Falling());
         }  
-        else if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
-        {  
-            SwitchState(_factory.LedgeHang());
-        }
         else if (_ctx.isThrustPressed && _ctx.isJetpackOn)
         {
             SwitchState(_factory.Jetpack());
         }
-
         /*else if (_ctx.isKneeTouchingLedge)
         {
             SwitchState(_factory.Mount());

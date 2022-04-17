@@ -75,6 +75,10 @@ public class PlayerIdleState : PlayerBaseState
         {
             SwitchState(_factory.GrabbingBox());
         }
+        else if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
+        {
+            SwitchState(_factory.LedgeHang());
+        }
     }
 
     private void ShootRaycastsForBox()

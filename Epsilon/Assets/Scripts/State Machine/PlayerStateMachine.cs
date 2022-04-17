@@ -384,6 +384,11 @@ public class PlayerStateMachine : MonoBehaviour
         FindObjectOfType<CameraManager>().deathCam.Priority = 500;
     }
 
+    public void DeactivateDeathCam()
+    {
+        FindObjectOfType<CameraManager>().deathCam.Priority = 10;
+    }
+
     //make player a child of moving platforms
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -451,4 +456,18 @@ public class PlayerStateMachine : MonoBehaviour
             transform.localScale = new Vector3(-RotationScaleAmount, RotationScaleAmount, transform.localScale.z);
         }
     }*/
+
+    public void Respawn()
+    {
+        GameCheckpointManager checkpointManager = FindObjectOfType<GameCheckpointManager>();
+
+        transform.position = checkpointManager.currentActiveSpawnPoint.transform.position;
+
+        DeactivateDeathCam();
+
+        //_rb.velocity = Vector2.zero;
+
+        _currentState = _states.Idle();
+        _currentState.EnterState();
+    }
 }
