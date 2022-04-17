@@ -98,7 +98,7 @@ public class LiftManager : MonoBehaviour
         //if lift is moving
         if (moveLift)
         {
-            if(Vector2.Distance(transform.position, FindObjectOfType<PlayerStateMachine>().transform.position) < distanceFromSound)
+            if(Vector2.Distance(transform.position, FindObjectOfType<PlayerStateMachine>().transform.position) < distanceFromSound) //TODO Cache Player Transform
             {
                 //play audio
                 if (!isLiftLoopPlaying)
