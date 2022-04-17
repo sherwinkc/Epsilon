@@ -29,4 +29,9 @@ public class ScreenFadeManager : MonoBehaviour
         if (animator != null) animator.enabled = false;
         //if (turnOffCompletelyWhenNotRun) this.gameObject.SetActive(false);
     }
+
+    public void FadeIn()
+    {
+        animator.Play("BlackScreenFadeIn");
+    }
 }

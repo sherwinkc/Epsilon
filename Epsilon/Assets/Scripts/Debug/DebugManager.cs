@@ -10,6 +10,7 @@ public class DebugManager : MonoBehaviour
 {
     PlayerStateMachine playerStateMachine;
     Collector collector;
+    PlayerVFXManager playerVFXMan;
 
     [Header("Toggle Debug")]
     public bool displayPlayerState;
@@ -24,8 +25,10 @@ public class DebugManager : MonoBehaviour
 
     [Header("Player State")]
     public TMP_Text playerStateDebug;
-    public TMP_Text previousStateDebug;    
-    //public TMP_Text standingOnWhatMaterial;
+    public TMP_Text previousStateDebug;
+    public TMP_Text holdCurrentState;
+    public TMP_Text standingOnWhatMaterial;
+    public TMP_Text isGroundedDebug;
 
     [Header("Player Velocity")]
     public TMP_Text playerVelocityX;
@@ -43,7 +46,7 @@ public class DebugManager : MonoBehaviour
     public TMP_Text jetpackTime;
 
     [Header("Collisions")]
-    public TMP_Text collidingWith;
+    //public TMP_Text collidingWith;
     public TMP_Text standingOn;
 
     [Header("Timeline / Cinematics")]
@@ -67,6 +70,7 @@ public class DebugManager : MonoBehaviour
     {
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         collector = FindObjectOfType<Collector>();
+        playerVFXMan = FindObjectOfType<PlayerVFXManager>();
     }
 
     void Start()
@@ -81,12 +85,18 @@ public class DebugManager : MonoBehaviour
         }
 
         playableDirectors = FindObjectsOfType<PlayableDirector>();
+
+        previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
+        playerStateDebug.text = "Player State: " + playerStateMachine.CurrentState.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (displayPlayerState) DisplayPlayerState();
+        DisplayPlayerState();
+        DisplayPreviousPlayerState();
+
+        isGroundedDebug.text = "is Grounded: " + playerStateMachine.IsGrounded.ToString();
 
         if (displayerPlayerVelocity) DisplayPlayerVelocity();
 
@@ -103,8 +113,7 @@ public class DebugManager : MonoBehaviour
         ReloadScene();
         ExitGame();
 
-        //Previous State
-        //if (previousStateDebug != null) previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
+        standingOnWhatMaterial.text = "Standing On: " + playerVFXMan.material.ToString();
         //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
 
@@ -117,7 +126,6 @@ public class DebugManager : MonoBehaviour
         //isMountDetected.text = "Is Mount Detected: " + animator.GetBool("mountDetected").ToString();
         isLettingGoOfLedgeAnimator.text = "Is Letting Go Of Ledge: " + animator.GetBool("isLettingGoLedge").ToString();
     }
-
 
     private void DisplayOrbCount()
     {
@@ -161,7 +169,13 @@ public class DebugManager : MonoBehaviour
 
     private void DisplayPlayerState()
     {
-        if (playerStateDebug != null) playerStateDebug.text = "Player State: " + playerStateMachine.CurrentState.ToString();
+        //playerStateDebug.text = "Player State: " + playerStateMachine.CurrentState.ToString();
+        //previousStateDebug.text = "Previous Player State: " + holdCurrentState.ToString();
+    }
+
+    private void DisplayPreviousPlayerState()
+    {
+        //previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
     }
 
     private static void ReloadScene()

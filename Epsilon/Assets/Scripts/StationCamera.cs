@@ -26,8 +26,8 @@ public class StationCamera : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            mainPlayerCam.Priority = 10;
-            stationCam.Priority = 100;
+            //mainPlayerCam.Priority = 10;
+            stationCam.Priority = 600;
         }
     }
 
@@ -35,7 +35,7 @@ public class StationCamera : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            mainPlayerCam.Priority = 100;
+            //mainPlayerCam.Priority = 100;
             stationCam.Priority = 10;
         }
     }

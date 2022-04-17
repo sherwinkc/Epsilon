@@ -33,15 +33,18 @@ public class PlayerDeathState : PlayerBaseState
     {
         _ctx.ragdoll.EnableRagdoll();
 
+        _ctx.audioManager.PlayDeathSounds();
+        _ctx.audioManager.playerBreathingSFX.Stop();
+
         yield return new WaitForSeconds(_ctx.deadTimeBeforeRestart);
 
-        //_ctx.FadeScreen();
+        _ctx.FadeScreen();
 
         yield return new WaitForSeconds(0.5f);
 
         _ctx.ragdoll.DisableRagdoll();
 
-        _ctx.Respawn();
+        _ctx.Respawn(); // This is in Player state Machine script - more of the respawn sequence
 
         //string scene = SceneManager.GetActiveScene().name;
         //SceneManager.LoadScene(scene);

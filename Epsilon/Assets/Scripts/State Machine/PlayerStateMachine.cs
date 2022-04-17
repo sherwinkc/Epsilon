@@ -459,13 +459,22 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void Respawn()
     {
-        GameCheckpointManager checkpointManager = FindObjectOfType<GameCheckpointManager>();
+        GameCheckpointManager checkpointManager = FindObjectOfType<GameCheckpointManager>(); //TODO Cache this
 
         transform.position = checkpointManager.currentActiveSpawnPoint.transform.position;
 
         DeactivateDeathCam();
 
         //_rb.velocity = Vector2.zero;
+
+        ScreenFadeManager screenFadeManager = FindObjectOfType<ScreenFadeManager>(); //TODO Cache this (Also Above)
+
+        if (screenFadeManager != null)
+        {
+            screenFadeManager.FadeIn();
+        }
+
+        audioManager.playerBreathingSFX.Play();
 
         _currentState = _states.Idle();
         _currentState.EnterState();

@@ -27,7 +27,7 @@ public class ParticleManager : MonoBehaviour
 
     private void CheckVFXDistanceFromPlayer()
     {
-        Debug.Log("Invoked");
+        //Debug.Log("Invoked");
 
         if (Vector2.Distance(transform.position, player.transform.position) < distancFromVFX)
         {

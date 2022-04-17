@@ -31,6 +31,7 @@ public class AudioManager : MonoBehaviour
 
     //Death
     public AudioSource deathCrunch;
+    public AudioSource deathSquelch, deathYelp1, deathYelp2, deathYelp3, deathYelp4;
 
     //Collect
     public AudioSource collectSFX;
@@ -152,4 +153,30 @@ public class AudioManager : MonoBehaviour
         powerUpSFX.Play();
     }
 
+    public void PlayDeathSounds()
+    {
+        deathCrunch.Play();
+
+        int randomNumber = Random.Range(0, 4);
+
+        //Debug.Log(randomNumber);
+
+        if (randomNumber == 0) 
+        { 
+            deathYelp1.Play();        
+        }
+        else if (randomNumber == 1)
+        {
+            deathYelp2.Play();
+        }
+        else if (randomNumber == 2)
+        {
+            deathYelp3.Play();
+        }
+        else
+        {
+            deathYelp4.Play();
+        }
+
+    }
 }
