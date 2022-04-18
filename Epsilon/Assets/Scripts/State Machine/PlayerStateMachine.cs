@@ -207,19 +207,6 @@ public class PlayerStateMachine : MonoBehaviour
         EnableDisableJetpackSprite();
     }
 
-    private void EnableDisableJetpackSprite()
-    {
-        //experimenting - swapping out sprites programmatically
-        if (isJetpackVisible)
-        {
-            GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOn"); //TODO strings bad slow        
-        }
-        else
-        {
-            GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOff"); //TODO strings bad slow   
-        }
-    }
-
     void Update()
     {
         //Ground Check
@@ -262,6 +249,19 @@ public class PlayerStateMachine : MonoBehaviour
         }
 
         thrustImage.value = thrustCounter * 100;
+    }
+
+    private void EnableDisableJetpackSprite()
+    {
+        //experimenting - swapping out sprites programmatically
+        if (isJetpackVisible)
+        {
+            GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOn"); //TODO strings bad slow        
+        }
+        else
+        {
+            GetComponent<SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOff"); //TODO strings bad slow   
+        }
     }
 
     private void CheckWhichWayPlayerIsFacing()
@@ -426,30 +426,6 @@ public class PlayerStateMachine : MonoBehaviour
         {
             transform.parent = null;
         }
-    }      
-
-    private void OnEnable()
-    {
-        EnableGameplayControls();
-    }
-
-    private void OnDisable()
-    {
-        DisableGameplayControls();
-    }
-    public void EnableGameplayControls()
-    {
-        _playerControls.Gameplay.Enable();
-    }
-
-    public void DisableGameplayControls()
-    {
-        _playerControls.Gameplay.Disable();
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawSphere(groundCheck.transform.position, groundCheckRadius);
     }
 
     public void Respawn()
@@ -481,5 +457,26 @@ public class PlayerStateMachine : MonoBehaviour
         {
             impulse.GenerateImpulse(force);
         }
+    }
+
+    private void OnEnable()
+    {
+        EnableGameplayControls();
+    }
+    private void OnDisable()
+    {
+        DisableGameplayControls();
+    }
+    public void EnableGameplayControls()
+    {
+        _playerControls.Gameplay.Enable();
+    }
+    public void DisableGameplayControls()
+    {
+        _playerControls.Gameplay.Disable();
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawSphere(groundCheck.transform.position, groundCheckRadius);
     }
 }

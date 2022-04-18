@@ -25,8 +25,7 @@ public class DebugManager : MonoBehaviour
 
     [Header("Player State")]
     public TMP_Text playerStateDebug;
-    public TMP_Text previousStateDebug;
-    //public TMP_Text holdCurrentState;
+    //public TMP_Text previousStateDebug;
     public TMP_Text standingOnWhatMaterial;
     public TMP_Text isGroundedDebug;
 
@@ -85,9 +84,6 @@ public class DebugManager : MonoBehaviour
         }
 
         playableDirectors = FindObjectsOfType<PlayableDirector>();
-
-        previousStateDebug.text = playerStateMachine.CurrentState.ToString();
-        playerStateDebug.text = playerStateMachine.CurrentState.ToString();
     }
 
     // Update is called once per frame
@@ -96,7 +92,7 @@ public class DebugManager : MonoBehaviour
         DisplayPlayerState();
         //DisplayPreviousPlayerState();
 
-        isGroundedDebug.text = "is Grounded: " + playerStateMachine.IsGrounded.ToString();
+        DisplayIsGrounded();
 
         if (displayerPlayerVelocity) DisplayPlayerVelocity();
 
@@ -111,20 +107,34 @@ public class DebugManager : MonoBehaviour
         DisplayOrbCount();
 
         ReloadScene();
-        ExitGame();
 
-        standingOnWhatMaterial.text = "Standing On: " + playerVFXMan.material.ToString();
+        DisplayIsStandingOn();
+
+        DisplayLedgeAndClimbingChecks();
+
         //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
+        //isMountDetected.text = "Is Mount Detected: " + animator.GetBool("mountDetected").ToString();
+    }
 
+    private void DisplayLedgeAndClimbingChecks()
+    {
         ledgeDetectedAnimator.text = "Ledge Detected: " + animator.GetBool("ledgeDetected").ToString();
         isTouchingWall.text = "isTouchingWall: " + playerStateMachine.isTouchingWall.ToString();
         isTouchingLedge.text = "isTouchingLedge: " + playerStateMachine.isTouchingLedge.ToString();
 
-        isNearClimbableLedge.text = "isTouchingLedge: " + playerStateMachine.ledgeInfo.isNearClimbableMesh.ToString();
-
-        //isMountDetected.text = "Is Mount Detected: " + animator.GetBool("mountDetected").ToString();
+        isNearClimbableLedge.text = "isNearClimbabeLedge: " + playerStateMachine.ledgeInfo.isNearClimbableMesh.ToString();
         isLettingGoOfLedgeAnimator.text = "Is Letting Go Of Ledge: " + animator.GetBool("isLettingGoLedge").ToString();
+    }
+
+    private void DisplayIsStandingOn()
+    {
+        standingOnWhatMaterial.text = "Standing On: " + playerVFXMan.material.ToString();
+    }
+
+    private void DisplayIsGrounded()
+    {
+        isGroundedDebug.text = "is Grounded: " + playerStateMachine.IsGrounded.ToString();
     }
 
     private void DisplayOrbCount()
@@ -169,12 +179,12 @@ public class DebugManager : MonoBehaviour
 
     private void DisplayPlayerState()
     {
-        playerStateDebug.text = playerStateMachine.CurrentState.ToString();
+        playerStateDebug.text = "player state: " + playerStateMachine.CurrentState.ToString();
     }
 
     private void DisplayPreviousPlayerState()
     {
-        previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
+        //previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
     }
 
     private static void ReloadScene()
@@ -202,14 +212,6 @@ public class DebugManager : MonoBehaviour
                 coyoteTime.text = "Coyote Time: " + playerStateMachine.coyoteTimeCounter.ToString("F2");
             }
         }
-    }
-
-    private static void ExitGame()
-    {
-        /*if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton6))
-        {
-            Application.Quit();
-        }*/
     }
 
     private void SetTimeScale()

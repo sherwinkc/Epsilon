@@ -37,7 +37,11 @@ public class RoverBehaviour : MonoBehaviour
             audioManager.roverEngine.Stop();
             audioManager.roverEngine2.Stop();
 
-            if (refillStationEndPoint != null) refillStationEndPoint.enabled = false;
+            if (refillStationEndPoint != null) 
+            { 
+                refillStationEndPoint.enabled = false;
+                //audioManager.powerDownSFX.Play(); // this is playing in both Docks
+            }
         }
 
         if (collision.gameObject.CompareTag("BatteryDeposit"))
