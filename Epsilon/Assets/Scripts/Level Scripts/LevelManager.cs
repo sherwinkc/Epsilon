@@ -5,11 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    PauseMenu pauseMenu;
+
     public float timeBeforeFade;
     public float timeBeforeSceneLoad;
 
     public bool cursorOn = false;
     public string levelToLoad;
+
+    private void Awake()
+    {
+        pauseMenu = GetComponent<PauseMenu>();
+    }
 
     void Start()
     {
@@ -31,10 +38,18 @@ public class LevelManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeFade);
 
-        FindObjectOfType<PlayerStateMachine>().FadeScreen();
+        pauseMenu.playerStateMachine.FadeScreen();
 
         yield return new WaitForSeconds(timeBeforeSceneLoad);
 
         SceneManager.LoadScene(levelToLoad);
+    }
+
+    public void RespawnFromCheckpoint()
+    {
+        Time.timeScale = 1f;
+        pauseMenu.pauseMenuCanvas.gameObject.SetActive(false);
+        pauseMenu.playerStateMachine.EnableGameplayControls();
+        pauseMenu.playerStateMachine.Respawn();
     }
 }

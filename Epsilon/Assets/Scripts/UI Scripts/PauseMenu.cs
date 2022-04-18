@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    PlayerStateMachine playerStateMachine;
+    public PlayerStateMachine playerStateMachine;
+    public Canvas pauseMenuCanvas;
 
-    [SerializeField] Canvas pauseMenuCanvas;
+
 
     private void Awake()
     {

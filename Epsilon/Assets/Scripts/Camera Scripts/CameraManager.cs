@@ -67,27 +67,27 @@ public class CameraManager : MonoBehaviour
         }*/         
 
         //mouse and keyboard
-        //CheckKeyboardInputs(); //TODO this is overriding the controller inputs
+        CheckKeyboardInputs(); //TODO this is overriding the controller inputs
     }
 
     private void CheckKeyboardInputs()
     {
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            LookUp();
+            camLookUp.Priority = 100;
         }
-        else
+        else if (Input.GetKeyUp(KeyCode.UpArrow))
         {
-            LookUpReleased();
+            camLookUp.Priority = 10;
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            LookDown();
+            camLookDown.Priority = 100;
         }
-        else
+        else if (Input.GetKeyUp(KeyCode.DownArrow))
         {
-            LookDownReleased();
+            camLookDown.Priority = 10;
         }
     }
 
