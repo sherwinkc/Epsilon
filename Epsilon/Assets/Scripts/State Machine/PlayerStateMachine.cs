@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 //using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using Cinemachine;
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -130,6 +131,9 @@ public class PlayerStateMachine : MonoBehaviour
     //For Collision Debug
     public Transform collisionTransform;
 
+    [Header("Screenshake")]
+    CinemachineImpulseSource impulse;
+
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -168,6 +172,9 @@ public class PlayerStateMachine : MonoBehaviour
 
         //camera test
         camManager = FindObjectOfType<CameraManager>();
+
+        //ScreenShake
+        impulse = FindObjectOfType<CinemachineImpulseSource>();
 
         //Controls calling OnMovement Input Function
         _playerControls.Gameplay.Move.started += OnMovementInput;
@@ -466,5 +473,13 @@ public class PlayerStateMachine : MonoBehaviour
 
         _currentState = _states.Idle();
         _currentState.EnterState();
+    }
+
+    public void Screenshake(float force)
+    {
+        if (impulse != null) 
+        {
+            impulse.GenerateImpulse(force);
+        }
     }
 }

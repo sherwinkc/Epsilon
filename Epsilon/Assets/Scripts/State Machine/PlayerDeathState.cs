@@ -33,6 +33,8 @@ public class PlayerDeathState : PlayerBaseState
     {
         _ctx.ragdoll.EnableRagdoll();
 
+        _ctx.Screenshake(1f);
+
         _ctx.audioManager.PlayDeathSounds();
         _ctx.audioManager.playerBreathingSFX.Stop();
 

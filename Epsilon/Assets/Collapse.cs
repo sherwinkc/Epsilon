@@ -119,6 +119,8 @@ public class Collapse : MonoBehaviour
 
         blackScreen.SetActive(false);
 
+        FindObjectOfType<ScreenFadeManager>().FadeIn(); // TODO Cache ScreenFadeManager
+
         audioManager.playerBreathingSFX.Play();
         levelMusicManager.music4.Play();
 
