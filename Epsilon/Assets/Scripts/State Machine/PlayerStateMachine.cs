@@ -5,6 +5,7 @@ using UnityEngine.Experimental.U2D.Animation;
 using UnityEngine.InputSystem;
 //using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -443,19 +444,6 @@ public class PlayerStateMachine : MonoBehaviour
     {
         Gizmos.DrawSphere(groundCheck.transform.position, groundCheckRadius);
     }
-
-    /*void RotateSprite()
-    {
-        //rotate sprite when moving left and right
-        if (Rigidbody.velocity.x > 0.5f)
-        {
-            transform.localScale = new Vector3(RotationScaleAmount, RotationScaleAmount, transform.localScale.z);
-        }
-        else if (Rigidbody.velocity.x < -0.5f)
-        {
-            transform.localScale = new Vector3(-RotationScaleAmount, RotationScaleAmount, transform.localScale.z);
-        }
-    }*/
 
     public void Respawn()
     {

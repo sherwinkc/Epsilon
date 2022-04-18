@@ -1,0 +1,23 @@
+Epsilon Naming Conventions
+
+Dates - 2020-09-01
+
+Development Build v0.0.1 CL0123 20220418
+
+Prefabs
+Pre_
+
+Audio
+SFX_
+
+Timeline
+TimeL_
+
+Sprites
+Spr_
+
+Animations
+Anim_
+
+Fonts
+Font_

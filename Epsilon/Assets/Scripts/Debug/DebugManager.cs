@@ -26,7 +26,7 @@ public class DebugManager : MonoBehaviour
     [Header("Player State")]
     public TMP_Text playerStateDebug;
     public TMP_Text previousStateDebug;
-    public TMP_Text holdCurrentState;
+    //public TMP_Text holdCurrentState;
     public TMP_Text standingOnWhatMaterial;
     public TMP_Text isGroundedDebug;
 
@@ -86,15 +86,15 @@ public class DebugManager : MonoBehaviour
 
         playableDirectors = FindObjectsOfType<PlayableDirector>();
 
-        previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
-        playerStateDebug.text = "Player State: " + playerStateMachine.CurrentState.ToString();
+        previousStateDebug.text = playerStateMachine.CurrentState.ToString();
+        playerStateDebug.text = playerStateMachine.CurrentState.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
         DisplayPlayerState();
-        DisplayPreviousPlayerState();
+        //DisplayPreviousPlayerState();
 
         isGroundedDebug.text = "is Grounded: " + playerStateMachine.IsGrounded.ToString();
 
@@ -169,13 +169,12 @@ public class DebugManager : MonoBehaviour
 
     private void DisplayPlayerState()
     {
-        //playerStateDebug.text = "Player State: " + playerStateMachine.CurrentState.ToString();
-        //previousStateDebug.text = "Previous Player State: " + holdCurrentState.ToString();
+        playerStateDebug.text = playerStateMachine.CurrentState.ToString();
     }
 
     private void DisplayPreviousPlayerState()
     {
-        //previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
+        previousStateDebug.text = "Previous Player State: " + playerStateMachine.CurrentState.ToString();
     }
 
     private static void ReloadScene()
