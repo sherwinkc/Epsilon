@@ -1,0 +1,4 @@
+Battery deposit needs sound
+Crates need sound
+Collect Jetpack needs sound
+

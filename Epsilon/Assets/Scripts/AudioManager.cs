@@ -60,6 +60,11 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource grabSFX;
 
+    public AudioSource bootUpSFX;
+
+    public AudioSource airDecompressSFX;
+    public AudioSource openSafeSFX;
+
     void Start()
     {
         

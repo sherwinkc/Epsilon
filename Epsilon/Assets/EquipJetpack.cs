@@ -5,8 +5,15 @@ using UnityEngine.Experimental.U2D.Animation;
 
 public class EquipJetpack : MonoBehaviour
 {
+    AudioManager audioManager;
+
     [SerializeField] GameObject thrustHolder;
     [SerializeField] SpriteRenderer sprRend;
+
+    private void Awake()
+    {
+        audioManager = FindObjectOfType<AudioManager>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,6 +33,9 @@ public class EquipJetpack : MonoBehaviour
             }
 
             if(sprRend != null) sprRend.enabled = false;
+
+            audioManager.bootUpSFX.Play();
+            audioManager.helperCollectSFX.Play();
         }
     }
 }
