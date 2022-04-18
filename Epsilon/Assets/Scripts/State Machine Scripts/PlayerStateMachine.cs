@@ -459,6 +459,13 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
+    public void EnterIdleState()
+    {
+        _currentState = _states.Idle();
+        _currentState.EnterState();
+        _anim.Play("Player_Idle");
+    }
+
     private void OnEnable()
     {
         EnableGameplayControls();

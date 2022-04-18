@@ -11,6 +11,7 @@ public class PlayerLedgeHangState : PlayerBaseState
     { 
         //set animator variables
         _ctx.Animator.SetBool("ledgeDetected", true);
+        _ctx.Animator.Play("Player_Hang");
 
         LedgeHang();
         _ctx.Rigidbody.velocity = new Vector2(0f, 0f);
@@ -33,7 +34,7 @@ public class PlayerLedgeHangState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (Input.GetKeyDown(KeyCode.W) || _ctx.CurrentMovementInput.y > 0.5f || Input.GetKeyDown(KeyCode.Joystick1Button0))
+        if (Input.GetKeyDown(KeyCode.W) || _ctx.CurrentMovementInput.y > 0.5f || Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Space))
         {
             SwitchState(_factory.ClimbLedge());
         }

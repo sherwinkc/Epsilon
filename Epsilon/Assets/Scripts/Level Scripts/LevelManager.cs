@@ -49,7 +49,8 @@ public class LevelManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         pauseMenu.pauseMenuCanvas.gameObject.SetActive(false);
-        pauseMenu.playerStateMachine.EnableGameplayControls();
         pauseMenu.playerStateMachine.Respawn();
+        pauseMenu.playerStateMachine.EnterIdleState();
+        pauseMenu.playerStateMachine.EnableGameplayControls();
     }
 }
