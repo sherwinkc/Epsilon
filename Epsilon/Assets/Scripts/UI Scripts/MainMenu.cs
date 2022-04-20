@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleButtonScalingWhenSelected();
+        //HandleButtonScalingWhenSelected();
 
         /*if (Input.GetKeyDown(KeyCode.Return))
         {
