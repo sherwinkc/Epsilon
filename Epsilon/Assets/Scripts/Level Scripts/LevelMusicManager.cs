@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelMusicManager : MonoBehaviour
 {
-    public AudioSource music1, music2, music3, music4;
+    public AudioSource music1, music2, music3, music4, music5;
     public bool playMusic1, playMusic2, playMusic3, playMusic4;
 
     private void Awake()

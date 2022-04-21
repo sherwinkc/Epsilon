@@ -30,6 +30,10 @@ public class CameraManager : MonoBehaviour
 
     public CinemachineVirtualCamera deathCam;
 
+    [Header("Player Look Camera")]
+    public CinemachineVirtualCamera endingCamClose;
+    public CinemachineVirtualCamera endingCamFar;
+
     private void Awake()
     {
         controls = new PlayerControls();

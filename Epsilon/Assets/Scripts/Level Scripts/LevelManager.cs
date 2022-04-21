@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     PauseMenu pauseMenu;
+    FinalRoomSequence finalRoomSeq;
 
     public float timeBeforeFade;
     public float timeBeforeSceneLoad;
@@ -16,6 +17,7 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         pauseMenu = GetComponent<PauseMenu>();
+        finalRoomSeq = FindObjectOfType<FinalRoomSequence>();
     }
 
     void Start()
@@ -31,10 +33,33 @@ public class LevelManager : MonoBehaviour
 
     public void EndGame()
     {
-        StartCoroutine(EndGameCo());
+        //StartCoroutine(EndGameCo());
     }
 
-    public IEnumerator EndGameCo()
+    public void LoadFinalRoom()
+    {
+        StartCoroutine(LoadFinalRoomCo());
+    }
+
+    public IEnumerator LoadFinalRoomCo()
+    {
+        yield return new WaitForSeconds(timeBeforeFade);
+
+        pauseMenu.playerStateMachine.FadeScreen();
+
+        yield return new WaitForSeconds(timeBeforeSceneLoad);
+
+        ScreenFadeManager screenFadeManager = FindObjectOfType<ScreenFadeManager>(); //TODO Cache this (Also Above)
+
+        if (screenFadeManager != null)
+        {
+            screenFadeManager.FadeIn();
+        }
+
+        finalRoomSeq.ActivateFinalRoomSequence();
+    }
+
+    /*public IEnumerator EndGameCo()
     {
         yield return new WaitForSeconds(timeBeforeFade);
 
@@ -43,7 +68,7 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeSceneLoad);
 
         SceneManager.LoadScene(levelToLoad);
-    }
+    }*/
 
     public void RespawnFromCheckpoint()
     {

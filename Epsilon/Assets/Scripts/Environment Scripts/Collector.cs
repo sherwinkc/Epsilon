@@ -35,7 +35,7 @@ public class Collector : MonoBehaviour
             playableDirector.Play();
             if(collision != null) Destroy(collision.gameObject);
             orbs++;
-            if (orbs >= 3) levelManager.EndGame();
+            if (orbs >= 3) levelManager.LoadFinalRoom();
 
             audioManager.PlayCollectSFX();
         }
