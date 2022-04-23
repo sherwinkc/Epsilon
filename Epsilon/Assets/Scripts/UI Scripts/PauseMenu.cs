@@ -5,14 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public PlayerStateMachine playerStateMachine;
-    public Canvas pauseMenuCanvas;
+    LevelManager levelManager;
 
+    public PlayerStateMachine playerStateMachine;
+    public Canvas pauseMenuCanvas;  
 
 
     private void Awake()
     {
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
 
@@ -33,12 +35,16 @@ public class PauseMenu : MonoBehaviour
             playerStateMachine.EnableGameplayControls();
             pauseMenuCanvas.gameObject.SetActive(false);
 
+            if (!levelManager.cursorOn) Cursor.visible = false;
+
             Time.timeScale = 1f; //TODO get rid
         }
         else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
         {
             playerStateMachine.DisableGameplayControls();
             pauseMenuCanvas.gameObject.SetActive(true);
+
+            if (!levelManager.cursorOn) Cursor.visible = true;
 
             Time.timeScale = 0f; //TODO get rid
         }

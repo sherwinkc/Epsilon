@@ -8,6 +8,8 @@ public class PlayerFunctions : MonoBehaviour
     AudioManager audioManager;
     PlayerStateMachine playerStateMachine;
     CameraManager camManager;
+    LevelManager levelMan;
+    Collector collector;
 
     public GameObject powerBeams;
     public float xOffset, yOffset;
@@ -17,6 +19,8 @@ public class PlayerFunctions : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         playerStateMachine = GetComponent<PlayerStateMachine>();
         camManager = FindObjectOfType<CameraManager>();
+        levelMan = FindObjectOfType<LevelManager>();
+        collector = GetComponent<Collector>();
     }
 
     // A U D I O
@@ -91,5 +95,10 @@ public class PlayerFunctions : MonoBehaviour
     public void SFX_PlayGrab()
     {
         audioManager.grabSFX.Play();
+    }
+
+    public void LoadFinalRoom()
+    {
+        if (collector.orbs >= 3) levelMan.LoadFinalRoom();
     }
 }

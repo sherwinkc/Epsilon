@@ -19,6 +19,8 @@ public class VideoManager : MonoBehaviour
     void Start()
     {
         Invoke("LoadNextScene", waitTimeToLoadLevel);
+
+        Cursor.visible = false;
     }
 
     void Update()

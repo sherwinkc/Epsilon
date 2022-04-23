@@ -27,6 +27,8 @@ public class MainMenu : MonoBehaviour
     {
         //Cursor.visible = false;
         menuMusic.Play();
+
+        Cursor.visible = true;
     }
 
     // Update is called once per frame

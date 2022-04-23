@@ -6,7 +6,9 @@ using UnityEngine.Playables;
 public class Collector : MonoBehaviour
 {
     AudioManager audioManager;
-    [SerializeField] LevelManager levelManager;
+    //[SerializeField] LevelManager levelManager;
+
+    [SerializeField] GameObject pickUpVFX;
 
     public PlayableDirector playableDirector;
     public int orbs = 0;
@@ -14,7 +16,7 @@ public class Collector : MonoBehaviour
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        levelManager = FindObjectOfType<LevelManager>();
+        //levelManager = FindObjectOfType<LevelManager>();
     }
 
     void Start()
@@ -33,9 +35,10 @@ public class Collector : MonoBehaviour
         if (collision.gameObject.CompareTag("Orb"))
         {
             playableDirector.Play();
-            if(collision != null) Destroy(collision.gameObject);
+            Instantiate(pickUpVFX, collision.gameObject.transform.position, Quaternion.identity);
+            if (collision != null) Destroy(collision.gameObject);
             orbs++;
-            if (orbs >= 3) levelManager.LoadFinalRoom();
+            //if (orbs >= 3) levelManager.LoadFinalRoom(); //moved to PLayer functions
 
             audioManager.PlayCollectSFX();
         }

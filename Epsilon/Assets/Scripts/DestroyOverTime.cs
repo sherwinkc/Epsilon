@@ -6,6 +6,12 @@ public class DestroyOverTime : MonoBehaviour
 {
     public float time;
 
+    private void Start()
+    {
+        Destroy();
+    }
+
+
     public void Destroy()
     {
         Destroy(this.gameObject, time);

@@ -25,25 +25,16 @@ public class LevelManager : MonoBehaviour
         if(!cursorOn) Cursor.visible = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void EndGame()
-    {
-        //StartCoroutine(EndGameCo());
-    }
-
     public void LoadFinalRoom()
     {
         StartCoroutine(LoadFinalRoomCo());
+
+        Debug.Log("Loaded Final Room");
     }
 
     public IEnumerator LoadFinalRoomCo()
     {
-        yield return new WaitForSeconds(timeBeforeFade);
+        //yield return new WaitForSeconds(timeBeforeFade);
 
         pauseMenu.playerStateMachine.FadeScreen();
 
@@ -58,17 +49,6 @@ public class LevelManager : MonoBehaviour
 
         finalRoomSeq.ActivateFinalRoomSequence();
     }
-
-    /*public IEnumerator EndGameCo()
-    {
-        yield return new WaitForSeconds(timeBeforeFade);
-
-        pauseMenu.playerStateMachine.FadeScreen();
-
-        yield return new WaitForSeconds(timeBeforeSceneLoad);
-
-        SceneManager.LoadScene(levelToLoad);
-    }*/
 
     public void RespawnFromCheckpoint()
     {
