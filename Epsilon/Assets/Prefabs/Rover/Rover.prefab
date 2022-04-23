@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3478115766548932235}
   - component: {fileID: 3478115766548932236}
   - component: {fileID: 3478115766548932237}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 3478115766964998456}
   - component: {fileID: 3478115766964998457}
   - component: {fileID: 3478115766964998458}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 3478115767153226029}
   - component: {fileID: 3478115767153226031}
   - component: {fileID: 3478115767153226030}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 3478115767259008726}
   - component: {fileID: 3478115767259008727}
   - component: {fileID: 3478115767259008744}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Square (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,7 +430,7 @@ MonoBehaviour:
   - {x: -0.50098616, y: -0.08721642, z: 0}
   m_ShapePathHash: -1807256087
   m_Mesh: {fileID: 0}
-  m_InstanceId: 266188
+  m_InstanceId: 1263904
 --- !u!1 &3478115767275731452
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 3478115767275731453}
   - component: {fileID: 3478115767275731455}
   - component: {fileID: 3478115767275731454}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Square (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +551,7 @@ GameObject:
   - component: {fileID: 3478115767442928949}
   - component: {fileID: 3478115767442928951}
   - component: {fileID: 3478115767442928950}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -661,7 +661,7 @@ GameObject:
   - component: {fileID: 3478115767474112752}
   - component: {fileID: 3478115767474112753}
   - component: {fileID: 3478115767474112754}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rover
   m_TagString: Rover
   m_Icon: {fileID: 0}
@@ -727,6 +727,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   batteryCount: 0
   batteriesRequired: 1
+  refillStationEndPoint: {fileID: 0}
   moveSpeed: 3
   canMove: 0
 --- !u!61 &3478115767474112754
@@ -767,7 +768,7 @@ GameObject:
   - component: {fileID: 3478115767647471528}
   - component: {fileID: 3478115767647471511}
   - component: {fileID: 3478115767647471529}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -890,7 +891,7 @@ MonoBehaviour:
   - {x: -0.48984456, y: 0.4931952, z: 0}
   m_ShapePathHash: 1453426738
   m_Mesh: {fileID: 0}
-  m_InstanceId: 265168
+  m_InstanceId: 1263940
 --- !u!1 &3478115767707213968
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,7 +903,7 @@ GameObject:
   - component: {fileID: 3478115767707213969}
   - component: {fileID: 3478115767707213970}
   - component: {fileID: 3478115767707213971}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1000,7 +1001,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3478115767771711956}
   - component: {fileID: 3478115767771711957}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Square (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1083,7 +1084,7 @@ GameObject:
   - component: {fileID: 3478115768055864385}
   - component: {fileID: 3478115768055864386}
   - component: {fileID: 3478115768055864387}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
