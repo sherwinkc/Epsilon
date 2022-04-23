@@ -115,11 +115,6 @@ public class DebugManager : MonoBehaviour
         //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
         //isMountDetected.text = "Is Mount Detected: " + animator.GetBool("mountDetected").ToString();
-
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            FindObjectOfType<LevelManager>().LoadFinalRoom();
-        }
     }
 
     private void DisplayLedgeAndClimbingChecks()

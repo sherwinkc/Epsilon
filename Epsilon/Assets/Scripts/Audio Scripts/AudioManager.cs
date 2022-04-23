@@ -67,6 +67,11 @@ public class AudioManager : MonoBehaviour
     public AudioSource airDecompressSFX;
     public AudioSource openSafeSFX;
 
+    [Header("UI")]
+    public AudioSource highlightUISFX;
+    public AudioSource selectUISFX;
+
+
     void Start()
     {
         

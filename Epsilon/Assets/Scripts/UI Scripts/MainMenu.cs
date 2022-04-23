@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     ScreenFadeManager screenFadeManager;
     [SerializeField] float timeToLoadGame = 0.25f;
+    [SerializeField] GameObject button;
+    [SerializeField] Button defaultButton;
 
     public string levelToLoad;
 
@@ -15,7 +18,7 @@ public class MainMenu : MonoBehaviour
     public AudioSource highlightUI;
     public AudioSource selectUI;
 
-    GameObject currentSelected, previouslySelected;
+    GameObject currentlySelected, previouslySelected;
 
     private void Awake()
     {
@@ -55,21 +58,34 @@ public class MainMenu : MonoBehaviour
             menuMusic.Stop();
             SceneManager.LoadScene(levelToLoad);
         }*/
+        //Debug.Log(EventSystem.current.currentSelectedGameObject);
+        //Debug.Log(button);
+
+        if (EventSystem.current.currentSelectedGameObject != button)
+        {
+            highlightUI.Play();
+            button = EventSystem.current.currentSelectedGameObject;
+        }
+
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            defaultButton.Select();
+        }
     }
 
     private void HandleButtonScalingWhenSelected()
     {
-        currentSelected = EventSystem.current.currentSelectedGameObject;
+        currentlySelected = EventSystem.current.currentSelectedGameObject;
 
-        if (currentSelected != null)
+        if (currentlySelected != null)
         {
-            currentSelected.gameObject.transform.localScale = new Vector3(1.05f, 1.2f, 1f);
+            currentlySelected.gameObject.transform.localScale = new Vector3(1.05f, 1.2f, 1f);
 
         }
 
         if (previouslySelected != null)
         {
-            if (currentSelected != previouslySelected)
+            if (currentlySelected != previouslySelected)
             {
                 previouslySelected.gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
 
@@ -78,7 +94,7 @@ public class MainMenu : MonoBehaviour
             }
         }
 
-        previouslySelected = currentSelected;
+        previouslySelected = currentlySelected;
     }
 
     public void StartGame()

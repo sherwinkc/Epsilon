@@ -1151,6 +1151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToLoadGame: 0.5
+  button: {fileID: 6280357}
+  defaultButton: {fileID: 6280359}
   levelToLoad: VideoTest
   menuMusic: {fileID: 989956845}
   highlightUI: {fileID: 1901554979}

@@ -2,19 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
     LevelManager levelManager;
+    AudioManager audioManager;
+
+    [SerializeField] GameObject button;
+    [SerializeField] Button defaultButton;
+    [SerializeField] Slider volumeSlider;
 
     public PlayerStateMachine playerStateMachine;
-    public Canvas pauseMenuCanvas;  
+    public Canvas pauseMenuCanvas;
 
 
     private void Awake()
     {
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         levelManager = FindObjectOfType<LevelManager>();
+        audioManager = FindObjectOfType<AudioManager>();
+
+        //Set60FPS();
     }
 
 
@@ -26,6 +36,22 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         EnableDisablePauseMenu();
+
+        PlaySoundWhenButtonChanges();
+    }
+
+    private void PlaySoundWhenButtonChanges()
+    {
+        if (EventSystem.current.currentSelectedGameObject != button && pauseMenuCanvas.gameObject.activeSelf)
+        {
+            audioManager.highlightUISFX.Play();
+            button = EventSystem.current.currentSelectedGameObject;
+        }
+
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            defaultButton.Select();
+        }
     }
 
     private void EnableDisablePauseMenu()
@@ -48,6 +74,13 @@ public class PauseMenu : MonoBehaviour
 
             Time.timeScale = 0f; //TODO get rid
         }
+
+        ChangeVolume();
+    }
+
+    private void ChangeVolume()
+    {
+        AudioListener.volume = volumeSlider.value;
     }
 
     public void GotoMainMenu()
@@ -66,4 +99,42 @@ public class PauseMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void SetResolution720()
+    {
+        Screen.SetResolution(1280, 720, true);
+    }
+
+    public void SetResolution1080()
+    {
+        Screen.SetResolution(1920, 1080, true);
+    }
+
+    public void SetResolution4K()
+    {
+        Screen.SetResolution(3840, 2160, true);
+    }
+
+    public void SetFullScreen()
+    {
+        Screen.fullScreen = true;
+    }
+
+    public void SetWindowedMode()
+    {
+        Screen.fullScreen = false;
+    }
+
+    public void Set30FPS()
+    {
+        //QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 30;
+    }
+
+    public void Set60FPS()
+    {
+        //QualitySettings.vSyncCount = 60;
+        Application.targetFrameRate = 60;
+    }
 }
+

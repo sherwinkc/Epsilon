@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyOverTime : MonoBehaviour
+public class DestroyParticlesAfterTime : MonoBehaviour
 {
     public float time;
+
+    private void Start()
+    {
+        Destroy();
+    }
 
     public void Destroy()
     {

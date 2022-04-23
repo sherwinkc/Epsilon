@@ -2380,7 +2380,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xA92022 FromOffWorld Games LTD - Company Number 13832893"
+  m_text: "\xA92022 FromOffWorld Games LTD 13832893"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2508,6 +2508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85ed4867bc6dcc4bb9902f83d56f065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  img: {fileID: 0}
 --- !u!95 &1257828023
 Animator:
   serializedVersion: 3
@@ -2669,8 +2670,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 117.51
-  m_fontSizeBase: 117.51
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

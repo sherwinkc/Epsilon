@@ -19,6 +19,12 @@ public class DebugController : MonoBehaviour
             enableDebug = !enableDebug;
             EnableOrDisableDebug();
         }
+
+        //TODO add FPS toggle on F2
+        /*if (Input.GetKeyDown(KeyCode.F2))
+        {
+
+        }*/
     }
 
     private void EnableOrDisableDebug()
