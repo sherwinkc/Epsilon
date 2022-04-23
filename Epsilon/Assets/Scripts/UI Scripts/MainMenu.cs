@@ -112,6 +112,11 @@ public class MainMenu : MonoBehaviour
 
     }
 
+    public void SelectedControls()
+    {
+        SceneManager.LoadScene("ThisGameSupports");
+    }
+
     public void QuitButton()
     {
         selectUI.Play();
