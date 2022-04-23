@@ -7,7 +7,7 @@ public class EquipJetpack : MonoBehaviour
 {
     AudioManager audioManager;
 
-    [SerializeField] GameObject thrustHolder;
+    public GameObject thrustHolder;
     [SerializeField] SpriteRenderer sprRend;
 
     private void Awake()

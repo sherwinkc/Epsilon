@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class LevelManager : MonoBehaviour
 {
     PauseMenu pauseMenu;
     FinalRoomSequence finalRoomSeq;
+    EquipJetpack equipJetpack;
+
+    [SerializeField] VideoPlayer video;
 
     public float timeBeforeFade;
     public float timeBeforeSceneLoad;
@@ -18,6 +22,9 @@ public class LevelManager : MonoBehaviour
     {
         pauseMenu = GetComponent<PauseMenu>();
         finalRoomSeq = FindObjectOfType<FinalRoomSequence>();
+        equipJetpack = FindObjectOfType<EquipJetpack>();
+
+        video.Stop();
     }
 
     void Start()
@@ -28,12 +35,13 @@ public class LevelManager : MonoBehaviour
     public void LoadFinalRoom()
     {
         StartCoroutine(LoadFinalRoomCo());
-
-        Debug.Log("Loaded Final Room");
     }
 
     public IEnumerator LoadFinalRoomCo()
     {
+        equipJetpack.thrustHolder.SetActive(false);
+
+        video.Play();
         //yield return new WaitForSeconds(timeBeforeFade);
 
         pauseMenu.playerStateMachine.FadeScreen();
