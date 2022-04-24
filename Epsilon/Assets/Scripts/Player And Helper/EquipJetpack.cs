@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.U2D.Animation;
+using UnityEngine.UI;
 
 public class EquipJetpack : MonoBehaviour
 {
@@ -10,9 +11,13 @@ public class EquipJetpack : MonoBehaviour
     public GameObject thrustHolder;
     [SerializeField] SpriteRenderer sprRend;
 
+    [SerializeField] GameObject jetpackTooltip;
+
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
+
+        jetpackTooltip.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -37,5 +42,7 @@ public class EquipJetpack : MonoBehaviour
             audioManager.bootUpSFX.Play();
             audioManager.helperCollectSFX.Play();
         }
+
+        if(jetpackTooltip != null) jetpackTooltip.SetActive(true);
     }
 }
