@@ -70,6 +70,7 @@ public class AudioManager : MonoBehaviour
     [Header("UI")]
     public AudioSource highlightUISFX;
     public AudioSource selectUISFX;
+    public AudioSource interactSFX;
 
 
     void Start()

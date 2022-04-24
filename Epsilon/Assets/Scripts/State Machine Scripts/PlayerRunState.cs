@@ -123,11 +123,13 @@ public class PlayerRunState : PlayerBaseState
         if (_ctx.hit.collider != null && _ctx.hit.collider.CompareTag("MovableBox"))
         {
             _ctx.interact.interactHUD.SetActive(true); //TODO - Don't like accessing interact script just to display HUD tooltip 
+            //_ctx.interact.PlayInteractSound();
         }
 
         if (_ctx.hit.collider == null && !_ctx.interact.isCloseEnoughToBattery && !_ctx.interact.isCloseEnoughToRover)
         {
             _ctx.interact.interactHUD.SetActive(false);
+            //_ctx.interact.interactHasSFXPlayed = false;
         }
     }
 

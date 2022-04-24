@@ -46,6 +46,8 @@ public class FinalRoomSequence : MonoBehaviour
     {
         screenFadeMan.FadeIn();
 
+        player.transform.localScale = new Vector3(player.RotationScaleAmount, player.RotationScaleAmount, player.transform.localScale.z);
+
         player.transform.position = teleportTo.transform.position;
 
         anim.Play("Player_LyingDown");

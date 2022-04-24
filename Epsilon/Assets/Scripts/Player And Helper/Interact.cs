@@ -19,6 +19,8 @@ public class Interact : MonoBehaviour
     public bool isCloseEnoughToLiftButton;
     //[SerializeField] bool isLiftOn = false;
 
+    public bool interactHasSFXPlayed = false;
+
     //battery
     public bool isCloseEnoughToBattery = false;
 
@@ -28,7 +30,7 @@ public class Interact : MonoBehaviour
 
     private void Awake()
     {
-        //audioManager = FindObjectOfType<AudioManager>();
+        audioManager = FindObjectOfType<AudioManager>();
         helper = FindObjectOfType<HelperMovement>();
         rover = FindObjectOfType<RoverBehaviour>();
     }
@@ -84,6 +86,7 @@ public class Interact : MonoBehaviour
             isCloseEnoughToBattery = true;
             colliderToPickUp = collision;
             interactHUD.SetActive(true);
+            //PlayInteractSound();
         }
 
         if (collision.gameObject.CompareTag("BatteryDeposit") && !rover.canMove && helper.isCarryingBattery)
@@ -94,8 +97,18 @@ public class Interact : MonoBehaviour
             {
                 isCloseEnoughToRover= true;
                 interactHUD.SetActive(true);
+                //PlayInteractSound();
                 //colliderToPickUp = collision;
             }
+        }
+    }
+
+    public void PlayInteractSound()
+    {
+        if (audioManager.interactSFX != null)
+        {
+            if(!interactHasSFXPlayed) audioManager.interactSFX.Play();
+            interactHasSFXPlayed = true;
         }
     }
 
@@ -109,8 +122,7 @@ public class Interact : MonoBehaviour
         {
             isCloseEnoughToLiftButton = true;
             interactHUD.SetActive(true);
-
-            //PlayLiftAudio();
+            //PlayInteractSound();
         }
     }
 
@@ -122,32 +134,9 @@ public class Interact : MonoBehaviour
         isCloseEnoughToRover = false;
         interactHUD.SetActive(false);
 
-        /*if (collision.gameObject.CompareTag("BatteryDeposit"))
+        /*if (collision.gameObject.CompareTag("BatteryDeposit") || collision.gameObject.CompareTag("Battery") || collision.gameObject.CompareTag("Lift"))
         {
-            FindObjectOfType<HelperMovement>().depositTransform = null;
+            interactHasSFXPlayed = false;
         }*/
     }
-    /*private void PlayLiftAudio()
-    {
-        //if lift is moving
-        if (liftManager.moveLift)
-        {
-            //play audio
-            if (!isLiftLoopPlaying)
-            {
-                audioManager.liftActiveLoop.Play();
-                isLiftLoopPlaying = true;
-            }
-        }
-        //if lift is not moving
-        else if (!liftManager.moveLift) 
-        {
-            //stop audio
-            if (isLiftLoopPlaying)
-            {
-                audioManager.liftActiveLoop.Stop();
-                isLiftLoopPlaying = false;
-            }
-        }
-    }*/
 }
