@@ -11,6 +11,7 @@ public class PlayerFunctions : MonoBehaviour
     CameraManager camManager;
     LevelManager levelMan;
     Collector collector;
+    Animator anim;
 
     public GameObject powerBeams;
     public float xOffset, yOffset;
@@ -24,6 +25,7 @@ public class PlayerFunctions : MonoBehaviour
         camManager = FindObjectOfType<CameraManager>();
         levelMan = FindObjectOfType<LevelManager>();
         collector = GetComponent<Collector>();
+        anim = GetComponent<Animator>();
     }
 
     // A U D I O
@@ -85,7 +87,8 @@ public class PlayerFunctions : MonoBehaviour
 
     public void StopInCinematicState()
     {
-        playerStateMachine.inCinematic = false;
+        //if statement prevent movement after all the orbs have been collected
+        if (collector.orbs < 3) playerStateMachine.inCinematic = false;
     }
 
     // V F X
@@ -103,9 +106,8 @@ public class PlayerFunctions : MonoBehaviour
     public void LoadFinalRoom()
     {
         if (collector.orbs >= 3) 
-        { 
-            levelMan.LoadFinalRoom();
-            //if (endGate != null) endGate.SetActive(false);            
+        {
+            levelMan.LoadFinalRoom();       
         }
     }
 }

@@ -42,7 +42,6 @@ public class LevelManager : MonoBehaviour
         equipJetpack.thrustHolder.SetActive(false);
 
         video.Play();
-        //yield return new WaitForSeconds(timeBeforeFade);
 
         pauseMenu.playerStateMachine.FadeScreen();
 
@@ -50,10 +49,7 @@ public class LevelManager : MonoBehaviour
 
         ScreenFadeManager screenFadeManager = FindObjectOfType<ScreenFadeManager>(); //TODO Cache this (Also Above)
 
-        if (screenFadeManager != null)
-        {
-            screenFadeManager.FadeIn();
-        }
+        if (screenFadeManager != null) screenFadeManager.FadeIn();
 
         finalRoomSeq.ActivateFinalRoomSequence();
     }

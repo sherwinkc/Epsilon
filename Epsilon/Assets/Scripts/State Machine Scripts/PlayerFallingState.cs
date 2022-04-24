@@ -39,7 +39,11 @@ public class PlayerFallingState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
+        if (_ctx.inCinematic)
+        {
+            SwitchState(_factory.InCinematic());
+        }
+        else if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
         {
             SwitchState(_factory.LedgeHang());
         }
