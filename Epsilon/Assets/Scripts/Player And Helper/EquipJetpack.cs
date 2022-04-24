@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.U2D.Animation;
-using UnityEngine.UI;
 
 public class EquipJetpack : MonoBehaviour
 {
@@ -17,7 +16,7 @@ public class EquipJetpack : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
 
-        jetpackTooltip.SetActive(false);
+        if (jetpackTooltip != null) jetpackTooltip.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
