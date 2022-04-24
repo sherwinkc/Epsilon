@@ -9,6 +9,7 @@ public class FinalRoomSequence : MonoBehaviour
     PlayerStateMachine player;
     LevelMusicManager levelMusicMan;
     ScreenFadeManager screenFadeMan;
+    //FindOrbsToolTipManager orbManager;
 
     public Animator anim;
 
@@ -26,6 +27,7 @@ public class FinalRoomSequence : MonoBehaviour
         camManager = FindObjectOfType<CameraManager>();
         levelMusicMan = FindObjectOfType<LevelMusicManager>();
         screenFadeMan = FindObjectOfType<ScreenFadeManager>();
+        //orbManager = FindObjectOfType<FindOrbsToolTipManager>();
 
         //questionCanvas.SetActive(false);
     }    
@@ -46,7 +48,7 @@ public class FinalRoomSequence : MonoBehaviour
     {
         screenFadeMan.FadeIn();
 
-        player.EnterIdleState();
+        player.EnterCinematicState();
 
         player.transform.localScale = new Vector3(player.RotationScaleAmount, player.RotationScaleAmount, player.transform.localScale.z);
 

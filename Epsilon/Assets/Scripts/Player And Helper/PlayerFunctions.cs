@@ -11,12 +11,11 @@ public class PlayerFunctions : MonoBehaviour
     CameraManager camManager;
     LevelManager levelMan;
     Collector collector;
-    FindOrbsToolTipManager orbManager;
 
     public GameObject powerBeams;
     public float xOffset, yOffset;
 
-    [SerializeField] GameObject endGate;
+    //[SerializeField] GameObject endGate;
 
     private void Awake()
     {
@@ -25,7 +24,6 @@ public class PlayerFunctions : MonoBehaviour
         camManager = FindObjectOfType<CameraManager>();
         levelMan = FindObjectOfType<LevelManager>();
         collector = GetComponent<Collector>();
-        orbManager = FindObjectOfType<FindOrbsToolTipManager>();
     }
 
     // A U D I O
@@ -107,8 +105,7 @@ public class PlayerFunctions : MonoBehaviour
         if (collector.orbs >= 3) 
         { 
             levelMan.LoadFinalRoom();
-            if (endGate != null) endGate.SetActive(false);
-            if (orbManager.findOrbsToolTip != null) orbManager.findOrbsToolTip.SetActive(false);
+            //if (endGate != null) endGate.SetActive(false);            
         }
     }
 }
