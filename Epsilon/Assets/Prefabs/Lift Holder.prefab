@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6021123303193139170}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lift Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1109746704602092278}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bottom End Point
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 699783330218812057}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top End Point
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -106,7 +106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2650982100542685306, guid: d8e8ff1329641884ca24d485c51612ef, type: 3}
       propertyPath: m_InstanceId
-      value: -908004
+      value: -299168
       objectReference: {fileID: 0}
     - target: {fileID: 7925293245730715946, guid: d8e8ff1329641884ca24d485c51612ef, type: 3}
       propertyPath: endPoint

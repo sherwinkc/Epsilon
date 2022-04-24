@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FindOrbsToolTipManager : MonoBehaviour
 {
-    [SerializeField] GameObject findOrbsToolTip;
+    public GameObject findOrbsToolTip;
 
     private void Awake()
     {
