@@ -14,6 +14,7 @@ public class PlayerFunctions : MonoBehaviour
     Animator anim;
 
     public GameObject powerBeams;
+    [SerializeField] Transform beamOrigin;
     public float xOffset, yOffset;
 
     //[SerializeField] GameObject endGate;
@@ -94,8 +95,10 @@ public class PlayerFunctions : MonoBehaviour
     // V F X
     public void SpawnPlayerBeams()
     {
-        Instantiate(powerBeams, new Vector2(playerStateMachine.transform.position.x + xOffset, playerStateMachine.transform.position.y + yOffset), 
-            playerStateMachine.transform.rotation);
+        if (beamOrigin == null) return;
+        
+        Instantiate(powerBeams, new Vector2(beamOrigin.transform.position.x, beamOrigin.transform.position.y), 
+            beamOrigin.transform.rotation);
     }
 
     public void SFX_PlayGrab()
