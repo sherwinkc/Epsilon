@@ -72,6 +72,10 @@ public class AudioManager : MonoBehaviour
     public AudioSource selectUISFX;
     public AudioSource interactSFX;
 
+    [Header("Player")]
+    public AudioSource breathing;
+    public AudioSource softGrunt;
+
 
     void Start()
     {
@@ -181,6 +185,5 @@ public class AudioManager : MonoBehaviour
         {
             deathYelp4.Play();
         }
-
     }
 }

@@ -113,4 +113,17 @@ public class PlayerFunctions : MonoBehaviour
             levelMan.LoadFinalRoom();       
         }
     }
+
+    public void PlaySoftGruntSFX()
+    {
+        audioManager.breathing.Stop();
+
+        audioManager.softGrunt.pitch = Random.Range(0.75f, 1f);
+        audioManager.softGrunt.Play();
+    }
+
+    public void PlayBeathingSFX()
+    {
+        if(!audioManager.breathing.isPlaying) audioManager.breathing.Play();
+    }
 }

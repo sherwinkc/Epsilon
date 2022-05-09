@@ -38,7 +38,8 @@ public class PlayerLedgeHangState : PlayerBaseState
         {
             SwitchState(_factory.ClimbLedge());
         }
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Joystick1Button1) || _ctx.CurrentMovementInput.y < -0.5f)
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Joystick1Button1) || _ctx.CurrentMovementInput.y < -0.5f || 
+            (_ctx.CurrentMovementInput.x < -0.5f && _ctx.isFacingRight) || (_ctx.CurrentMovementInput.x > 0.5f && !_ctx.isFacingRight)) //checks which way player is facing and pressing in the opposite direction
         {
             _ctx._hasLetGoOfLedge = true;
             SwitchState(_factory.LetGoOfLedge());

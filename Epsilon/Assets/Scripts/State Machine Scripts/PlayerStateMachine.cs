@@ -134,6 +134,8 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Screenshake")]
     CinemachineImpulseSource impulse;
 
+    public bool isFacingRight;
+
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -254,14 +256,17 @@ public class PlayerStateMachine : MonoBehaviour
     private void EnableDisableJetpackSprite()
     {
         //experimenting - swapping out sprites programmatically
-        if (isJetpackVisible)
+        /*if (isJetpackVisible)
         {
             GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOn"); //TODO strings bad slow        
         }
         else
         {
             GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOff"); //TODO strings bad slow   
-        }
+            GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("Player", "Entry"); //TODO strings bad slow   
+        }*/
+
+        GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("Player", "Entry");
     }
 
     private void CheckWhichWayPlayerIsFacing()
@@ -269,10 +274,12 @@ public class PlayerStateMachine : MonoBehaviour
         if (transform.localScale.x > 0)
         {
             _anim.SetBool("isLookingRight", true);
+            isFacingRight = true;
         }
         else
         {
             _anim.SetBool("isLookingRight", false);
+            isFacingRight = false;
         }
     }
 
