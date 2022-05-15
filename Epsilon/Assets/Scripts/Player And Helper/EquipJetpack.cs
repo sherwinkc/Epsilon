@@ -28,7 +28,7 @@ public class EquipJetpack : MonoBehaviour
             if (collision != null) 
             {
                 collision.gameObject.GetComponent<PlayerStateMachine>().isJetpackOn = true;
-                collision.gameObject.GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOn"); //TODO strings bad slow   
+                //collision.gameObject.GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOn"); //TODO strings bad slow   
             } 
 
             if (thrustHolder != null)

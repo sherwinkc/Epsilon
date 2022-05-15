@@ -28,7 +28,9 @@ public class SlideManager : MonoBehaviour
 
     public void ActivateBlackScreen()
     {
-        FindObjectOfType<ScreenFadeManager>().TurnOnAnimatorAndFadeOut();
+        ScreenFadeManager screenFadeManager = FindObjectOfType<ScreenFadeManager>();
+        if (screenFadeManager != null) screenFadeManager.TurnOnAnimatorAndFadeOut();
+
         Invoke("LoadNextScene", 0.26f);
     }
 

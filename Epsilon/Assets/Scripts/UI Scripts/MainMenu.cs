@@ -126,7 +126,7 @@ public class MainMenu : MonoBehaviour
 
     private IEnumerator StartGameCoroutine()
     {
-        screenFadeManager.TurnOnAnimatorAndFadeOut();
+        if(screenFadeManager != null) screenFadeManager.TurnOnAnimatorAndFadeOut();
         selectUI.Play();
 
         yield return new WaitForSeconds(timeToLoadGame);

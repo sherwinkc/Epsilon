@@ -22,6 +22,16 @@ MonoBehaviour:
     - m_Name: JetpackOff
       m_Hash: -1522985116
       m_Sprite: {fileID: 21300000, guid: 21b4467878a928648bd333d58985a9ee, type: 3}
-    - m_Name: LowHealth
-      m_Hash: -2044772471
-      m_Sprite: {fileID: 21300000, guid: 6e757bbbc5de1514aa59ef4e8e34ea6e, type: 3}
+    - m_Name: Eyes
+      m_Hash: 120101800
+      m_Sprite: {fileID: 21300000, guid: 7f7623ed848c63246b87a25c907ece82, type: 3}
+  - m_Name: New Player
+    m_Hash: 844293227
+    m_CategoryList:
+    - m_Name: No Eyes
+      m_Hash: -1755904155
+      m_Sprite: {fileID: 21300000, guid: 0b0ed4fd4497e1d40b32deefa336dccd, type: 3}
+    - m_Name: Eyes
+      m_Hash: 120101800
+      m_Sprite: {fileID: 21300000, guid: 7f7623ed848c63246b87a25c907ece82, type: 3}
+  m_ModificationHash: 0

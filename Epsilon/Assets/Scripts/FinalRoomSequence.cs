@@ -46,7 +46,7 @@ public class FinalRoomSequence : MonoBehaviour
 
     public void ActivateFinalRoomSequence()
     {
-        screenFadeMan.FadeIn();
+        if(screenFadeMan != null) screenFadeMan.FadeIn();
 
         player.transform.localScale = new Vector3(player.RotationScaleAmount, player.RotationScaleAmount, player.transform.localScale.z);
 
@@ -75,8 +75,8 @@ public class FinalRoomSequence : MonoBehaviour
         camManager.endingCamFar.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(transitionTime2);
-        
-        screenFadeMan.TurnOnAnimatorAndFadeOut();
+
+        if (screenFadeMan != null) screenFadeMan.TurnOnAnimatorAndFadeOut();
 
         yield return new WaitForSeconds(0.5f);
 

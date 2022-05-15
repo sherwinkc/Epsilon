@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0b0ed4fd4497e1d40b32deefa336dccd
+guid: 7f7623ed848c63246b87a25c907ece82
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -66,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -147,7 +147,7 @@ TextureImporter:
         rgba: 4278255360
     - name: bone_4
       guid: 791450f4d06ced1418f2c5e3ed59d4e5
-      position: {x: 119.731255, y: 47.644463, z: -1}
+      position: {x: 119.7312, y: 47.6445, z: -1}
       rotation: {x: 0, y: -0, z: -0.6833847, w: -0.7300585}
       length: 92.62602
       parentId: 2
@@ -183,7 +183,7 @@ TextureImporter:
         rgba: 4278223103
     - name: bone_8
       guid: 9c65099b2161947488ca7786273926b9
-      position: {x: 158.08057, y: -1.5892819, z: 0}
+      position: {x: 158.08058, y: -1.5892819, z: 0}
       rotation: {x: 0, y: 0, z: -0.0073889843, w: 0.99997276}
       length: 123.462326
       parentId: 6

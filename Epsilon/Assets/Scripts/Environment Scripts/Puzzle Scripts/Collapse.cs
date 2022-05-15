@@ -119,9 +119,10 @@ public class Collapse : MonoBehaviour
 
         blackScreen.SetActive(false);
 
-        FindObjectOfType<ScreenFadeManager>().FadeIn(); // TODO Cache ScreenFadeManager
+        ScreenFadeManager screenFadeMan = FindObjectOfType<ScreenFadeManager>(); // TODO Cache ScreenFadeManager
+        if (screenFadeMan != null) screenFadeMan.FadeIn();
 
-        audioManager.playerBreathingSFX.Play();
+            audioManager.playerBreathingSFX.Play();
         levelMusicManager.music4.Play();
 
         //Initate cinematic state

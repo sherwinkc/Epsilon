@@ -38,7 +38,7 @@ public class VideoManager : MonoBehaviour
 
     private IEnumerator StartGameCoroutine()
     {
-        screenFadeManager.TurnOnAnimatorAndFadeOut();
+        if (screenFadeManager != null) screenFadeManager.TurnOnAnimatorAndFadeOut();
 
         yield return new WaitForSeconds(timeToLoadGame);
 
