@@ -50,7 +50,12 @@ public class DebugManager : MonoBehaviour
 
     [Header("Timeline / Cinematics")]
     public PlayableDirector[] playableDirectors;
-    public bool timelinesAreActive = true;
+    public bool turnOffAllTimelines = false;
+    [SerializeField] bool timeline1Active;
+    [SerializeField] bool timeline2Active;
+    [SerializeField] bool timeline3Active;
+    [SerializeField] bool timeline4Active;
+
 
     [Header("Collectibles")]
     public TMP_Text orbCount;
@@ -83,7 +88,7 @@ public class DebugManager : MonoBehaviour
             Time.timeScale = 1f;
         }
 
-        playableDirectors = FindObjectsOfType<PlayableDirector>();
+        //playableDirectors = FindObjectsOfType<PlayableDirector>();
     }
 
     // Update is called once per frame
@@ -102,7 +107,7 @@ public class DebugManager : MonoBehaviour
 
         if (displayJetpackValues) DisplayJetpackValues();
 
-        CheckPlayableDirectorsEnabled(); //Turn this on or off to activate timelines
+        CheckPlayableDirectors(); //Turn this on or off to activate timelines
 
         DisplayOrbCount();
 
@@ -115,6 +120,8 @@ public class DebugManager : MonoBehaviour
         //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
         //isMountDetected.text = "Is Mount Detected: " + animator.GetBool("mountDetected").ToString();
+
+
     }
 
     private void DisplayLedgeAndClimbingChecks()
@@ -142,22 +149,69 @@ public class DebugManager : MonoBehaviour
         if (orbCount != null) orbCount.text = "Orb Count: " + collector.orbs.ToString();
     }
     
-    private void CheckPlayableDirectorsEnabled()
+    private void CheckPlayableDirectors()
     {
-        if (timelinesAreActive)
-        {
-            for (int i = 0; i < playableDirectors.Length; i++)
-            {
-                playableDirectors[i].enabled = true;
-            }
-        }
-        else if (!timelinesAreActive)
+        if (turnOffAllTimelines)
         {
             for (int i = 0; i < playableDirectors.Length; i++)
             {
                 playableDirectors[i].enabled = false;
             }
+
+            return;
         }
+
+        if (timeline1Active)
+        {
+            playableDirectors[0].enabled = true;
+        }
+        else if(!timeline1Active)
+        {
+            playableDirectors[0].enabled = false;
+        }
+
+        if (timeline2Active)
+        {
+            playableDirectors[1].enabled = true;
+        }
+        else
+        {
+            playableDirectors[1].enabled = false;
+        }
+
+        if (timeline3Active)
+        {
+            playableDirectors[2].enabled = true;
+        }
+        else
+        {
+            playableDirectors[2].enabled = false;
+        }
+
+        /*if (timeline4Active)
+        {
+            playableDirectors[3].enabled = true;
+        }
+        else
+        {
+            playableDirectors[3].enabled = false;
+        }*/
+
+        /*if (turnOffAllTimelines)
+        {
+            for (int i = 0; i < playableDirectors.Length; i++)
+            {
+                playableDirectors[i].enabled = true;
+            }
+        }*/
+
+        /*if (!turnOffAllTimelines)
+        {
+            for (int i = 0; i < playableDirectors.Length; i++)
+            {
+                playableDirectors[i].enabled = false;
+            }
+        }*/
     }
 
     private void DisplayJetpackValues()
