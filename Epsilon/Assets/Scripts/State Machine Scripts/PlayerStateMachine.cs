@@ -115,6 +115,9 @@ public class PlayerStateMachine : MonoBehaviour
     public bool regenerateThrust;
     public float regenerateThrustSpeed;
     [SerializeField] float delayThrustRegenerationSpeed = 1f;
+    public Vector3 impulseJetpack; //TODO not currently used
+
+    public GameObject boostDetails;
 
     [Header("Player Health & Death")]
     public int playerHealth = 1;
@@ -209,6 +212,8 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         EnableDisableJetpackSprite();
+
+        impulseJetpack = new Vector3(0f, 20f, 0f);
     }
 
     void Update()

@@ -9,13 +9,24 @@ public class PlayerJetpackState : PlayerBaseState
 
     public override void EnterState()
     {
-        if(!_ctx.IsGrounded) _ctx.Rigidbody.velocity = Vector2.zero;
+        if (!_ctx.IsGrounded)
+        {
+            _ctx.Rigidbody.velocity = Vector2.zero; // get rid of any velocity
+        }
+
+        if (_ctx.IsGrounded)
+        {
+            _ctx.Rigidbody.AddForce(new Vector3(0f, 75f, 0f), ForceMode2D.Impulse); // give player an initial boost once
+            if(!_ctx.audioManager.jetpackStart.isPlaying) _ctx.audioManager.jetpackStart.Play(); // play audio
+        }
 
         _ctx.Animator.SetBool("isJetpacking", true);
         _ctx.Animator.SetBool("isFalling", false);
 ;
         _ctx._jetEmission.Play();
         _ctx.FootEmission.Stop();
+
+        _ctx.boostDetails.SetActive(true);
 
         _ctx.canJetpack = false;
 
@@ -55,6 +66,7 @@ public class PlayerJetpackState : PlayerBaseState
         if (_ctx.audioManager != null) _ctx.audioManager.jetpackLoop.Stop();
 
         _ctx._jetEmission.Stop();
+        _ctx.boostDetails.SetActive(false);
 
         //_ctx.thrustCounter = _ctx.thrustTime;
 
