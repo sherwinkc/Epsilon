@@ -30,6 +30,8 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Variables")]
     [SerializeField] float _moveSpeed = 4f; //4f before * by Time.Delta Time.
     [SerializeField] float _inAirMoveSpeedMultiplier;
+    [Tooltip("Default = 10f. Higher values result in faster acceleration")]
+    public float _inAirAccelerationRate = 7.5f; //TODO change to serializefield
     [SerializeField] float _rotationScaleAmount = 0.33f;
     [SerializeField] float _softLandingSpeedMultiplier = 0.75f;
     public bool canJump = true;

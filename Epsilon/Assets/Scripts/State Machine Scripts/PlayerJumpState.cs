@@ -23,7 +23,10 @@ public class PlayerJumpState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
-        _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * (_ctx.MoveSpeed * _ctx.InAirSpeedMultiplier)), _ctx.Rigidbody.velocity.y);
+        _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * (_ctx.MoveSpeed * _ctx.InAirSpeedMultiplier)), _ctx.Rigidbody.velocity.y); //default logic
+        //_ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x, _ctx.Rigidbody.velocity.y);
+
+        //InAirLogic();
 
         ShootRaycastsForClimbing();
         RaycastDebug();
@@ -122,5 +125,19 @@ public class PlayerJumpState : PlayerBaseState
         {
             _ctx.transform.localScale = new Vector3(-_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
         }*/
+    }
+
+    private void InAirLogic()
+    {
+        float fHorizontalVelocity = _ctx.Rigidbody.velocity.x;
+        //float fHorizontalDamping = 0.25f;
+
+        fHorizontalVelocity += _ctx.CurrentMovement.x * Time.deltaTime * _ctx._inAirAccelerationRate;
+        //fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDamping, Time.deltaTime * 100f);
+        //Rigidbody.velocity = new Vector2(fHorizontalVelocity, Rigidbody.velocity.y);
+
+
+        //_ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx.MoveSpeed), _ctx.Rigidbody.velocity.y); //Default
+        _ctx.Rigidbody.velocity = new Vector2((fHorizontalVelocity /** _ctx.MoveSpeed*/), _ctx.Rigidbody.velocity.y);
     }
 }
