@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HelperSprite : MonoBehaviour
 {
+    //this script turns the helper left and right by setting its scale
+
     Transform player;
 
     private void Awake()
