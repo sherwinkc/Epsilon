@@ -13,25 +13,16 @@ MonoBehaviour:
   m_Name: Player Sprite Library Asset
   m_EditorClassIdentifier: 
   m_Labels:
-  - m_Name: Player
-    m_Hash: -1615495341
+  - m_Name: PlayerV3
+    m_Hash: 1136948404
     m_CategoryList:
-    - m_Name: JetpackOn
-      m_Hash: 840169301
-      m_Sprite: {fileID: 21300000, guid: 0450adb3eed8edd44a4f72412f6b28be, type: 3}
-    - m_Name: JetpackOff
-      m_Hash: -1522985116
-      m_Sprite: {fileID: 21300000, guid: 21b4467878a928648bd333d58985a9ee, type: 3}
-    - m_Name: Eyes
-      m_Hash: 120101800
-      m_Sprite: {fileID: 21300000, guid: 7f7623ed848c63246b87a25c907ece82, type: 3}
-  - m_Name: New Player
-    m_Hash: 844293227
-    m_CategoryList:
-    - m_Name: No Eyes
-      m_Hash: -1755904155
-      m_Sprite: {fileID: 21300000, guid: 0b0ed4fd4497e1d40b32deefa336dccd, type: 3}
-    - m_Name: Eyes
-      m_Hash: 120101800
-      m_Sprite: {fileID: 21300000, guid: 7f7623ed848c63246b87a25c907ece82, type: 3}
+    - m_Name: Player
+      m_Hash: -1615495341
+      m_Sprite: {fileID: 21300000, guid: 0806316c0d2fc1e48be2b45fdb1b4d54, type: 3}
+    - m_Name: PlayerWithoutJetpack
+      m_Hash: 121920680
+      m_Sprite: {fileID: 21300000, guid: 323f9ae1de7aeda45a7217f8e1ee5767, type: 3}
+    - m_Name: PlayerCrackedHelm
+      m_Hash: -2039613301
+      m_Sprite: {fileID: 21300000, guid: 91fbd42a39a270441b3753a1d136bf0c, type: 3}
   m_ModificationHash: 0

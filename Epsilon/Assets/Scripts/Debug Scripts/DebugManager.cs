@@ -69,6 +69,8 @@ public class DebugManager : MonoBehaviour
     public TMP_Text isMountDetected;
     public TMP_Text isLettingGoOfLedgeAnimator;
 
+    [Header("Datapad")]
+    public GameObject datapad;
 
     private void Awake()
     {
@@ -121,7 +123,22 @@ public class DebugManager : MonoBehaviour
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
         //isMountDetected.text = "Is Mount Detected: " + animator.GetBool("mountDetected").ToString();
 
+        EnableDatapad();
+    }
 
+    private void EnableDatapad()
+    {
+        if (Input.GetKeyDown(KeyCode.F9))
+        {
+            if (datapad.activeSelf == false)
+            {
+                datapad.SetActive(true);
+            }
+            else if (datapad.activeSelf == true)
+            {
+                datapad.SetActive(false);
+            }
+        }
     }
 
     private void DisplayLedgeAndClimbingChecks()
