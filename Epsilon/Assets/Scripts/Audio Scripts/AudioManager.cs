@@ -76,6 +76,10 @@ public class AudioManager : MonoBehaviour
     public AudioSource breathing;
     public AudioSource softGrunt;
 
+    [Header("Datapads")]
+    public AudioSource datapadSFXOpen;
+    public AudioSource datapadSFXClose;
+
 
     void Start()
     {

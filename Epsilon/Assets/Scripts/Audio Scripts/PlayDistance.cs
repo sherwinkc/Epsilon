@@ -7,8 +7,10 @@ public class PlayDistance : MonoBehaviour
     public AudioSource audioSource;
     public PlayerStateMachine player;
     public Transform sound;
+    [SerializeField] bool useAudioSourceVolume = false;
 
     [SerializeField] bool playOnAwake = false;
+
 
     [Header("Volume")]
     public float distanceFromSound = 6;
@@ -30,7 +32,7 @@ public class PlayDistance : MonoBehaviour
         player = FindObjectOfType<PlayerStateMachine>();
         sound = this.gameObject.transform;
 
-        maxVolume = audioSource.volume;
+        if(useAudioSourceVolume) maxVolume = audioSource.volume;
 
         //InvokeRepeating("CheckToPlay", 0f, 5f);
 
