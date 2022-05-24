@@ -86,6 +86,11 @@ public class PlayerFunctions : MonoBehaviour
         playerStateMachine.inCinematic = true;
     }
 
+    public void ExitInCinematicState()
+    {
+        playerStateMachine.inCinematic = false;
+    }
+
     public void StopInCinematicState()
     {
         //if statement prevent movement after all the orbs have been collected

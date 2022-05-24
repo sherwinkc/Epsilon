@@ -43,7 +43,8 @@ public class Datapad : MonoBehaviour
 
             Invoke("TurnOffText", showTextDuration);
 
-            audioManager.datapadSFXOpen.Play();
+            PlayOpenSFX();
+            Invoke("PlayOpenSFX", 10.5f);
         }
     }
 
@@ -51,6 +52,11 @@ public class Datapad : MonoBehaviour
     {
         if (textToShow != null) textToShow.SetActive(false);
 
-        audioManager.datapadSFXClose.Play();
+        //audioManager.datapadSFXClose.Play();
+    }
+
+    void PlayOpenSFX()
+    {
+        audioManager.datapadSFXOpen.Play();
     }
 }

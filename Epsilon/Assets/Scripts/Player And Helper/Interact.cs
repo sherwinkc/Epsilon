@@ -10,8 +10,10 @@ public class Interact : MonoBehaviour
     HelperMovement helper;
     Collider2D colliderToPickUp;
     RoverBehaviour rover;
+    Animator animator;
 
     public GameObject interactHUD;
+    public GameObject interactUnableToHUD;
     public LiftManager liftManager;
 
     //lift
@@ -33,6 +35,7 @@ public class Interact : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         helper = FindObjectOfType<HelperMovement>();
         rover = FindObjectOfType<RoverBehaviour>();
+        animator = GetComponent<Animator>();
     }
 
     void Start()
@@ -59,6 +62,8 @@ public class Interact : MonoBehaviour
                 helper.isPickingUpItem = true;
                 isCloseEnoughToBattery = false;
                 interactHUD.SetActive(false);
+
+                animator.Play("Player_HandGesture");
             }
 
             //check if close enough to rover && holding a battery
@@ -68,6 +73,8 @@ public class Interact : MonoBehaviour
                 helper.isDepositingToRover = true;
                 isCloseEnoughToRover = false;
                 interactHUD.SetActive(false);
+
+                animator.Play("Player_HandGesture");
             }
         } 
     }
@@ -101,6 +108,10 @@ public class Interact : MonoBehaviour
                 //colliderToPickUp = collision;
             }
         }
+        else if (collision.gameObject.CompareTag("BatteryDeposit") && !helper.isCarryingBattery)
+        {
+            interactUnableToHUD.SetActive(true);
+        }
     }
 
     public void PlayInteractSound()
@@ -133,6 +144,7 @@ public class Interact : MonoBehaviour
         isCloseEnoughToBattery = false;
         isCloseEnoughToRover = false;
         interactHUD.SetActive(false);
+        interactUnableToHUD.SetActive(false);
 
         /*if (collision.gameObject.CompareTag("BatteryDeposit") || collision.gameObject.CompareTag("Battery") || collision.gameObject.CompareTag("Lift"))
         {

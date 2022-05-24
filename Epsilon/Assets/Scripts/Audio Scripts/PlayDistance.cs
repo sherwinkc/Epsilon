@@ -15,14 +15,19 @@ public class PlayDistance : MonoBehaviour
     [Header("Volume")]
     public float distanceFromSound = 6;
     public float maxVolume;
+    [Tooltip("Higher values result in faster volume fade")]
     public float decreaseVolumeRate = 5f;
+    [Tooltip("Higher values result in faster volume fade")]
     public float increaseVolumeRate = 5f;
 
     [Header("Panning")]
     [SerializeField] float maxPanAmountLeft = -0.75f;
     [SerializeField] float maxPanAmountRight = 0.75f;
+    [Tooltip("Higher values result in faster panning")]
     [SerializeField] float rightPanningRate = 0.75f;
+    [Tooltip("Higher values result in faster panning")]
     [SerializeField] float leftPanningRate = 0.75f;
+    [SerializeField] float centerPanRange = 5f;
 
 
     // Start is called before the first frame update
@@ -73,7 +78,23 @@ public class PlayDistance : MonoBehaviour
 
     private void CheckPanning()
     {
-        if (sound.transform.position.x < player.transform.position.x) // if the sound is to the left of the player we want it panned left
+        //check if player is within a small distance
+        if (Vector2.Distance(sound.transform.position, player.transform.position) < centerPanRange) // check if player is in a small range so the pan is centered
+        {
+            if (audioSource.panStereo < 0)
+            {
+                audioSource.panStereo += Time.deltaTime * rightPanningRate;
+
+                if (audioSource.panStereo >= 0) audioSource.panStereo = 0f;
+            }
+            else if (audioSource.panStereo > 0)
+            {
+                audioSource.panStereo -= Time.deltaTime * leftPanningRate;
+
+                if (audioSource.panStereo <= 0) audioSource.panStereo = 0f;
+            }
+        }
+        else if (sound.transform.position.x < player.transform.position.x) // if the sound is to the left of the player we want it panned left
         {
             audioSource.panStereo -= Time.deltaTime * leftPanningRate; //TODO make parameter;
 
@@ -99,7 +120,7 @@ public class PlayDistance : MonoBehaviour
     {
         if (Vector2.Distance(sound.transform.position, player.transform.position) < distanceFromSound)
         {
-            audioSource.volume += Time.deltaTime / increaseVolumeRate;
+            audioSource.volume += Time.deltaTime * increaseVolumeRate;
 
             if (audioSource.volume >= maxVolume)
             {
@@ -110,7 +131,7 @@ public class PlayDistance : MonoBehaviour
         {
             if (audioSource.volume > 0)
             {
-                audioSource.volume -= Time.deltaTime / decreaseVolumeRate;
+                audioSource.volume -= Time.deltaTime * decreaseVolumeRate;
             }
 
             if (audioSource.volume <= 0)
