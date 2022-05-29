@@ -7,21 +7,9 @@ public class LevelMusicManager : MonoBehaviour
     public AudioSource music1, music2, music3, music4, music5;
     public bool randomiseMusic, playMusic1, playMusic2, playMusic3, playMusic4;
 
-    private void Awake()
-    {
-
-    }
-
     void Start()
     {
         PlaySelectedMusic();
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void PlaySelectedMusic()

@@ -6,15 +6,9 @@ public class FindAllAudioGameObjects : MonoBehaviour
 {
     public AudioSource[] audioSources;
 
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        audioSources = FindObjectsOfType<AudioSource>();
-     
+        audioSources = FindObjectsOfType<AudioSource>();     
     }
 }

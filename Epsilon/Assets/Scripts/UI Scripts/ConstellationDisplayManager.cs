@@ -23,11 +23,6 @@ public class ConstellationDisplayManager : MonoBehaviour
         constellation3.SetActive(false);
     }
 
-    void Start()
-    {
-
-    }
-
     private void OnEnable()
     {
         if (collector.orbs == 1)
@@ -42,12 +37,6 @@ public class ConstellationDisplayManager : MonoBehaviour
         {
             SwitchOnConstellation3();
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void SwitchOnConstellation1()

@@ -46,7 +46,8 @@ public class AudioManager : MonoBehaviour
     public AudioSource puzzleCorrect2;
 
     [Header("Bridge")]
-    public AudioSource bridgeOpenSFX;
+    public AudioSource bridgeOpenSFX; 
+    public AudioSource bridgeOpenSFX2;
 
     [Header("Rock")]
     public AudioSource rockSFX;
@@ -79,18 +80,6 @@ public class AudioManager : MonoBehaviour
     [Header("Datapads")]
     public AudioSource datapadSFXOpen;
     public AudioSource datapadSFXClose;
-
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
 
     public void PlayFootstepsSFX(AudioMaterial material)
     {

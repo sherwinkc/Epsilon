@@ -11,17 +11,6 @@ public class PlayerVFXManager : MonoBehaviour
 
     public RaycastHit2D hitInfo;
 
-    private void Awake()
-    {
-
-    }
-
-    void Start()
-    {
-        
-    }
-
-
     void Update()
     {
         Invoke("ShootRaycastDownToDetectMaterial", 0.5f);

@@ -35,7 +35,7 @@ public class PlayerDeathState : PlayerBaseState
 
         _ctx.Screenshake(1f);
 
-        _ctx.audioManager.PlayDeathSounds();
+        //_ctx.audioManager.PlayDeathSounds(); // Play Death yelps and screams
         _ctx.audioManager.playerBreathingSFX.Stop();
 
         yield return new WaitForSeconds(_ctx.deadTimeBeforeRestart);

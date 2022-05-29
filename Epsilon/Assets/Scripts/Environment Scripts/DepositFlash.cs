@@ -14,12 +14,6 @@ public class DepositFlash : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void TurnOnBarHolder()
     {
         if (barHolder != null)

@@ -12,15 +12,4 @@ public class GameCheckpointManager : MonoBehaviour
     {
         currentActiveSpawnPoint = spawnPoints[0];
     }
-
-    void Start()
-    {
-        
-    }
-
-
-    void Update()
-    {
-        
-    }
 }

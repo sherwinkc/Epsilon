@@ -25,17 +25,6 @@ public class Collector : MonoBehaviour
         player = FindObjectOfType<PlayerStateMachine>();
     }
 
-    void Start()
-    {
-        
-    }
-
-    
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Orb"))

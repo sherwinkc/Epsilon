@@ -507,5 +507,4 @@ public class PlayerStateMachine : MonoBehaviour
     {
         Gizmos.DrawSphere(groundCheck.transform.position, groundCheckRadius);
     }
-
 }

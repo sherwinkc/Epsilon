@@ -16,9 +16,9 @@ public class PlayDistance : MonoBehaviour
     public float distanceFromSound = 6;
     public float maxVolume;
     [Tooltip("Higher values result in faster volume fade")]
-    public float decreaseVolumeRate = 5f;
+    public float decreaseVolumeRate = 0.05f;
     [Tooltip("Higher values result in faster volume fade")]
-    public float increaseVolumeRate = 5f;
+    public float increaseVolumeRate = 0.1f;
 
     [Header("Panning")]
     [SerializeField] float maxPanAmountLeft = -0.75f;
@@ -40,7 +40,6 @@ public class PlayDistance : MonoBehaviour
         if(useAudioSourceVolume) maxVolume = audioSource.volume;
 
         //InvokeRepeating("CheckToPlay", 0f, 5f);
-
     }
 
     private void CheckToPlay() //called every 5 secs
@@ -62,11 +61,6 @@ public class PlayDistance : MonoBehaviour
                 audioSource.Play();
             }
         }*/
-    }
-
-    private void Start()
-    {
-        //InvokeRepeating("CheckPanning", 0f, 1f);
     }
 
     // Update is called once per frame

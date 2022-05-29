@@ -15,12 +15,6 @@ public class SlideManager : MonoBehaviour
         Invoke("ActivateBlackScreen", loadTime);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void LoadNextScene()
     {
         SceneManager.LoadScene(levelToLoad);

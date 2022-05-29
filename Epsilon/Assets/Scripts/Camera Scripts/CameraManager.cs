@@ -44,12 +44,6 @@ public class CameraManager : MonoBehaviour
         controls.Gameplay.LookDown.canceled += ctx => LookDownReleased();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
