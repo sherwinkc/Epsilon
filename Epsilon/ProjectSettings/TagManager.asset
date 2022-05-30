@@ -29,6 +29,7 @@ TagManager:
   - Trigger_FinalRoom
   - Sand
   - Metal
+  - CropButton
   layers:
   - Default
   - TransparentFX

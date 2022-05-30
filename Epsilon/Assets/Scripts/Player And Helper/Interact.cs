@@ -29,6 +29,9 @@ public class Interact : MonoBehaviour
     //rover
     public bool isCloseEnoughToRover = false;
 
+    //crop button
+    public bool isCloseEnoughToCropButton = false;
+
 
     private void Awake()
     {
@@ -76,6 +79,13 @@ public class Interact : MonoBehaviour
 
                 animator.Play("Player_HandGesture");
             }
+
+            else if (isCloseEnoughToCropButton)
+            {
+                FindObjectOfType<CropsManager>().ActivateSprinklers();
+                interactHUD.SetActive(false);
+            }
+
         } 
     }
 
@@ -83,11 +93,7 @@ public class Interact : MonoBehaviour
     {
         HandleLiftLogic(collision);
 
-        if (collision.gameObject.CompareTag("BatteryDeposit"))
-        {
-            FindObjectOfType<HelperMovement>().depositTransform = collision.transform;
-        }
-
+        //Battery
         if (collision.gameObject.CompareTag("Battery") && !helper.isCarryingBattery)
         {
             isCloseEnoughToBattery = true;
@@ -96,6 +102,13 @@ public class Interact : MonoBehaviour
             //PlayInteractSound();
         }
 
+        //Batter Deposit
+        if (collision.gameObject.CompareTag("BatteryDeposit"))
+        {
+            FindObjectOfType<HelperMovement>().depositTransform = collision.transform;
+        }
+
+        //Battery Deposit
         if (collision.gameObject.CompareTag("BatteryDeposit") && !rover.canMove && helper.isCarryingBattery)
         {
             DepositManager depositManager = collision.gameObject.GetComponent<DepositManager>();
@@ -111,6 +124,13 @@ public class Interact : MonoBehaviour
         else if (collision.gameObject.CompareTag("BatteryDeposit") && !helper.isCarryingBattery)
         {
             interactUnableToHUD.SetActive(true);
+        }
+
+        //crop Button
+        if (collision.gameObject.CompareTag("CropButton"))
+        {
+            isCloseEnoughToCropButton = true;
+            interactHUD.SetActive(true);
         }
     }
 
@@ -137,7 +157,6 @@ public class Interact : MonoBehaviour
         }
     }
 
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         isCloseEnoughToLiftButton = false;
@@ -145,6 +164,7 @@ public class Interact : MonoBehaviour
         isCloseEnoughToRover = false;
         interactHUD.SetActive(false);
         interactUnableToHUD.SetActive(false);
+        isCloseEnoughToCropButton = false;
 
         /*if (collision.gameObject.CompareTag("BatteryDeposit") || collision.gameObject.CompareTag("Battery") || collision.gameObject.CompareTag("Lift"))
         {
