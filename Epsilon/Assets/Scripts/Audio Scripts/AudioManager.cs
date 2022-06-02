@@ -28,7 +28,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource helperCollectSFX;
 
     [Header("Rover")]
-    public AudioSource roverEngine, roverEngine2;
+    public AudioSource roverEngine;
     public AudioSource roverGreenLightSFX;
     public AudioSource powerDownSFX;
 

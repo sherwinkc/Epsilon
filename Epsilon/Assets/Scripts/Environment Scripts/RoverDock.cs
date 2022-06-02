@@ -25,12 +25,19 @@ public class RoverDock : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Rover"))
         {
-            redLight.enabled = false;
-            greenLight.enabled = true;
+            collision.GetComponent<RoverBehaviour>().animator.SetTrigger("MoveArm");
 
-            if (animToOpen != null) animToOpen.SetTrigger("Open"); //TODO Animator is being called 60fps
-
-            audioManager.roverGreenLightSFX.Play();
+            Invoke("OpenBridge", 1.5f); //TODO Magic Number
         }
+    }
+
+    private void OpenBridge()
+    {
+        redLight.enabled = false;
+        greenLight.enabled = true;
+
+        if (animToOpen != null) animToOpen.SetTrigger("Open"); //TODO Animator is being called 60fps
+
+        audioManager.roverGreenLightSFX.Play();
     }
 }

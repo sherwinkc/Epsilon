@@ -45,7 +45,7 @@ public class LevelMusicManager : MonoBehaviour
         else if (randomiseMusic)
         {
             int var = Random.Range(1, 5);
-            Debug.Log(var);
+            //Debug.Log(var);
 
             if (var == 1) music1.gameObject.SetActive(true);
             if (var == 2) music2.gameObject.SetActive(true);

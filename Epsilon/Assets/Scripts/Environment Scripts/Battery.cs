@@ -5,7 +5,7 @@ using UnityEngine;
 public class Battery : MonoBehaviour
 {
     AudioManager audioManager;
-    public GameObject helperTransform;
+    public Transform helperTransform;
     public HelperMovement helper;
 
     [SerializeField] bool isMovingWithHelper = false;
@@ -16,6 +16,8 @@ public class Battery : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
         helper = FindObjectOfType<HelperMovement>();
+
+        if (helper != null) helperTransform = helper.transform;
     }
 
     // Update is called once per frame

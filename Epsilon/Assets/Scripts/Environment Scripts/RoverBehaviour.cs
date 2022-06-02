@@ -10,12 +10,15 @@ public class RoverBehaviour : MonoBehaviour
 
     [SerializeField] BoxCollider2D refillStationEndPoint;
 
+    public Animator animator;
+
     public float moveSpeed = 1f;
     public bool canMove = false;
 
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -30,7 +33,7 @@ public class RoverBehaviour : MonoBehaviour
         {
             canMove = false;
             audioManager.roverEngine.Stop();
-            audioManager.roverEngine2.Stop();
+            //audioManager.roverEngine2.Stop();
 
             if (refillStationEndPoint != null) 
             { 
@@ -62,7 +65,7 @@ public class RoverBehaviour : MonoBehaviour
     {
         canMove = true;
         audioManager.roverEngine.Play();
-        audioManager.roverEngine2.Play();
+        //audioManager.roverEngine2.Play();
 
         if (batteryCount >= batteriesRequired)
         {

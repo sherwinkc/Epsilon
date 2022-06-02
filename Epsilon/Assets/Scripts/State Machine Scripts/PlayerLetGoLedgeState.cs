@@ -38,7 +38,11 @@ public class PlayerLetGoLedgeState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.IsGrounded)
+        /*if (_ctx.Rigidbody.velocity.y < -1f && _ctx.airTime > 0.2f) //TODO fix so that I can grab ledges when falling in this state
+        {
+            SwitchState(_factory.Falling());
+        }
+        else*/ if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Idle());
         }
