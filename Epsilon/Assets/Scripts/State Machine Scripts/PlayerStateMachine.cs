@@ -73,6 +73,9 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] float _maxFallVelocity = 10f;
     [SerializeField] float _defaultGravityScaleWhenFalling = 1f;
     [SerializeField] float _gravityScaleWhenFalling = 2.5f;
+    public float timeInAirBeforeDeath = 10f;
+    public float velocityInAirBeforeDeath = -10f;
+
 
     [Header("Footsteps VFX")]    //Footsteps particle system
     public ParticleSystem _footEmission;

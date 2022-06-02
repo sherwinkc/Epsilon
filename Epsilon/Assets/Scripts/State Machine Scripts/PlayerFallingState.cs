@@ -49,6 +49,10 @@ public class PlayerFallingState : PlayerBaseState
         {
             SwitchState(_factory.LedgeHang());
         }
+        else if (_ctx.IsGrounded && _ctx.airTime > _ctx.timeInAirBeforeDeath && _ctx.Rigidbody.velocity.y < _ctx.velocityInAirBeforeDeath) 
+        {
+            SwitchState(_factory.Death());
+        }
         else if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Idle());

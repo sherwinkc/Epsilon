@@ -75,6 +75,9 @@ public class PlayerJumpState : PlayerBaseState
 
     void HandleJump()
     {
+        //animate jump
+        _ctx.Animator.SetTrigger(_ctx.JumpHash);
+
         _ctx.Animator.SetBool(_ctx.IsRunningHash, false);
 
         if (_ctx.IsJumpPressed)
@@ -86,7 +89,6 @@ public class PlayerJumpState : PlayerBaseState
             _ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x, _ctx.JumpSpeed);
         }
 
-        _ctx.Animator.SetTrigger(_ctx.JumpHash);
     }
 
     private void ShootRaycastsForClimbing()
