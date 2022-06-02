@@ -13,7 +13,7 @@ public class DayAndNightCycle : MonoBehaviour
     [SerializeField] Animator nightAnim;
 
     [SerializeField] float cycleLength;
-    [SerializeField] bool isNight;
+    //[SerializeField] bool isNight;
 
     private void Awake()
     {
@@ -48,7 +48,7 @@ public class DayAndNightCycle : MonoBehaviour
         globalLight2.Play("DimGlobalLight1");
         sun.Play("SetSun");
         Invoke("BeginSunrise", cycleLength);
-        isNight = true;
+        //isNight = true;
     }
 
     private void BeginSunrise()
@@ -59,7 +59,7 @@ public class DayAndNightCycle : MonoBehaviour
         globalLight2.Play("BrightenGlobalLight");
         sun.Play("RiseSun");
         Invoke("BeginSunset", cycleLength);
-        isNight = false;
+        //isNight = false;
     }
 
 }

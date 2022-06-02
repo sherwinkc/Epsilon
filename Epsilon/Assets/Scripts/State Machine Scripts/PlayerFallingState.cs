@@ -14,6 +14,8 @@ public class PlayerFallingState : PlayerBaseState
         _ctx.Animator.SetBool("ledgeDetected", false);
 
         _ctx.FootEmission.Stop();
+
+        _ctx.Rigidbody.gravityScale = _ctx.GravityScaleWhenFalling;
     }
 
     public override void UpdateState()
@@ -34,7 +36,7 @@ public class PlayerFallingState : PlayerBaseState
 
     public override void ExitState()
     {
-
+        _ctx.Rigidbody.gravityScale = _ctx.DefaultScaleWhenFalling;
     }
 
     public override void CheckSwitchStates()

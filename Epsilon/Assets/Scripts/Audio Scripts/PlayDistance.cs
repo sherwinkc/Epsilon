@@ -9,8 +9,7 @@ public class PlayDistance : MonoBehaviour
     public Transform sound;
     [SerializeField] bool useAudioSourceVolume = false;
 
-    [SerializeField] bool playOnAwake = false;
-
+    //[SerializeField] bool playOnAwake = false;
 
     [Header("Volume")]
     public float distanceFromSound = 6;

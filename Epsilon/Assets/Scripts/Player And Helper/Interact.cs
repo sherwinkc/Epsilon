@@ -31,6 +31,7 @@ public class Interact : MonoBehaviour
 
     //crop button
     public bool isCloseEnoughToCropButton = false;
+    bool isCropsOn = false;
 
 
     private void Awake()
@@ -80,12 +81,12 @@ public class Interact : MonoBehaviour
                 animator.Play("Player_HandGesture");
             }
 
-            else if (isCloseEnoughToCropButton)
+            else if (isCloseEnoughToCropButton && !isCropsOn)
             {
                 FindObjectOfType<CropsManager>().ActivateSprinklers();
                 interactHUD.SetActive(false);
+                isCropsOn = true;
             }
-
         } 
     }
 
@@ -127,7 +128,7 @@ public class Interact : MonoBehaviour
         }
 
         //crop Button
-        if (collision.gameObject.CompareTag("CropButton"))
+        if (collision.gameObject.CompareTag("CropButton") && !isCropsOn)
         {
             isCloseEnoughToCropButton = true;
             interactHUD.SetActive(true);

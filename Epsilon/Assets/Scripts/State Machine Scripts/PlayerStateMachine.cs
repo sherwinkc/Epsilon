@@ -34,6 +34,7 @@ public class PlayerStateMachine : MonoBehaviour
     public float _inAirAccelerationRate = 7.5f; //TODO change to serializefield
     [SerializeField] float _rotationScaleAmount = 0.33f;
     [SerializeField] float _softLandingSpeedMultiplier = 0.75f;
+    [SerializeField] float _hardLandingSpeedMultiplier = 1.5f;
     public bool canJump = true;
 
     [Header("Ground Checks")]  
@@ -58,18 +59,20 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Jump Variables")]
     [SerializeField] bool _isJumpPressed = false;
     [SerializeField] float _jumpSpeed = 5f;
-    [SerializeField] float _gravityScaleWhenFalling = 2.5f;
     [SerializeField] float jumpReleaseDampener = 0.5f;
     //[SerializeField] float jumpReleasedMultiplier = 0.33f;
     public float jumpBufferCounter = 0f;
     public float jumpBufferTime = 0.2f;
     public float coyoteTimeCounter;
     public float coyoteTime = 0.4f;
+    public float airTime = 0f;
 
     [Header("Falling & Velocity")]
     [SerializeField] float _fallingYAxisThreshold = -0.25f;
     public bool _hasLetGoOfLedge = false;
     [SerializeField] float _maxFallVelocity = 10f;
+    [SerializeField] float _defaultGravityScaleWhenFalling = 1f;
+    [SerializeField] float _gravityScaleWhenFalling = 2.5f;
 
     [Header("Footsteps VFX")]    //Footsteps particle system
     public ParticleSystem _footEmission;
@@ -155,10 +158,12 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsMovementPressed { get { return isMovementPressed; } }
     public float MoveSpeed { get { return _moveSpeed; } }
     public float SoftLandingSpeedMultiplier { get { return _softLandingSpeedMultiplier; } }
+    public float HardLandingSpeedMultiplier { get { return _hardLandingSpeedMultiplier; } }
     public float InAirSpeedMultiplier { get { return _inAirMoveSpeedMultiplier; } }
     public float FallingYAxisThreshold { get { return _fallingYAxisThreshold; } }
     public float MaxFallVelocity { get { return _maxFallVelocity; } }
     public float GravityScaleWhenFalling { get { return _gravityScaleWhenFalling; } }
+    public float DefaultScaleWhenFalling { get { return _defaultGravityScaleWhenFalling; } }
     public float RotationScaleAmount {  get { return _rotationScaleAmount; } }
     public int IsRunningHash { get { return _isRunningHash; } }
     public int JumpHash { get { return _jumpHash; } }
@@ -227,6 +232,7 @@ public class PlayerStateMachine : MonoBehaviour
         _anim.SetBool(_isGroundedHash, _isGrounded);
         _anim.SetFloat("SpeedX", Mathf.Abs(Rigidbody.velocity.x));
         _anim.SetFloat("VelocityX", Rigidbody.velocity.x);
+        _anim.SetFloat("airTime", airTime);
 
         if (_isGrounded) Animator.SetBool("isLettingGoLedge", false);
 
@@ -240,12 +246,13 @@ public class PlayerStateMachine : MonoBehaviour
             canJetpack = true;
             StopCoroutine(DelayThrustRegen());
             StartCoroutine(DelayThrustRegen());
-
+            airTime = 0f;
         }
         else
         {
             regenerateThrust = false; //TODO player only regenerates thrust when on the ground? Yay or Nay
             StopCoroutine(DelayThrustRegen());
+            airTime += Time.deltaTime;
         }
 
         //Thrust Logic
@@ -386,10 +393,10 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    /*private void OnTriggerExit2D(Collider2D collision)
     {
         //Debug.Log("Player exit collider: " + collision.gameObject.name);
-    }
+    }*/
 
     public void FadeScreen()
     {
@@ -503,6 +510,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _playerControls.Gameplay.Disable();
     }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawSphere(groundCheck.transform.position, groundCheckRadius);

@@ -26,6 +26,10 @@ public class PlayerRunState : PlayerBaseState
         {
             _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx.MoveSpeed * _ctx.SoftLandingSpeedMultiplier), _ctx.Rigidbody.velocity.y);
         }
+        else if (_ctx.Animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Landing_Heavy"))
+        {
+            _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx.MoveSpeed * _ctx.HardLandingSpeedMultiplier), _ctx.Rigidbody.velocity.y);
+        }
         else
         {
             float fHorizontalVelocity = _ctx.Rigidbody.velocity.x;
