@@ -78,8 +78,8 @@ public class PlayerFallingState : PlayerBaseState
 
     private void RaycastDebug()
     {
-        Debug.DrawRay(_ctx.wallCheck.position, (Vector2.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
-        Debug.DrawRay(_ctx.ledgeCheck.position, (Vector2.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
+        Debug.DrawRay(_ctx.wallCheck.position, (_ctx.transform.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
+        Debug.DrawRay(_ctx.ledgeCheck.position, (_ctx.transform.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.red);
 
         //Debug.DrawRay(_ctx.kneeCheck.position, (Vector2.right * _ctx.wallCheckDistance * 0.8f) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
     }

@@ -410,7 +410,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5ee380de6a66dab48b580c1da53d8638, type: 3}
+    m_Font: {fileID: 12800000, guid: 6477cdead408a9540af778bf929d4f41, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -479,7 +479,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7766991, y: 1}
+    m_SensorSize: {x: 1.7770116, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1341,7 +1341,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 731452835
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &625751279
@@ -1384,7 +1384,7 @@ MonoBehaviour:
   timeToLoadGame: 0.5
   button: {fileID: 6280357}
   defaultButton: {fileID: 6280359}
-  levelToLoad: VideoTest
+  levelToLoad: MainLevel
   menuMusic: {fileID: 989956845}
   highlightUI: {fileID: 1901554979}
   selectUI: {fileID: 817304605}
@@ -2877,15 +2877,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Epsilon
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b615b594da50632498c1ab9a5187b4ae, type: 2}
-  m_sharedMaterial: {fileID: -5010616918295812928, guid: b615b594da50632498c1ab9a5187b4ae, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4a1fc54c3a46c7249a9f35b75f966550, type: 2}
+  m_sharedMaterial: {fileID: 7063578459503843469, guid: 4a1fc54c3a46c7249a9f35b75f966550, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 3254779903
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.75686276}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3184,7 +3184,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5ee380de6a66dab48b580c1da53d8638, type: 3}
+    m_Font: {fileID: 12800000, guid: 6477cdead408a9540af778bf929d4f41, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -3454,7 +3454,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5ee380de6a66dab48b580c1da53d8638, type: 3}
+    m_Font: {fileID: 12800000, guid: 6477cdead408a9540af778bf929d4f41, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -4551,7 +4551,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1255947111
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2112062057
