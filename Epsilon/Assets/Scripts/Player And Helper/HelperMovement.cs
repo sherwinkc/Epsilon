@@ -5,6 +5,7 @@ using UnityEngine;
 public class HelperMovement : MonoBehaviour
 {
     Vector2 destination;
+    CircleCollider2D circleCollider;
     [SerializeField] GameObject idleDestinationTransform;
 
     //Pickup
@@ -20,6 +21,11 @@ public class HelperMovement : MonoBehaviour
     public bool isPickingUpItem = false;
     public bool isDepositingToRover = false;
     public bool isCarryingBattery = false;
+
+    private void Awake()
+    {
+        circleCollider = GetComponent<CircleCollider2D>();    
+    }
 
     void Start()
     {
@@ -42,18 +48,26 @@ public class HelperMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isPickingUpItem && objectToPickUp != null) 
+        if (isPickingUpItem && objectToPickUp != null)
         {
             transform.position = Vector2.MoveTowards(transform.position, objectToPickUp.transform.position, movePickupSpeed);
+            EnableCircleCollider();
         }
         else if (isDepositingToRover && depositTransform != null)
         {
             transform.position = Vector2.MoveTowards(transform.position, depositTransform.position, movePickupSpeed);
+            //EnableCircleCollider();
         }
         else
         {
             StayWithPlayerLerpFunction();
         }
+    }
+
+    //TODO - Don't want to check this every frame
+    private void EnableCircleCollider() 
+    {
+        circleCollider.enabled = true;
     }
 
     private void StayWithPlayerLerpFunction()
@@ -62,5 +76,8 @@ public class HelperMovement : MonoBehaviour
         destination.x = idleDestinationTransform.transform.position.x;
         destination.y = idleDestinationTransform.transform.position.y;
         transform.position = Vector3.Lerp(transform.position, destination, moveSpeed * Time.deltaTime);
+
+        //TODO - Don't want to check this every frame
+        circleCollider.enabled = false;
     }
 }

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     ScreenFadeManager screenFadeManager;
+    Animator anim;
     [SerializeField] float timeToLoadGame = 0.25f;
     [SerializeField] GameObject button;
     [SerializeField] Button defaultButton;
@@ -20,9 +21,20 @@ public class MainMenu : MonoBehaviour
 
     GameObject currentlySelected, previouslySelected;
 
+    [SerializeField] GameObject selectedIcon1;
+    [SerializeField] GameObject selectedIcon2;
+    [SerializeField] GameObject selectedIcon3;
+
+    [SerializeField] GameObject selectedline1;
+    [SerializeField] GameObject selectedline2;
+    [SerializeField] GameObject selectedline3;
+
+    public bool hasAnim1played = false;
+
     private void Awake()
     {
         screenFadeManager = FindObjectOfType<ScreenFadeManager>();
+        anim = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -37,6 +49,41 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(EventSystem.current.currentSelectedGameObject.name);
+
+        if (EventSystem.current.currentSelectedGameObject.name == "Button Start Game")
+        {
+            selectedIcon1.SetActive(true);
+            selectedline1.SetActive(true);
+        }
+        else
+        {
+            selectedIcon1.SetActive(false);
+            selectedline1.SetActive(false);
+        }
+
+        if (EventSystem.current.currentSelectedGameObject.name == "Button Controls")
+        {
+            selectedIcon2.SetActive(true);
+            selectedline2.SetActive(true);
+        }
+        else
+        {
+            selectedIcon2.SetActive(false);
+            selectedline2.SetActive(false);
+        }
+
+        if (EventSystem.current.currentSelectedGameObject.name == "Button Quit")
+        {
+            selectedIcon3.SetActive(true);
+            selectedline3.SetActive(true);
+        }
+        else
+        {
+            selectedIcon3.SetActive(false);
+            selectedline3.SetActive(false);
+        }
+
         //HandleButtonScalingWhenSelected();
 
         /*if (Input.GetKeyDown(KeyCode.Return))

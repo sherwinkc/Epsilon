@@ -222,6 +222,8 @@ public class PlayerStateMachine : MonoBehaviour
         EnableDisableJetpackSprite();
 
         impulseJetpack = new Vector3(0f, 20f, 0f);
+
+        isJetpackOn = false;
     }
 
     void Update()
@@ -283,7 +285,7 @@ public class PlayerStateMachine : MonoBehaviour
             GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("Player", "Entry"); //TODO strings bad slow   
         }*/
 
-        //GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("NewPlayer", "No Eyes");
+        GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("PlayerV3", "PlayerWithoutJetpack");
     }
 
     private void CheckWhichWayPlayerIsFacing()

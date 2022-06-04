@@ -26,7 +26,9 @@ public class DayAndNightCycle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("BeginSunset", cycleLength);
+        //Invoke("BeginSunset", cycleLength);
+        //BeginSunset();
+        BeginSunrise();
     }
 
     // Update is called once per frame
@@ -37,10 +39,7 @@ public class DayAndNightCycle : MonoBehaviour
 
     private void BeginSunset()
     {
-        dayAnim.enabled = true;
-        globalLight1.enabled = true;
-        globalLight2.enabled = true;
-        sun.enabled = true;
+        TurnOnComponents();
 
         Debug.Log("BeginSunsetInvoked");
         dayAnim.Play("SunSet");
@@ -51,15 +50,25 @@ public class DayAndNightCycle : MonoBehaviour
         //isNight = true;
     }
 
+
     private void BeginSunrise()
     {
+        TurnOnComponents();
+
         Debug.Log("BeginSunriseInvoked");
         dayAnim.Play("Sunrise");
         globalLight1.Play("BrightenGlobalLight1");
         globalLight2.Play("BrightenGlobalLight");
-        sun.Play("RiseSun");
+        sun.Play("SunSetAndRise");
         Invoke("BeginSunset", cycleLength);
         //isNight = false;
     }
 
+    private void TurnOnComponents()
+    {
+        dayAnim.enabled = true;
+        globalLight1.enabled = true;
+        globalLight2.enabled = true;
+        sun.enabled = true;
+    }
 }

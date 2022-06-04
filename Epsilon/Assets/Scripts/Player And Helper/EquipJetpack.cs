@@ -17,6 +17,8 @@ public class EquipJetpack : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
 
         if (jetpackTooltip != null) jetpackTooltip.SetActive(false);
+
+        if (thrustHolder != null) thrustHolder.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -27,8 +29,8 @@ public class EquipJetpack : MonoBehaviour
 
             if (collision != null) 
             {
-                collision.gameObject.GetComponent<PlayerStateMachine>().isJetpackOn = true;
-                //collision.gameObject.GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOn"); //TODO strings bad slow   
+                collision.gameObject.GetComponent<PlayerStateMachine>().isJetpackOn = true; //TODO Cache ??? ALso using this below???
+                collision.gameObject.GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("PlayerV3", "Player"); //TODO strings bad slow   
             } 
 
             if (thrustHolder != null)
