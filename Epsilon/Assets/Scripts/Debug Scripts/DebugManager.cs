@@ -11,13 +11,15 @@ public class DebugManager : MonoBehaviour
     PlayerStateMachine playerStateMachine;
     Collector collector;
     PlayerVFXManager playerVFXMan;
+    DayAndNightCycle dayAndNight;
 
     [Header("Toggle Debug")]
     public bool displayPlayerState;
     public bool displayerPlayerVelocity;
     public bool displayMovementInput;
     public bool displayJumpLogic;
-    public bool displayJetpackValues;    
+    public bool displayJetpackValues;
+    public bool logAllAudioPlaying = false;
 
     [Header("Change Game Time")]
     public bool timeScaleOn = false;
@@ -33,6 +35,9 @@ public class DebugManager : MonoBehaviour
     public TMP_Text playerVelocityX;
     public TMP_Text playerVelocityY;
 
+    [Header("Gravity")]
+    public TMP_Text playerGravity;
+
     [Header("Player Input")]
     public TMP_Text currentInputX;
     public TMP_Text currentInputY;
@@ -43,6 +48,7 @@ public class DebugManager : MonoBehaviour
 
     [Header("Jetpack")]
     public TMP_Text jetpackTime;
+    public TMP_Text isJetpackOn;
 
     [Header("Collisions")]
     //public TMP_Text collidingWith;
@@ -55,7 +61,6 @@ public class DebugManager : MonoBehaviour
     [SerializeField] bool timeline2Active;
     [SerializeField] bool timeline3Active;
     [SerializeField] bool timeline4Active;
-
 
     [Header("Collectibles")]
     public TMP_Text orbCount;
@@ -72,11 +77,27 @@ public class DebugManager : MonoBehaviour
     [Header("Datapad")]
     public GameObject datapad;
 
+    [Header("Audio")]
+    AudioSource[] sources;
+
+    [Header("Day & Night Cycle")]
+    public TMP_Text sunrising;
+    public TMP_Text sunsetting;
+
+    [Header("Session Play Time")]
+    //public TMP_Text playTIme;
+    public TMP_Text mins;
+    public TMP_Text secs;
+    float playTime = 0f;
+    int minsCounter = 0;
+
+
     private void Awake()
     {
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         collector = FindObjectOfType<Collector>();
         playerVFXMan = FindObjectOfType<PlayerVFXManager>();
+        dayAndNight = FindObjectOfType<DayAndNightCycle>();
     }
 
     void Start()
@@ -91,6 +112,8 @@ public class DebugManager : MonoBehaviour
         }
 
         //playableDirectors = FindObjectsOfType<PlayableDirector>();
+
+        if (logAllAudioPlaying) sources = GameObject.FindObjectsOfType<AudioSource>();
     }
 
     // Update is called once per frame
@@ -119,24 +142,57 @@ public class DebugManager : MonoBehaviour
 
         DisplayLedgeAndClimbingChecks();
 
+        playerGravity.text = "Player Gravity: " + playerStateMachine.Rigidbody.gravityScale;
+
+        isJetpackOn.text = "Is Jetpack On: " + playerStateMachine.isJetpackOn.ToString();
+
+        LogAllAudioPlayingToConsole();
+
+        CheckDayNightCycleAndDisplay();
+
+        DisplayPlayTime();
+
+
         //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
         //isMountDetected.text = "Is Mount Detected: " + animator.GetBool("mountDetected").ToString();
-
-        EnableDatapad();
     }
 
-    private void EnableDatapad()
+    private void DisplayPlayTime()
     {
-        if (Input.GetKeyDown(KeyCode.F9))
+        secs.text = (playTime += Time.deltaTime).ToString("F0") + " secs";
+
+        if (playTime >= 59.999)
         {
-            if (datapad.activeSelf == false)
+            playTime = 0f;
+            minsCounter++;
+        }
+
+        mins.text = minsCounter.ToString("F0") + " mins";
+    }
+
+    private void CheckDayNightCycleAndDisplay()
+    {
+        if (dayAndNight != null && dayAndNight.enabled)
+        {
+            sunrising.text = "Sunrising: " + dayAndNight.sunrising.ToString();
+            sunsetting.text = "Sunrising: " + dayAndNight.sunsetting.ToString();
+
+        }
+        else
+        {
+            sunrising.text = "Day & Night Cycle Off";
+            sunsetting.text = "Day & Night Cycle Off";
+        }
+    }
+
+    private void LogAllAudioPlayingToConsole()
+    {
+        if (logAllAudioPlaying)
+        {
+            foreach (AudioSource audioSource in sources)
             {
-                datapad.SetActive(true);
-            }
-            else if (datapad.activeSelf == true)
-            {
-                datapad.SetActive(false);
+                if (audioSource.isPlaying) Debug.Log(audioSource.name + " is playing " + audioSource.clip.name);
             }
         }
     }

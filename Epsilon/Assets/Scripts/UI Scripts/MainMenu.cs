@@ -44,6 +44,9 @@ public class MainMenu : MonoBehaviour
         menuMusic.Play();
 
         Cursor.visible = true;
+
+        selectedIcon1.SetActive(true);
+        selectedline1.SetActive(true);
     }
 
     // Update is called once per frame
