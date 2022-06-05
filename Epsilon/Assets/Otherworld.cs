@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Otherworld : MonoBehaviour
 {
+    [SerializeField] bool isOtherWorldScriptOn;
     [SerializeField] GameObject otherworld;
     [SerializeField] GameObject helperLegs;
     [SerializeField] float displayTime = 0.01f;
@@ -18,7 +19,7 @@ public class Otherworld : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("StartCo", repeatTime, repeatTime);    
+        if (isOtherWorldScriptOn) InvokeRepeating("StartCo", repeatTime, repeatTime);    
     }
 
     public void StartCo()
