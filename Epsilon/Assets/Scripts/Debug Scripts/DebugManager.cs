@@ -176,7 +176,7 @@ public class DebugManager : MonoBehaviour
         if (dayAndNight != null && dayAndNight.enabled)
         {
             sunrising.text = "Sunrising: " + dayAndNight.sunrising.ToString();
-            sunsetting.text = "Sunrising: " + dayAndNight.sunsetting.ToString();
+            sunsetting.text = "Sunsetting: " + dayAndNight.sunsetting.ToString();
 
         }
         else
