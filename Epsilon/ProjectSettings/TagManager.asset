@@ -30,6 +30,9 @@ TagManager:
   - Sand
   - Metal
   - CropButton
+  - SolarPanelsButton
+  - CommsTowerButton
+  - BatteryRecharger
   layers:
   - Default
   - TransparentFX

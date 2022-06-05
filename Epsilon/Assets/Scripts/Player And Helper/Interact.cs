@@ -33,6 +33,16 @@ public class Interact : MonoBehaviour
     public bool isCloseEnoughToCropButton = false;
     bool isCropsOn = false;
 
+    //solar Panels
+    public bool isCloseEnoughToSolarPanelButton = false;
+    bool isSolarPanelsOn = false;
+
+    //Comms Tower
+    public bool isCloseEnoughToCommsTowerButton = false;
+    bool isCommsTowerOn = false;
+
+    //Battery Recharger
+    public bool isCloseEnoughToBatteryRecharger = false;
 
     private void Awake()
     {
@@ -81,11 +91,39 @@ public class Interact : MonoBehaviour
                 animator.Play("Player_HandGesture");
             }
 
+            //check if close enough to battery recharger && holding a battery
+            else if (isCloseEnoughToBatteryRecharger && helper.isCarryingBattery)
+            {
+                //helper.objectToPickUp = colliderToPickUp.gameObject;
+                helper.isDepositingToBatteryRecharger = true;
+                interactHUD.SetActive(false);
+
+                animator.Play("Player_HandGesture");
+            }
+
             else if (isCloseEnoughToCropButton && !isCropsOn)
             {
                 FindObjectOfType<CropsManager>().ActivateSprinklers();
                 interactHUD.SetActive(false);
                 isCropsOn = true;
+            }
+
+            else if (isCloseEnoughToSolarPanelButton && !isSolarPanelsOn)
+            {
+                SolarPanel[] solarPanels = FindObjectsOfType<SolarPanel>();
+
+                for (int i = 0; i < solarPanels.Length; i++)
+                {
+                    solarPanels[i].GetComponent<Animator>().enabled = true;
+                }
+
+                isSolarPanelsOn = true;
+            }
+
+            else if (isCloseEnoughToCommsTowerButton && !isCommsTowerOn)
+            {
+                FindObjectOfType<CommsTower>().GetComponent<Animator>().enabled = true;
+                isCommsTowerOn = true;
             }
         } 
     }
@@ -103,7 +141,7 @@ public class Interact : MonoBehaviour
             //PlayInteractSound();
         }
 
-        //Batter Deposit
+        //Battery Deposit
         if (collision.gameObject.CompareTag("BatteryDeposit"))
         {
             FindObjectOfType<HelperMovement>().depositTransform = collision.transform;
@@ -132,6 +170,29 @@ public class Interact : MonoBehaviour
         {
             isCloseEnoughToCropButton = true;
             interactHUD.SetActive(true);
+        }
+
+        //solar panels Button
+        if (collision.gameObject.CompareTag("SolarPanelsButton") && !isSolarPanelsOn)
+        {
+            isCloseEnoughToSolarPanelButton = true;
+            interactHUD.SetActive(true);
+        }
+
+        if (collision.gameObject.CompareTag("CommsTowerButton") && !isCommsTowerOn)
+        {
+            isCloseEnoughToCommsTowerButton = true;
+            interactHUD.SetActive(true);
+        }
+
+        if (collision.gameObject.CompareTag("BatteryRecharger") && helper.isCarryingBattery)
+        {
+            isCloseEnoughToBatteryRecharger = true;
+            interactHUD.SetActive(true);
+        }
+        else if (collision.gameObject.CompareTag("BatteryRecharger") && !helper.isCarryingBattery)
+        {
+            interactUnableToHUD.SetActive(true);
         }
     }
 
@@ -166,6 +227,9 @@ public class Interact : MonoBehaviour
         interactHUD.SetActive(false);
         interactUnableToHUD.SetActive(false);
         isCloseEnoughToCropButton = false;
+        isCloseEnoughToSolarPanelButton = false;
+        isCloseEnoughToCommsTowerButton = false;
+        isCloseEnoughToBatteryRecharger = false;
 
         /*if (collision.gameObject.CompareTag("BatteryDeposit") || collision.gameObject.CompareTag("Battery") || collision.gameObject.CompareTag("Lift"))
         {

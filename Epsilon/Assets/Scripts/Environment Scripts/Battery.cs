@@ -54,5 +54,20 @@ public class Battery : MonoBehaviour
 
             audioManager.helperCollectSFX.Play();
         }
+        else if (collision.gameObject.CompareTag("BatteryRecharger"))
+        {
+            isMovingWithHelper = false;
+            helper.isPickingUpItem = false;
+            helper.isCarryingBattery = false;
+            helper.isDepositingToBatteryRecharger = false;
+
+            BatteryRecharger batRecharger = FindObjectOfType<BatteryRecharger>();
+            batRecharger.batteriesDocked++;
+            batRecharger.ActivateBatterySprites();
+
+            audioManager.helperCollectSFX.Play();
+
+            Destroy(this.gameObject);
+        }
     }
 }

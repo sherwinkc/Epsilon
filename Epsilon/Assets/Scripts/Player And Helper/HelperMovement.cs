@@ -12,6 +12,7 @@ public class HelperMovement : MonoBehaviour
     public GameObject objectToPickUp;
     //[SerializeField] GameObject depositPosition;
     public Transform depositTransform;
+    public Transform batteryRechargerTransform;
 
     //move speed
     [Tooltip("Lower numbers result in a longer easing time")]
@@ -21,6 +22,8 @@ public class HelperMovement : MonoBehaviour
     public bool isPickingUpItem = false;
     public bool isDepositingToRover = false;
     public bool isCarryingBattery = false;
+
+    public bool isDepositingToBatteryRecharger = false;
 
     private void Awake()
     {
@@ -56,6 +59,11 @@ public class HelperMovement : MonoBehaviour
         else if (isDepositingToRover && depositTransform != null)
         {
             transform.position = Vector2.MoveTowards(transform.position, depositTransform.position, movePickupSpeed);
+            //EnableCircleCollider();
+        }
+        else if (isDepositingToBatteryRecharger)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, batteryRechargerTransform.position, movePickupSpeed);
             //EnableCircleCollider();
         }
         else

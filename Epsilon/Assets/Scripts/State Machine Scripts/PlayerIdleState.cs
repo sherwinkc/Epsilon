@@ -92,7 +92,8 @@ public class PlayerIdleState : PlayerBaseState
             //_ctx.interact.PlayInteractSound();
         }
 
-        if (_ctx.hit.collider == null && !_ctx.interact.isCloseEnoughToBattery && !_ctx.interact.isCloseEnoughToRover && !_ctx.interact.isCloseEnoughToLiftButton && !_ctx.interact.isCloseEnoughToCropButton)
+        if (_ctx.hit.collider == null && !_ctx.interact.isCloseEnoughToBattery && !_ctx.interact.isCloseEnoughToRover && !_ctx.interact.isCloseEnoughToLiftButton 
+            && !_ctx.interact.isCloseEnoughToCropButton && !_ctx.interact.isCloseEnoughToSolarPanelButton && !_ctx.interact.isCloseEnoughToCommsTowerButton && !_ctx.interact.isCloseEnoughToBatteryRecharger)
         {
             _ctx.interact.interactHUD.SetActive(false);
             //_ctx.interact.interactHasSFXPlayed = false;
