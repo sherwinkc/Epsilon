@@ -54,6 +54,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource rockfallSFX;
 
     [Header("Interact")]
+    public AudioSource buttonPressSFX; //TODO
     public AudioSource helperInteractSFX; //TODO
     public AudioSource frictionSFX; //TODO
 
@@ -80,6 +81,13 @@ public class AudioManager : MonoBehaviour
     [Header("Datapads")]
     public AudioSource datapadSFXOpen;
     public AudioSource datapadSFXClose;
+
+    [Header("Solar Panels")]
+    public AudioSource solarPanelSFXOpen;
+
+    [Header("Comms Towwer")]
+    public AudioSource commsTowerSFXOpen;
+
 
     public void PlayFootstepsSFX(AudioMaterial material)
     {

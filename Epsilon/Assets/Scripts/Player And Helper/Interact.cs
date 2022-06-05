@@ -66,6 +66,8 @@ public class Interact : MonoBehaviour
             if (isCloseEnoughToLiftButton)
             {
                 if (liftManager != null) liftManager.moveLift = !liftManager.moveLift;
+
+                audioManager.buttonPressSFX.Play();
             }
 
             //check if close to battery
@@ -78,6 +80,7 @@ public class Interact : MonoBehaviour
                 interactHUD.SetActive(false);
 
                 animator.Play("Player_HandGesture");
+                //audioManager.buttonPressSFX.Play(); //TODO Another sound for hand gesture
             }
 
             //check if close enough to rover && holding a battery
@@ -89,6 +92,7 @@ public class Interact : MonoBehaviour
                 interactHUD.SetActive(false);
 
                 animator.Play("Player_HandGesture");
+                //audioManager.buttonPressSFX.Play(); //TODO Another sound for hand gesture
             }
 
             //check if close enough to battery recharger && holding a battery
@@ -99,6 +103,7 @@ public class Interact : MonoBehaviour
                 interactHUD.SetActive(false);
 
                 animator.Play("Player_HandGesture");
+                //audioManager.buttonPressSFX.Play(); //TODO Another sound for hand gesture
             }
 
             else if (isCloseEnoughToCropButton && !isCropsOn)
@@ -106,6 +111,7 @@ public class Interact : MonoBehaviour
                 FindObjectOfType<CropsManager>().ActivateSprinklers();
                 interactHUD.SetActive(false);
                 isCropsOn = true;
+                audioManager.buttonPressSFX.Play();
             }
 
             else if (isCloseEnoughToSolarPanelButton && !isSolarPanelsOn)
@@ -117,13 +123,20 @@ public class Interact : MonoBehaviour
                     solarPanels[i].GetComponent<Animator>().enabled = true;
                 }
 
+                audioManager.solarPanelSFXOpen.Play();
                 isSolarPanelsOn = true;
+
+                audioManager.buttonPressSFX.Play();
+                audioManager.buttonPressSFX.Play();
             }
 
             else if (isCloseEnoughToCommsTowerButton && !isCommsTowerOn)
             {
                 FindObjectOfType<CommsTower>().GetComponent<Animator>().enabled = true;
                 isCommsTowerOn = true;
+
+                audioManager.buttonPressSFX.Play();
+                audioManager.commsTowerSFXOpen.Play();
             }
         } 
     }
