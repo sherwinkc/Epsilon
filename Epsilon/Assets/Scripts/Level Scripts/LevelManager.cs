@@ -31,6 +31,9 @@ public class LevelManager : MonoBehaviour
 
     public TMP_Text task1text, task2text, task3text, task4text;
 
+    //Computer
+    [SerializeField] GameObject computerSignal;
+
     private void Awake()
     {
         pauseMenu = GetComponent<PauseMenu>();
@@ -103,29 +106,46 @@ public class LevelManager : MonoBehaviour
         
         if (areBatteriesCollected && isSatelliteDeployed && arePlantsHydrated && areBatteriesCollected)
         {
-            StartCoroutine(CameraCutSequence());
+            StartCoroutine(SignalAndDoorSequence());
         }
     }    
 
-    private IEnumerator CameraCutSequence()
+    private IEnumerator SignalAndDoorSequence()
     {
+        PlayerStateMachine playerStateMachine = FindObjectOfType<PlayerStateMachine>();
+        playerStateMachine.inCinematic = true;
+
+        //Computer Signal Sequence
         yield return new WaitForSeconds(1f);
 
-        if (screenFadeManager != null)
-        {
-            screenFadeManager.TurnOnAnimatorAndFadeOut(); 
-        }
+        FadeToBlack();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
-        cameraManager.FocusCamera();
+        //change camera
+        cameraManager.FocusComputerCamera();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
-        if (screenFadeManager != null)
-        {
-            screenFadeManager.FadeIn();
-        }
+        FadeFromBlack();
+
+        yield return new WaitForSeconds(1f);
+
+        computerSignal.SetActive(true);
+
+        yield return new WaitForSeconds(8f); //watch computer for 8 secs
+
+        FadeToBlack();
+
+        yield return new WaitForSeconds(1f);
+
+        //change cameras - computer > gate
+        cameraManager.ResetComputerCamera();
+        cameraManager.FocusGateCamera();
+
+        yield return new WaitForSeconds(1f);
+
+        FadeFromBlack();
 
         yield return new WaitForSeconds(1f);
 
@@ -134,20 +154,53 @@ public class LevelManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        if (screenFadeManager != null)
-        {
-            screenFadeManager.TurnOnAnimatorAndFadeOut();
-        }
+        FadeToBlack();
 
         yield return new WaitForSeconds(1f);
 
-        cameraManager.ResetCamera();
+        // change cameras - Gate > Battery Charger
+        cameraManager.ResetGateCamera();
+        cameraManager.FocusBatteryChargerCamera();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
+        FadeFromBlack();
+
+        yield return new WaitForSeconds(3f); // focus on battery charger for 10 secs
+
+        BatteryRecharger batteryRecharger = FindObjectOfType<BatteryRecharger>();
+
+        batteryRecharger.DischargeBatteryAnim();
+
+        yield return new WaitForSeconds(7f); // focus on battery charger for 10 secs
+
+        FadeToBlack();
+
+        yield return new WaitForSeconds(1f);
+
+        //change cameras
+        cameraManager.ResetBatteryChargerCamera();
+
+        yield return new WaitForSeconds(1f);
+
+        FadeFromBlack();
+
+        playerStateMachine.inCinematic = false;
+    }
+
+    private void FadeFromBlack()
+    {
         if (screenFadeManager != null)
         {
             screenFadeManager.FadeIn();
+        }
+    }
+
+    private void FadeToBlack()
+    {
+        if (screenFadeManager != null)
+        {
+            screenFadeManager.TurnOnAnimatorAndFadeOut();
         }
     }
 }

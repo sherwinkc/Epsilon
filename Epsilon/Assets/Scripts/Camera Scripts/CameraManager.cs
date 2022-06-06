@@ -38,6 +38,12 @@ public class CameraManager : MonoBehaviour
     [Header("Gate 1")]
     public CinemachineVirtualCamera gate1Cam;
 
+    [Header("Computer")]
+    public CinemachineVirtualCamera computerCam;
+
+    [Header("Battery Charger")]
+    public CinemachineVirtualCamera batteryChargerCam;
+
     private void Awake()
     {
         controls = new PlayerControls();
@@ -147,14 +153,34 @@ public class CameraManager : MonoBehaviour
         controls.Gameplay.Disable();
     }
 
-    public void FocusCamera()
+    public void FocusGateCamera()
     {
         gate1Cam.Priority = 100;
-        //Invoke("ResetCamera", 5f);
     }
 
-    public void ResetCamera()
+    public void ResetGateCamera()
     {
         gate1Cam.Priority = 10;
     }
+
+    public void FocusComputerCamera()
+    {
+        computerCam.Priority = 100;
+    }
+
+    public void ResetComputerCamera()
+    {
+        computerCam.Priority = 10;
+    }
+
+    public void FocusBatteryChargerCamera()
+    {
+        batteryChargerCam.Priority = 100;
+    }
+
+    public void ResetBatteryChargerCamera()
+    {
+        batteryChargerCam.Priority = 10;
+    }
+
 }

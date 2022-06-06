@@ -460,6 +460,8 @@ public class PlayerStateMachine : MonoBehaviour
 
         transform.position = checkpointManager.currentActiveSpawnPoint.transform.position;
 
+        Rigidbody.gravityScale = _defaultGravityScaleWhenFalling;
+
         DeactivateDeathCam();
 
         //_rb.velocity = Vector2.zero;

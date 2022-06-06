@@ -20,6 +20,8 @@ public class StationCamera : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Debug.Log("Entered Collider: " + collision.name);
+
         if (collision.gameObject.CompareTag("Player"))
         {
             //mainPlayerCam.Priority = 10;
@@ -30,6 +32,8 @@ public class StationCamera : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        //Debug.Log("Exited Collider: " + collision.name);
+
         if (collision.gameObject.CompareTag("Player"))
         {
             //mainPlayerCam.Priority = 100;

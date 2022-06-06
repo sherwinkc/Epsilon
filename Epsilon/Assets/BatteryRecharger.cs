@@ -7,13 +7,24 @@ public class BatteryRecharger : MonoBehaviour
     [SerializeField] Animator door;
     [SerializeField] GameObject battery1, battery2, battery3;
 
+    [SerializeField] GameObject realBattery;
+
+    Animator anim;
+
+
     public int batteriesDocked = 0;
 
     public bool collectKeys = false;
 
     private void Awake()
     {
+        anim = GetComponent<Animator>();
+
         ActivateBatterySprites();
+
+        realBattery.SetActive(false);
+
+        anim.enabled = false;
     }
 
     private void Start()
@@ -57,5 +68,16 @@ public class BatteryRecharger : MonoBehaviour
 
             levelManager.CheckLevelIntroStatus();
         }
+    }
+
+    public void DischargeBatteryAnim()
+    {
+        anim.enabled = true;
+    }
+
+    public void SwapBatteryToRealOne()
+    {
+        battery1.SetActive(false);
+        realBattery.SetActive(true);
     }
 }

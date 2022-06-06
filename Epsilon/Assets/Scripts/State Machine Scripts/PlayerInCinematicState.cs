@@ -10,7 +10,7 @@ public class PlayerInCinematicState : PlayerBaseState
     public override void EnterState()
     {
         _ctx.Rigidbody.velocity = Vector2.zero;
-        _ctx.Rigidbody.simulated = false;
+        //_ctx.Rigidbody.simulated = false; //Was turing off rigidbody during cinematic state such as stationary cameras
 
         //stop foot emission VFX when entering Idle
         _ctx.FootEmission.Stop();
@@ -28,7 +28,7 @@ public class PlayerInCinematicState : PlayerBaseState
 
     public override void ExitState()
     {
-        _ctx.Rigidbody.simulated = true;
+        //_ctx.Rigidbody.simulated = true;
     }
 
     public override void CheckSwitchStates()

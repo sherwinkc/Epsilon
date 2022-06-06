@@ -19,6 +19,7 @@ public class Interact : MonoBehaviour
     public LiftManager liftManager;
 
     public Transform buttonTransform;
+    public BoxCollider2D buttonBoxCollider;
     public float xTeleportOffset;
     public float yTeleportOffset;
 
@@ -151,47 +152,6 @@ public class Interact : MonoBehaviour
         if(isLerping) transform.position = Vector2.Lerp(transform.position, new Vector2(buttonTransform.position.x + xTeleportOffset, buttonTransform.position.y + yTeleportOffset), lerpingRate);
     }
 
-    private void ActivateLift()
-    {
-        Invoke("MoveLiftAfterADelay", 0.2f); //had to invoke at a later time - this was causing issues when the animation was still playing but th lift was still moving
-
-        audioManager.buttonPressSFX.Play();
-    }
-
-    private void MoveLiftAfterADelay()
-    {
-        if (liftManager != null) liftManager.moveLift = !liftManager.moveLift;
-    }
-
-    private void ActivateCommsTower()
-    {
-        FindObjectOfType<CommsTower>().GetComponent<Animator>().enabled = true;
-        isCommsTowerOn = true;
-
-        audioManager.buttonPressSFX.Play();
-        audioManager.commsTowerSFXOpen.Play();
-
-        levelManager.CheckLevelIntroStatus();
-    }
-
-    private void ActivateSolarPanels()
-    {
-        SolarPanel[] solarPanels = FindObjectsOfType<SolarPanel>();
-
-        for (int i = 0; i < solarPanels.Length; i++)
-        {
-            solarPanels[i].GetComponent<Animator>().enabled = true;
-        }
-
-        audioManager.solarPanelSFXOpen.Play();
-        isSolarPanelsOn = true;
-
-        audioManager.buttonPressSFX.Play();
-        audioManager.buttonPressSFX.Play();
-
-        levelManager.CheckLevelIntroStatus();
-    }
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         HandleLiftLogic(collision);
@@ -229,10 +189,11 @@ public class Interact : MonoBehaviour
             interactUnableToHUD.SetActive(true);
         }
 
-        //crop Button
+        //Crops Button
         if (collision.gameObject.CompareTag("CropButton") && !isCropsOn)
         {
             buttonTransform = collision.transform;
+            buttonBoxCollider = collision.GetComponent<BoxCollider2D>();
             isCloseEnoughToCropButton = true;
             interactHUD.SetActive(true);
         }
@@ -241,17 +202,21 @@ public class Interact : MonoBehaviour
         if (collision.gameObject.CompareTag("SolarPanelsButton") && !isSolarPanelsOn)
         {
             buttonTransform = collision.transform;
+            buttonBoxCollider = collision.GetComponent<BoxCollider2D>();
             isCloseEnoughToSolarPanelButton = true;
             interactHUD.SetActive(true);
         }
 
+        //Comms Tower Button
         if (collision.gameObject.CompareTag("CommsTowerButton") && !isCommsTowerOn)
         {
             buttonTransform = collision.transform;
+            buttonBoxCollider = collision.GetComponent<BoxCollider2D>();
             isCloseEnoughToCommsTowerButton = true;
             interactHUD.SetActive(true);
         }
 
+        //Battery Recharger
         if (collision.gameObject.CompareTag("BatteryRecharger") && helper.isCarryingBattery && !levelManager.areBatteriesCollected)
         {
             isCloseEnoughToBatteryRecharger = true;
@@ -262,16 +227,43 @@ public class Interact : MonoBehaviour
             interactUnableToHUD.SetActive(true);
         }
     }
-
-    public void PlayInteractSound()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (audioManager.interactSFX != null)
+        isCloseEnoughToLiftButton = false;
+        isCloseEnoughToBattery = false;
+        isCloseEnoughToRover = false;
+        interactHUD.SetActive(false);
+        interactUnableToHUD.SetActive(false);
+        isCloseEnoughToCropButton = false;
+        isCloseEnoughToSolarPanelButton = false;
+        isCloseEnoughToCommsTowerButton = false;
+        isCloseEnoughToBatteryRecharger = false;
+
+        buttonBoxCollider = null;
+
+        //buttonTransform = null; //TODP Fr some reason setting this to null break lerping
+
+        /*if (collision.gameObject.CompareTag("BatteryDeposit") || collision.gameObject.CompareTag("Battery") || collision.gameObject.CompareTag("Lift"))
         {
-            if(!interactHasSFXPlayed) audioManager.interactSFX.Play();
-            interactHasSFXPlayed = true;
-        }
+            interactHasSFXPlayed = false;
+        }*/
     }
 
+    private void MoveLiftAfterADelay()
+    {
+        if (liftManager != null) liftManager.moveLift = !liftManager.moveLift;
+    }
+    private void TeleportPlayerAndAnimate()
+    {
+        //teleport player
+        player.transform.localScale = playerScale;
+
+        isLerping = true;
+        //player.transform.position = new Vector2(buttonTransform.position.x + xTeleportOffset, buttonTransform.position.y + yTeleportOffset);
+
+        //animate button press
+        animator.Play("Player_PressButton");
+    }
     private void HandleLiftLogic(Collider2D collision)
     {
         //Debug.Log("HandleLiftLogic");
@@ -286,46 +278,64 @@ public class Interact : MonoBehaviour
             //PlayInteractSound();
         }
     }
-
-    private void OnTriggerExit2D(Collider2D collision)
+    private void ActivateLift()
     {
-        isCloseEnoughToLiftButton = false;
-        isCloseEnoughToBattery = false;
-        isCloseEnoughToRover = false;
-        interactHUD.SetActive(false);
-        interactUnableToHUD.SetActive(false);
-        isCloseEnoughToCropButton = false;
-        isCloseEnoughToSolarPanelButton = false;
-        isCloseEnoughToCommsTowerButton = false;
-        isCloseEnoughToBatteryRecharger = false;
+        Invoke("MoveLiftAfterADelay", 0.2f); //had to invoke at a later time - this was causing issues when the animation was still playing but th lift was still moving
 
-        //buttonTransform = null; //TODP Fr some reason setting this to null break lerping
-
-        /*if (collision.gameObject.CompareTag("BatteryDeposit") || collision.gameObject.CompareTag("Battery") || collision.gameObject.CompareTag("Lift"))
-        {
-            interactHasSFXPlayed = false;
-        }*/
+        audioManager.buttonPressSFX.Play();
     }
 
-    private void TeleportPlayerAndAnimate()
-    {
-        //teleport player
-        player.transform.localScale = playerScale;
-
-        isLerping = true;
-        //player.transform.position = new Vector2(buttonTransform.position.x + xTeleportOffset, buttonTransform.position.y + yTeleportOffset);
-
-        //animate button press
-        animator.Play("Player_PressButton");
-    }
-
+    //Crops Logic
     private void ActivateCrops()
     {
+        buttonBoxCollider.enabled = false;
         FindObjectOfType<CropsManager>().ActivateSprinklers();
         interactHUD.SetActive(false);
         isCropsOn = true;
         audioManager.buttonPressSFX.Play();
 
         levelManager.CheckLevelIntroStatus();
+    }
+    //Solar Panels Logic
+    private void ActivateSolarPanels()
+    {
+        buttonBoxCollider.enabled = false;
+
+        SolarPanel[] solarPanels = FindObjectsOfType<SolarPanel>();
+
+        for (int i = 0; i < solarPanels.Length; i++)
+        {
+            solarPanels[i].GetComponent<Animator>().enabled = true;
+        }
+
+        audioManager.solarPanelSFXOpen.Play();
+        isSolarPanelsOn = true;
+
+        audioManager.buttonPressSFX.Play();
+        audioManager.buttonPressSFX.Play();
+
+        levelManager.CheckLevelIntroStatus();
+    }
+    //Comms Tower Logic
+    private void ActivateCommsTower()
+    {
+        buttonBoxCollider.enabled = false;
+
+        FindObjectOfType<CommsTower>().GetComponent<Animator>().enabled = true;
+        isCommsTowerOn = true;
+
+        audioManager.buttonPressSFX.Play();
+        audioManager.commsTowerSFXOpen.Play();
+
+        levelManager.CheckLevelIntroStatus();
+    }
+
+    public void PlayInteractSound()
+    {
+        if (audioManager.interactSFX != null)
+        {
+            if(!interactHasSFXPlayed) audioManager.interactSFX.Play();
+            interactHasSFXPlayed = true;
+        }
     }
 }
