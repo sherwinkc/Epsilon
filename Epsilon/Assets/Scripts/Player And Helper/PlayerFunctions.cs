@@ -12,6 +12,7 @@ public class PlayerFunctions : MonoBehaviour
     LevelManager levelMan;
     Collector collector;
     Animator anim;
+    Interact interact;
 
     public GameObject powerBeams;
     [SerializeField] Transform beamOrigin;
@@ -27,6 +28,7 @@ public class PlayerFunctions : MonoBehaviour
         levelMan = FindObjectOfType<LevelManager>();
         collector = GetComponent<Collector>();
         anim = GetComponent<Animator>();
+        interact = GetComponent<Interact>();
     }
 
     // A U D I O
@@ -130,5 +132,10 @@ public class PlayerFunctions : MonoBehaviour
     public void PlayBeathingSFX()
     {
         if(!audioManager.breathing.isPlaying) audioManager.breathing.Play();
+    }
+
+    public void TurnOffInteractLerp()
+    {
+        interact.isLerping = false;
     }
 }

@@ -11,6 +11,7 @@ public class Interact : MonoBehaviour
     Collider2D colliderToPickUp;
     RoverBehaviour rover;
     Animator animator;
+    PlayerStateMachine player; //TODO Interact and player statemachine are on the same gameobject - transform is the same
 
     public GameObject interactHUD;
     public GameObject interactUnableToHUD;
@@ -24,6 +25,11 @@ public class Interact : MonoBehaviour
     [SerializeField] GameObject lift;
     public bool isCloseEnoughToLiftButton;
     //[SerializeField] bool isLiftOn = false;
+
+    public bool isLerping = false;
+    [SerializeField] float lerpingRate = 0.1f;
+
+    [SerializeField] Vector3 playerScale;
 
     public bool interactHasSFXPlayed = false;
 
@@ -54,11 +60,14 @@ public class Interact : MonoBehaviour
         helper = FindObjectOfType<HelperMovement>();
         rover = FindObjectOfType<RoverBehaviour>();
         animator = GetComponent<Animator>();
+        player = GetComponent<PlayerStateMachine>();
     }
 
     void Start()
     {
         interactHUD.SetActive(false);
+
+        playerScale = player.transform.localScale;
     }
 
 
@@ -126,7 +135,10 @@ public class Interact : MonoBehaviour
                 TeleportPlayerAndAnimate();
                 Invoke("ActivateCommsTower", 1f);
             }
-        } 
+        }
+
+        // lerp player torwards button
+        if(isLerping) transform.position = Vector2.Lerp(transform.position, new Vector2(buttonTransform.position.x + xTeleportOffset, buttonTransform.position.y + yTeleportOffset), lerpingRate);
     }
 
     private void ActivateLift()
@@ -274,7 +286,7 @@ public class Interact : MonoBehaviour
         isCloseEnoughToCommsTowerButton = false;
         isCloseEnoughToBatteryRecharger = false;
 
-        buttonTransform = null;
+        //buttonTransform = null; //TODP Fr some reason setting this to null break lerping
 
         /*if (collision.gameObject.CompareTag("BatteryDeposit") || collision.gameObject.CompareTag("Battery") || collision.gameObject.CompareTag("Lift"))
         {
@@ -285,8 +297,10 @@ public class Interact : MonoBehaviour
     private void TeleportPlayerAndAnimate()
     {
         //teleport player
-        PlayerStateMachine player = FindObjectOfType<PlayerStateMachine>();
-        player.transform.position = new Vector2(buttonTransform.position.x + xTeleportOffset, buttonTransform.position.y + yTeleportOffset);
+        player.transform.localScale = playerScale;
+
+        isLerping = true;
+        //player.transform.position = new Vector2(buttonTransform.position.x + xTeleportOffset, buttonTransform.position.y + yTeleportOffset);
 
         //animate button press
         animator.Play("Player_PressButton");

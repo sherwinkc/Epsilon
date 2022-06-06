@@ -87,6 +87,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Comms Towwer")]
     public AudioSource commsTowerSFXOpen;
+    public AudioSource commsTowerSFXEnd;
 
 
     public void PlayFootstepsSFX(AudioMaterial material)
