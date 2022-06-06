@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class CommsTower : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject lightAndSFX, light2;
 
-    // Update is called once per frame
-    void Update()
+    public void TurnOnLight()
     {
-        
+        if (lightAndSFX != null || light2 != null)
+        {
+            lightAndSFX.SetActive(true);
+            light2.SetActive(true);
+        }
     }
 }

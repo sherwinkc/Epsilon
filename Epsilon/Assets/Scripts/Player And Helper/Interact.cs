@@ -16,6 +16,10 @@ public class Interact : MonoBehaviour
     public GameObject interactUnableToHUD;
     public LiftManager liftManager;
 
+    public Transform buttonTransform;
+    public float xTeleportOffset;
+    public float yTeleportOffset;
+
     //lift
     [SerializeField] GameObject lift;
     public bool isCloseEnoughToLiftButton;
@@ -65,9 +69,8 @@ public class Interact : MonoBehaviour
             //check if close to lift
             if (isCloseEnoughToLiftButton)
             {
-                if (liftManager != null) liftManager.moveLift = !liftManager.moveLift;
-
-                audioManager.buttonPressSFX.Play();
+                TeleportPlayerAndAnimate();
+                Invoke("ActivateLift", 1.2f);
             }
 
             //check if close to battery
@@ -108,37 +111,60 @@ public class Interact : MonoBehaviour
 
             else if (isCloseEnoughToCropButton && !isCropsOn)
             {
-                FindObjectOfType<CropsManager>().ActivateSprinklers();
-                interactHUD.SetActive(false);
-                isCropsOn = true;
-                audioManager.buttonPressSFX.Play();
+                TeleportPlayerAndAnimate();
+                Invoke("ActivateCrops", 1f);
             }
 
             else if (isCloseEnoughToSolarPanelButton && !isSolarPanelsOn)
             {
-                SolarPanel[] solarPanels = FindObjectsOfType<SolarPanel>();
-
-                for (int i = 0; i < solarPanels.Length; i++)
-                {
-                    solarPanels[i].GetComponent<Animator>().enabled = true;
-                }
-
-                audioManager.solarPanelSFXOpen.Play();
-                isSolarPanelsOn = true;
-
-                audioManager.buttonPressSFX.Play();
-                audioManager.buttonPressSFX.Play();
+                TeleportPlayerAndAnimate();
+                Invoke("ActivateSolarPanels", 1f);
             }
 
             else if (isCloseEnoughToCommsTowerButton && !isCommsTowerOn)
             {
-                FindObjectOfType<CommsTower>().GetComponent<Animator>().enabled = true;
-                isCommsTowerOn = true;
-
-                audioManager.buttonPressSFX.Play();
-                audioManager.commsTowerSFXOpen.Play();
+                TeleportPlayerAndAnimate();
+                Invoke("ActivateCommsTower", 1f);
             }
         } 
+    }
+
+    private void ActivateLift()
+    {
+        Invoke("MoveLiftAfterADelay", 0.2f); //had to invoke at a later time - this was causing issues when the animation was still playing but th lift was still moving
+
+        audioManager.buttonPressSFX.Play();
+    }
+
+    private void MoveLiftAfterADelay()
+    {
+        if (liftManager != null) liftManager.moveLift = !liftManager.moveLift;
+    }
+
+
+    private void ActivateCommsTower()
+    {
+        FindObjectOfType<CommsTower>().GetComponent<Animator>().enabled = true;
+        isCommsTowerOn = true;
+
+        audioManager.buttonPressSFX.Play();
+        audioManager.commsTowerSFXOpen.Play();
+    }
+
+    private void ActivateSolarPanels()
+    {
+        SolarPanel[] solarPanels = FindObjectsOfType<SolarPanel>();
+
+        for (int i = 0; i < solarPanels.Length; i++)
+        {
+            solarPanels[i].GetComponent<Animator>().enabled = true;
+        }
+
+        audioManager.solarPanelSFXOpen.Play();
+        isSolarPanelsOn = true;
+
+        audioManager.buttonPressSFX.Play();
+        audioManager.buttonPressSFX.Play();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -181,6 +207,7 @@ public class Interact : MonoBehaviour
         //crop Button
         if (collision.gameObject.CompareTag("CropButton") && !isCropsOn)
         {
+            buttonTransform = collision.transform;
             isCloseEnoughToCropButton = true;
             interactHUD.SetActive(true);
         }
@@ -188,12 +215,14 @@ public class Interact : MonoBehaviour
         //solar panels Button
         if (collision.gameObject.CompareTag("SolarPanelsButton") && !isSolarPanelsOn)
         {
+            buttonTransform = collision.transform;
             isCloseEnoughToSolarPanelButton = true;
             interactHUD.SetActive(true);
         }
 
         if (collision.gameObject.CompareTag("CommsTowerButton") && !isCommsTowerOn)
         {
+            buttonTransform = collision.transform;
             isCloseEnoughToCommsTowerButton = true;
             interactHUD.SetActive(true);
         }
@@ -224,8 +253,9 @@ public class Interact : MonoBehaviour
 
         liftManager = collision.GetComponentInParent<LiftManager>();
 
-        if (collision.gameObject.CompareTag("Lift"))
+        if (collision.gameObject.CompareTag("Lift") && !liftManager.moveLift)
         {
+            buttonTransform = collision.transform;
             isCloseEnoughToLiftButton = true;
             interactHUD.SetActive(true);
             //PlayInteractSound();
@@ -244,9 +274,29 @@ public class Interact : MonoBehaviour
         isCloseEnoughToCommsTowerButton = false;
         isCloseEnoughToBatteryRecharger = false;
 
+        buttonTransform = null;
+
         /*if (collision.gameObject.CompareTag("BatteryDeposit") || collision.gameObject.CompareTag("Battery") || collision.gameObject.CompareTag("Lift"))
         {
             interactHasSFXPlayed = false;
         }*/
+    }
+
+    private void TeleportPlayerAndAnimate()
+    {
+        //teleport player
+        PlayerStateMachine player = FindObjectOfType<PlayerStateMachine>();
+        player.transform.position = new Vector2(buttonTransform.position.x + xTeleportOffset, buttonTransform.position.y + yTeleportOffset);
+
+        //animate button press
+        animator.Play("Player_PressButton");
+    }
+
+    private void ActivateCrops()
+    {
+        FindObjectOfType<CropsManager>().ActivateSprinklers();
+        interactHUD.SetActive(false);
+        isCropsOn = true;
+        audioManager.buttonPressSFX.Play();
     }
 }

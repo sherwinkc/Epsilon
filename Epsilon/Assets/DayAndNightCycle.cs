@@ -9,6 +9,7 @@ public class DayAndNightCycle : MonoBehaviour
     [SerializeField] Animator dayAnim;
     [SerializeField] Animator globalLight1, globalLight2;
     [SerializeField] Animator sun;
+    [SerializeField] Animation sunrise;
 
     [SerializeField] Animator nightAnim;
 
@@ -28,7 +29,9 @@ public class DayAndNightCycle : MonoBehaviour
     {
         //Invoke("BeginSunset", cycleLength);
         //BeginSunset();
-        BeginSunrise();
+        //BeginSunrise();
+
+        //BeginSunriseAtMidMorning();
     }
 
     // Update is called once per frame
@@ -74,5 +77,23 @@ public class DayAndNightCycle : MonoBehaviour
         globalLight1.enabled = true;
         globalLight2.enabled = true;
         sun.enabled = true;
+    }
+
+    private void BeginSunriseAtMidMorning()
+    {
+        TurnOnComponents();
+
+        //Debug.Log("BeginSunriseInvoked");
+        dayAnim.Play("Sunrise");
+        globalLight1.Play("BrightenGlobalLight1");
+        globalLight2.Play("BrightenGlobalLight");
+
+        //sunrise["SunSetAndRise"].time = 10f;
+        sun.Play("SunSetAndRise");
+
+        Invoke("BeginSunset", cycleLength);
+
+        sunrising = true;
+        sunsetting = false;
     }
 }

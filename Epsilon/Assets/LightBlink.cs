@@ -10,6 +10,8 @@ public class LightBlink : MonoBehaviour
 
     [SerializeField] bool isOn = true;
 
+    [SerializeField] AudioSource beepSFX;
+
     private void Awake()
     {
         light2D = GetComponent<Light2D>();
@@ -32,6 +34,7 @@ public class LightBlink : MonoBehaviour
         {
             light2D.enabled = true;
             isOn = true;
+            if (beepSFX != null) beepSFX.Play();
         }
     }
 
