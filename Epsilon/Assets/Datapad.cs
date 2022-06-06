@@ -36,7 +36,7 @@ public class Datapad : MonoBehaviour
             PlayOpenSFX();
             Invoke("PlayOpenSFX", 10.5f);
 
-            if(errandsHUD != null) Invoke("ShowErrands", showTextDuration);
+            if(errandsHUD != null) Invoke("ShowErrands", 11f);
         }
     }
 

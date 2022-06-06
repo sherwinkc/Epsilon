@@ -34,6 +34,8 @@ public class LevelManager : MonoBehaviour
     //Computer
     [SerializeField] GameObject computerSignal;
 
+    [SerializeField] GameObject taskList;
+
     private void Awake()
     {
         pauseMenu = GetComponent<PauseMenu>();
@@ -113,7 +115,9 @@ public class LevelManager : MonoBehaviour
     private IEnumerator SignalAndDoorSequence()
     {
         PlayerStateMachine playerStateMachine = FindObjectOfType<PlayerStateMachine>();
-        playerStateMachine.inCinematic = true;
+        playerStateMachine.EnterCinematicState();
+
+        taskList.SetActive(false);
 
         //Computer Signal Sequence
         yield return new WaitForSeconds(1f);
@@ -132,6 +136,11 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         computerSignal.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+
+        Computer computer = FindObjectOfType<Computer>();
+        computer.ActivateSidePanel();
 
         yield return new WaitForSeconds(8f); //watch computer for 8 secs
 
@@ -171,6 +180,8 @@ public class LevelManager : MonoBehaviour
         BatteryRecharger batteryRecharger = FindObjectOfType<BatteryRecharger>();
 
         batteryRecharger.DischargeBatteryAnim();
+        audioMan.dischargeSFXOpen.Play();
+        audioMan.finishSFXOpen.Play();
 
         yield return new WaitForSeconds(7f); // focus on battery charger for 10 secs
 

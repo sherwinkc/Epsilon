@@ -86,7 +86,7 @@ public class Interact : MonoBehaviour
             }
 
             //check if close to battery
-            else if (isCloseEnoughToBattery)
+            else if (isCloseEnoughToBattery && !player.inCinematic)
             {
                 helper.objectToPickUp = colliderToPickUp.gameObject;
                 //helper.objectToPickUp.GetComponent<Collider2D>().enabled = false;
@@ -157,7 +157,7 @@ public class Interact : MonoBehaviour
         HandleLiftLogic(collision);
 
         //Battery
-        if (collision.gameObject.CompareTag("Battery") && !helper.isCarryingBattery && !helper.isPickingUpItem)
+        if (collision.gameObject.CompareTag("Battery") && !helper.isCarryingBattery && !helper.isPickingUpItem && !player.inCinematic)
         {
             isCloseEnoughToBattery = true;
             colliderToPickUp = collision;

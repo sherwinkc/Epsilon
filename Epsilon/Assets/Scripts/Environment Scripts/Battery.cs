@@ -56,6 +56,7 @@ public class Battery : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("BatteryRecharger"))
         {
+            Debug.Log("Battery Collided with :" + collision.gameObject.name);
             isMovingWithHelper = false;
             helper.isPickingUpItem = false;
             helper.isCarryingBattery = false;

@@ -92,6 +92,11 @@ public class AudioManager : MonoBehaviour
     [Header("Gate")]
     public AudioSource gateSFXOpen;
 
+    [Header("Battery Discharge")]
+    public AudioSource dischargeSFXOpen;
+    public AudioSource finishSFXOpen;
+
+
 
     public void PlayFootstepsSFX(AudioMaterial material)
     {

@@ -11,6 +11,8 @@ public class BatteryRecharger : MonoBehaviour
 
     Animator anim;
 
+    [SerializeField] BoxCollider2D boxCollider;
+
 
     public int batteriesDocked = 0;
 
@@ -19,16 +21,12 @@ public class BatteryRecharger : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        anim.enabled = false;
+
+        boxCollider = GetComponent<BoxCollider2D>();
 
         ActivateBatterySprites();
-
         realBattery.SetActive(false);
-
-        anim.enabled = false;
-    }
-
-    private void Start()
-    {
 
     }
 
@@ -66,6 +64,8 @@ public class BatteryRecharger : MonoBehaviour
             LevelManager levelManager = FindObjectOfType<LevelManager>();
             levelManager.areBatteriesCollected = true;
 
+            DisableTrigger();
+
             levelManager.CheckLevelIntroStatus();
         }
     }
@@ -79,5 +79,10 @@ public class BatteryRecharger : MonoBehaviour
     {
         battery1.SetActive(false);
         realBattery.SetActive(true);
+    }
+
+    public void DisableTrigger()
+    {
+        boxCollider.enabled = false;
     }
 }

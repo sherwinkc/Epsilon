@@ -8,7 +8,7 @@ public class LightBlink : MonoBehaviour
     [SerializeField] Light2D light2D;
     [SerializeField] float flashTime;
 
-    [SerializeField] bool isOn = true;
+    [SerializeField] bool isOn = false;
 
     [SerializeField] AudioSource beepSFX;
 
