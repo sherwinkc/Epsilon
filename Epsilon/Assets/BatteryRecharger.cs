@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BatteryRecharger : MonoBehaviour
-{
+{    
+    [SerializeField] Animator door;
     [SerializeField] GameObject battery1, battery2, battery3;
 
     public int batteriesDocked = 0;
+
+    public bool collectKeys = false;
 
     private void Awake()
     {
         ActivateBatterySprites();
     }
 
-    void Start()
+    private void Start()
     {
-        
+
     }
 
-    void Update()
+    private void Update()
     {
-        
+        if (collectKeys) ActivateBatterySprites();
     }
 
     public void ActivateBatterySprites()
@@ -48,6 +51,11 @@ public class BatteryRecharger : MonoBehaviour
             battery1.SetActive(true);
             battery2.SetActive(true);
             battery3.SetActive(true);
+
+            LevelManager levelManager = FindObjectOfType<LevelManager>();
+            levelManager.areBatteriesCollected = true;
+
+            levelManager.CheckLevelIntroStatus();
         }
     }
 }

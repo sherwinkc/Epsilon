@@ -5,21 +5,17 @@ using Cinemachine;
 
 public class StationCamera : MonoBehaviour
 {
+    CameraManager cameraManager;
+
     public CinemachineVirtualCamera mainPlayerCam;
     public CinemachineVirtualCamera stationCam;
 
     //TODO disable trigger when puzzle is complete
     //[SerializeField] bool disableTriggerOncePuzzleIsComplete;
 
-    void Start()
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        cameraManager = FindObjectOfType<CameraManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,6 +24,7 @@ public class StationCamera : MonoBehaviour
         {
             //mainPlayerCam.Priority = 10;
             stationCam.Priority = 600;
+            cameraManager.isInAStationaryCam = true;
         }
     }
 
@@ -37,6 +34,7 @@ public class StationCamera : MonoBehaviour
         {
             //mainPlayerCam.Priority = 100;
             stationCam.Priority = 10;
+            cameraManager.isInAStationaryCam = false;
         }
     }
 }

@@ -12,6 +12,7 @@ public class Interact : MonoBehaviour
     RoverBehaviour rover;
     Animator animator;
     PlayerStateMachine player; //TODO Interact and player statemachine are on the same gameobject - transform is the same
+    LevelManager levelManager;
 
     public GameObject interactHUD;
     public GameObject interactUnableToHUD;
@@ -61,6 +62,7 @@ public class Interact : MonoBehaviour
         rover = FindObjectOfType<RoverBehaviour>();
         animator = GetComponent<Animator>();
         player = GetComponent<PlayerStateMachine>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
     void Start()
@@ -122,18 +124,26 @@ public class Interact : MonoBehaviour
             {
                 TeleportPlayerAndAnimate();
                 Invoke("ActivateCrops", 1f);
+
+                levelManager.arePlantsHydrated = true;
             }
 
             else if (isCloseEnoughToSolarPanelButton && !isSolarPanelsOn)
             {
                 TeleportPlayerAndAnimate();
                 Invoke("ActivateSolarPanels", 1f);
+
+                LevelManager levelManager = FindObjectOfType<LevelManager>();
+                levelManager.areSolarPanelsDeployed = true;
             }
 
             else if (isCloseEnoughToCommsTowerButton && !isCommsTowerOn)
             {
                 TeleportPlayerAndAnimate();
                 Invoke("ActivateCommsTower", 1f);
+
+                LevelManager levelManager = FindObjectOfType<LevelManager>();
+                levelManager.isSatelliteDeployed = true;
             }
         }
 
@@ -153,7 +163,6 @@ public class Interact : MonoBehaviour
         if (liftManager != null) liftManager.moveLift = !liftManager.moveLift;
     }
 
-
     private void ActivateCommsTower()
     {
         FindObjectOfType<CommsTower>().GetComponent<Animator>().enabled = true;
@@ -161,6 +170,8 @@ public class Interact : MonoBehaviour
 
         audioManager.buttonPressSFX.Play();
         audioManager.commsTowerSFXOpen.Play();
+
+        levelManager.CheckLevelIntroStatus();
     }
 
     private void ActivateSolarPanels()
@@ -177,6 +188,8 @@ public class Interact : MonoBehaviour
 
         audioManager.buttonPressSFX.Play();
         audioManager.buttonPressSFX.Play();
+
+        levelManager.CheckLevelIntroStatus();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -184,7 +197,7 @@ public class Interact : MonoBehaviour
         HandleLiftLogic(collision);
 
         //Battery
-        if (collision.gameObject.CompareTag("Battery") && !helper.isCarryingBattery)
+        if (collision.gameObject.CompareTag("Battery") && !helper.isCarryingBattery && !helper.isPickingUpItem)
         {
             isCloseEnoughToBattery = true;
             colliderToPickUp = collision;
@@ -239,12 +252,12 @@ public class Interact : MonoBehaviour
             interactHUD.SetActive(true);
         }
 
-        if (collision.gameObject.CompareTag("BatteryRecharger") && helper.isCarryingBattery)
+        if (collision.gameObject.CompareTag("BatteryRecharger") && helper.isCarryingBattery && !levelManager.areBatteriesCollected)
         {
             isCloseEnoughToBatteryRecharger = true;
             interactHUD.SetActive(true);
         }
-        else if (collision.gameObject.CompareTag("BatteryRecharger") && !helper.isCarryingBattery)
+        else if (collision.gameObject.CompareTag("BatteryRecharger") && !helper.isCarryingBattery && !levelManager.areBatteriesCollected)
         {
             interactUnableToHUD.SetActive(true);
         }
@@ -312,5 +325,7 @@ public class Interact : MonoBehaviour
         interactHUD.SetActive(false);
         isCropsOn = true;
         audioManager.buttonPressSFX.Play();
+
+        levelManager.CheckLevelIntroStatus();
     }
 }

@@ -12,6 +12,8 @@ public class Datapad : MonoBehaviour
 
     [SerializeField] float showTextDuration;
 
+    [SerializeField] GameObject errandsHUD;
+
     private void Awake()
     {
         spr = GetComponentInChildren<SpriteRenderer>();
@@ -19,18 +21,6 @@ public class Datapad : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
 
         if (textToShow != null) textToShow.SetActive(false);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -45,6 +35,8 @@ public class Datapad : MonoBehaviour
 
             PlayOpenSFX();
             Invoke("PlayOpenSFX", 10.5f);
+
+            if(errandsHUD != null) Invoke("ShowErrands", showTextDuration);
         }
     }
 
@@ -58,5 +50,10 @@ public class Datapad : MonoBehaviour
     void PlayOpenSFX()
     {
         audioManager.datapadSFXOpen.Play();
+    }
+
+    private void ShowErrands()
+    {
+        errandsHUD.SetActive(true);
     }
 }

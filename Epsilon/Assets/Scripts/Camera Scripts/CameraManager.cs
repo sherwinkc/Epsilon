@@ -27,12 +27,16 @@ public class CameraManager : MonoBehaviour
 
     public bool isCameraTargetPlayer = true;
     public bool isFocusingOnHelper;
+    public bool isInAStationaryCam = false;
 
     public CinemachineVirtualCamera deathCam;
 
     [Header("Player Look Camera")]
     public CinemachineVirtualCamera endingCamClose;
     public CinemachineVirtualCamera endingCamFar;
+
+    [Header("Gate 1")]
+    public CinemachineVirtualCamera gate1Cam;
 
     private void Awake()
     {
@@ -109,9 +113,9 @@ public class CameraManager : MonoBehaviour
         camLookDown.Priority = 10;
     }
 
-    private void SetCamerasDuringLedgeClimb()
+    private void SetCamerasDuringLedgeClimb() //pretty sure it's this that's overriding stationary cameras
     {
-        if (!isFocusingOnHelper)
+        if (!isFocusingOnHelper && !isInAStationaryCam)
         {
             if (isCameraTargetPlayer)
             {
@@ -141,5 +145,16 @@ public class CameraManager : MonoBehaviour
     private void OnDisable()
     {
         controls.Gameplay.Disable();
+    }
+
+    public void FocusCamera()
+    {
+        gate1Cam.Priority = 100;
+        //Invoke("ResetCamera", 5f);
+    }
+
+    public void ResetCamera()
+    {
+        gate1Cam.Priority = 10;
     }
 }
