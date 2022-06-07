@@ -15,10 +15,16 @@ public class RoverBehaviour : MonoBehaviour
     public float moveSpeed = 1f;
     public bool canMove = false;
 
+    //Red & Green Lights
+    public GameObject greenLight1, greenLight2, greenLight3, redLight1, redLight2, redLight3;
+
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
         animator = GetComponent<Animator>();
+
+        DisableAllGreenLights();
+        EnableAllRedLights();
     }
 
     // Update is called once per frame
@@ -33,32 +39,7 @@ public class RoverBehaviour : MonoBehaviour
         {
             canMove = false;
             audioManager.roverEngine.Stop();
-            //audioManager.roverEngine2.Stop();
-
-            if (refillStationEndPoint != null) 
-            { 
-                refillStationEndPoint.enabled = false;
-                //audioManager.powerDownSFX.Play(); // this is playing in both Docks
-            }
         }
-
-        if (collision.gameObject.CompareTag("BatteryDeposit"))
-        {
-            collision.gameObject.GetComponent<DepositManager>().isRoverDockedHere = true;
-        }
-
-
-        /*if (collision.gameObject.CompareTag("Battery"))
-        {
-            canMove = true;
-            FindObjectOfType<AudioManager>().roverEngine.Play(); //TODO cache audio manager
-
-            if (batteryCount >= batteriesRequired)
-            {
-                //TODO Require a battery count
-            }
-            //batteryCount++;
-        }*/
     }
 
     public void MoveRover()
@@ -72,5 +53,33 @@ public class RoverBehaviour : MonoBehaviour
             //TODO Require a battery count
         }
         //batteryCount++;
+    }
+
+    private void DisableAllGreenLights()
+    {
+        greenLight1.SetActive(false);
+        greenLight2.SetActive(false);
+        greenLight3.SetActive(false);
+    }
+
+    private void EnableAllGreenLights()
+    {
+        greenLight1.SetActive(true);
+        greenLight2.SetActive(true);
+        greenLight3.SetActive(true);
+    }
+
+    private void EnableAllRedLights()
+    {
+        redLight1.SetActive(true);
+        redLight2.SetActive(true);
+        redLight3.SetActive(true);
+    }
+
+    private void DisableAllRedLights()
+    {
+        redLight1.SetActive(false);
+        redLight2.SetActive(false);
+        redLight3.SetActive(false);
     }
 }

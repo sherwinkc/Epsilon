@@ -69,9 +69,11 @@ public class AudioManager : MonoBehaviour
     public AudioSource playerBreathingSFX;
     public AudioSource grabSFX;
 
-    [Header("Safe")]
+    [Header("Drop Pod")]
     public AudioSource airDecompressSFX;
     public AudioSource openSafeSFX;
+    public AudioSource machineSFX;
+    public AudioSource machineEndSFX;
 
     [Header("UI")]
     public AudioSource highlightUISFX;

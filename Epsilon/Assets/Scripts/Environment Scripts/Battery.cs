@@ -33,14 +33,10 @@ public class Battery : MonoBehaviour
             helper.isDepositingToRover = false;
             helper.isCarryingBattery = false;
             audioManager.helperCollectSFX.Play();
-            audioManager.roverGreenLightSFX.Play();
+            //audioManager.roverGreenLightSFX.Play();
 
-            //Turn on rover and other things
-            DepositManager depManager = collision.gameObject.GetComponent<DepositManager>();
-
-            depManager.ChangeDepositState();
-            depManager.rover.MoveRover();
-            depManager.isRoverDockedHere = false;
+            DepositManager depMan = FindObjectOfType<DepositManager>();
+            depMan.StartCo();
 
             Destroy(this.gameObject);
         }

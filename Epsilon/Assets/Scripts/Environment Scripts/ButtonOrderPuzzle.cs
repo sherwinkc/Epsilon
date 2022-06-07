@@ -5,8 +5,6 @@ using UnityEngine;
 public class ButtonOrderPuzzle : MonoBehaviour
 {
     AudioManager audioManager;
-
-    [SerializeField] Animator safeAnimator;
     [SerializeField] float timeToReset = 0.5f;
 
     bool isPuzzleComplete = false;
@@ -106,7 +104,9 @@ public class ButtonOrderPuzzle : MonoBehaviour
 
                 if (cameraTrigger != null) cameraTrigger.SetActive(false);
                 isPuzzleComplete = true;
-                if (safeAnimator != null) safeAnimator.SetTrigger("Open");
+                DropPod dropPod = FindObjectOfType<DropPod>();
+                dropPod.OpenDropPod();
+
             }
         }       
     }
