@@ -27,7 +27,6 @@ public class BatteryRecharger : MonoBehaviour
 
         ActivateBatterySprites();
         realBattery.SetActive(false);
-
     }
 
     private void Update()

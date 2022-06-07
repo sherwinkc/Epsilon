@@ -12,6 +12,13 @@ public class DebugManager : MonoBehaviour
     Collector collector;
     PlayerVFXManager playerVFXMan;
     DayAndNightCycle dayAndNight;
+    LevelManager levelManager;
+    BatteryRecharger batteryRecharger;
+
+    [Header("Gate Sequence")]
+    [Tooltip("Shortcut: F2")]
+    public bool ActivateGateSequence;
+    private bool sequenceInitiated = false;
 
     [Header("Toggle Debug")]
     public bool displayPlayerState;
@@ -98,6 +105,8 @@ public class DebugManager : MonoBehaviour
         collector = FindObjectOfType<Collector>();
         playerVFXMan = FindObjectOfType<PlayerVFXManager>();
         dayAndNight = FindObjectOfType<DayAndNightCycle>();
+        levelManager = FindObjectOfType<LevelManager>();
+        batteryRecharger = FindObjectOfType<BatteryRecharger>();
     }
 
     void Start()
@@ -152,10 +161,32 @@ public class DebugManager : MonoBehaviour
 
         DisplayPlayTime();
 
+        GateSequenceDebugLogic();
 
         //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
         //isMountDetected.text = "Is Mount Detected: " + animator.GetBool("mountDetected").ToString();
+
+    }
+
+    private void GateSequenceDebugLogic()
+    {
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ActivateGateSequence = true;
+        }
+
+        if (ActivateGateSequence && !sequenceInitiated)
+        {
+            sequenceInitiated = true;
+
+            levelManager.areBatteriesCollected = true;
+            levelManager.isSatelliteDeployed = true;
+            levelManager.arePlantsHydrated = true;
+
+            batteryRecharger.batteriesDocked = 3;
+            batteryRecharger.ActivateBatterySprites();
+        }
     }
 
     private void DisplayPlayTime()
