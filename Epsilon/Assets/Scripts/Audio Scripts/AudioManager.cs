@@ -96,6 +96,10 @@ public class AudioManager : MonoBehaviour
     public AudioSource dischargeSFXOpen;
     public AudioSource finishSFXOpen;
 
+    [Header("Computer")]
+    public AudioSource extendSFX;
+
+
 
 
     public void PlayFootstepsSFX(AudioMaterial material)

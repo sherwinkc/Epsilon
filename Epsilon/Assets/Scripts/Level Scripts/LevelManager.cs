@@ -141,6 +141,7 @@ public class LevelManager : MonoBehaviour
 
         Computer computer = FindObjectOfType<Computer>();
         computer.ActivateSidePanel();
+        audioMan.extendSFX.Play();
 
         yield return new WaitForSeconds(8f); //watch computer for 8 secs
 
@@ -179,6 +180,7 @@ public class LevelManager : MonoBehaviour
 
         BatteryRecharger batteryRecharger = FindObjectOfType<BatteryRecharger>();
 
+        batteryRecharger.SetGreenLight();
         batteryRecharger.DischargeBatteryAnim();
         audioMan.dischargeSFXOpen.Play();
         audioMan.finishSFXOpen.Play();
