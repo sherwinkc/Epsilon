@@ -270,6 +270,16 @@ public class PlayerStateMachine : MonoBehaviour
         }
 
         thrustImage.value = thrustCounter * 100;
+
+        //TODO don't really want to check everyframe whether we are in a cinematic
+        if (inCinematic)
+        {
+            DisableGameplayControls();
+        }
+        else if(!inCinematic)
+        {
+            EnableGameplayControls();
+        }
     }
 
     private void EnableDisableJetpackSprite()

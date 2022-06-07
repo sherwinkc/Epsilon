@@ -155,7 +155,7 @@ public class CameraManager : MonoBehaviour
 
     public void FocusGateCamera()
     {
-        gate1Cam.Priority = 100;
+        gate1Cam.Priority = 300;
     }
 
     public void ResetGateCamera()
@@ -165,7 +165,7 @@ public class CameraManager : MonoBehaviour
 
     public void FocusComputerCamera()
     {
-        computerCam.Priority = 100;
+        computerCam.Priority = 300;
     }
 
     public void ResetComputerCamera()
@@ -175,7 +175,7 @@ public class CameraManager : MonoBehaviour
 
     public void FocusBatteryChargerCamera()
     {
-        batteryChargerCam.Priority = 100;
+        batteryChargerCam.Priority = 300;
     }
 
     public void ResetBatteryChargerCamera()

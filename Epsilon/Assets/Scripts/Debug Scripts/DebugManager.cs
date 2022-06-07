@@ -15,6 +15,8 @@ public class DebugManager : MonoBehaviour
     LevelManager levelManager;
     BatteryRecharger batteryRecharger;
 
+    [SerializeField] GameObject battery;
+
     [Header("Gate Sequence")]
     [Tooltip("Shortcut: F2")]
     public bool ActivateGateSequence;
@@ -163,10 +165,20 @@ public class DebugManager : MonoBehaviour
 
         GateSequenceDebugLogic();
 
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            CreateABattery();
+        }
+
         //if (collidingWith != null && playerStateMachine.collisionForDebug != null) collidingWith.text = "Colliding With: " + playerStateMachine.collisionForDebug.gameObject.name.ToString();
         //if (jumpBuffer != null) jumpBuffer.text = "Jump Buffer: " + playerStateMachine.jumpBufferCounter.ToString("F4");
         //isMountDetected.text = "Is Mount Detected: " + animator.GetBool("mountDetected").ToString();
 
+    }
+
+    private void CreateABattery()
+    {
+        if (battery != null) Instantiate(battery, playerStateMachine.transform.position, Quaternion.identity);
     }
 
     private void GateSequenceDebugLogic()

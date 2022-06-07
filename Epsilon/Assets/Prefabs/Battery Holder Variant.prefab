@@ -7,9 +7,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1231425008047781076, guid: 015d8909c6a00e74abf9306cb73d1257, type: 3}
+      propertyPath: m_Size.x
+      value: 0.7404572
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231425008047781076, guid: 015d8909c6a00e74abf9306cb73d1257, type: 3}
+      propertyPath: m_Size.y
+      value: 0.86511946
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231425008047781076, guid: 015d8909c6a00e74abf9306cb73d1257, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.0010217875
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231425008047781076, guid: 015d8909c6a00e74abf9306cb73d1257, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.000000059604645
+      objectReference: {fileID: 0}
     - target: {fileID: 1715338370896206809, guid: 015d8909c6a00e74abf9306cb73d1257, type: 3}
       propertyPath: m_Name
-      value: Battery Holder
+      value: Battery Holder Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1715338370896206810, guid: 015d8909c6a00e74abf9306cb73d1257, type: 3}
       propertyPath: m_RootOrder

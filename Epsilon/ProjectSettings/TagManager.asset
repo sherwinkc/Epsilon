@@ -33,6 +33,7 @@ TagManager:
   - SolarPanelsButton
   - CommsTowerButton
   - BatteryRecharger
+  - ZoomOutCam
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,8 @@ public class RoverDock : MonoBehaviour
 
     public Animator animToOpen;
 
+    [SerializeField] float timeBeforeOpeningBridge = 2f;
+
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -26,8 +28,9 @@ public class RoverDock : MonoBehaviour
         if (collision.gameObject.CompareTag("Rover"))
         {
             collision.GetComponent<RoverBehaviour>().animator.SetTrigger("MoveArm");
+            audioManager.smallMotorSFX.Play();
 
-            Invoke("OpenBridge", 1.5f); //TODO Magic Number
+            Invoke("OpenBridge", timeBeforeOpeningBridge);
         }
     }
 

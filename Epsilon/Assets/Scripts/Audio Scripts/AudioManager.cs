@@ -23,14 +23,16 @@ public class AudioManager : MonoBehaviour
     public AudioSource jetpackStart, jetpackLoop;
     public AudioSource bootUpSFX;
 
-    [Header("VO")]
+    [Header("Helper")]
     public AudioSource helper;
     public AudioSource helperCollectSFX;
+    public AudioSource helperSignal;
 
     [Header("Rover")]
     public AudioSource roverEngine;
     public AudioSource roverGreenLightSFX;
     public AudioSource powerDownSFX;
+    public AudioSource smallMotorSFX;
 
     [Header("Death")]
     public AudioSource deathCrunch;
@@ -48,6 +50,8 @@ public class AudioManager : MonoBehaviour
     [Header("Bridge")]
     public AudioSource bridgeOpenSFX; 
     public AudioSource bridgeOpenSFX2;
+    public AudioSource avalancheSFX;
+    public AudioSource lockInSFX;
 
     [Header("Rock")]
     public AudioSource rockSFX;
@@ -98,9 +102,6 @@ public class AudioManager : MonoBehaviour
 
     [Header("Computer")]
     public AudioSource extendSFX;
-
-
-
 
     public void PlayFootstepsSFX(AudioMaterial material)
     {

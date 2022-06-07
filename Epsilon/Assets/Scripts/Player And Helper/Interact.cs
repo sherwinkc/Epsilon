@@ -95,6 +95,7 @@ public class Interact : MonoBehaviour
                 interactHUD.SetActive(false);
 
                 animator.Play("Player_HandGesture");
+                audioManager.helperSignal.Play();
                 //audioManager.buttonPressSFX.Play(); //TODO Another sound for hand gesture
             }
 
@@ -107,6 +108,7 @@ public class Interact : MonoBehaviour
                 interactHUD.SetActive(false);
 
                 animator.Play("Player_HandGesture");
+                audioManager.helperSignal.Play();
                 //audioManager.buttonPressSFX.Play(); //TODO Another sound for hand gesture
             }
 
@@ -118,6 +120,7 @@ public class Interact : MonoBehaviour
                 interactHUD.SetActive(false);
 
                 animator.Play("Player_HandGesture");
+                audioManager.helperSignal.Play();
                 //audioManager.buttonPressSFX.Play(); //TODO Another sound for hand gesture
             }
 

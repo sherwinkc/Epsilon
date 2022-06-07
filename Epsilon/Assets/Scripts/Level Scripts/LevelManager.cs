@@ -106,7 +106,7 @@ public class LevelManager : MonoBehaviour
             task4text.text = "<s>4. Deploy the satellite scanner.</s>";
         }   
         
-        if (areBatteriesCollected && isSatelliteDeployed && arePlantsHydrated && areBatteriesCollected)
+        if (areBatteriesCollected && isSatelliteDeployed && arePlantsHydrated && areSolarPanelsDeployed)
         {
             StartCoroutine(SignalAndDoorSequence());
         }
@@ -114,6 +114,9 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator SignalAndDoorSequence()
     {
+        //Computer Signal Sequence
+        yield return new WaitForSeconds(10f);
+
         PlayerStateMachine playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         playerStateMachine.EnterCinematicState();
 
@@ -143,7 +146,7 @@ public class LevelManager : MonoBehaviour
         computer.ActivateSidePanel();
         audioMan.extendSFX.Play();
 
-        yield return new WaitForSeconds(8f); //watch computer for 8 secs
+        yield return new WaitForSeconds(7f); //watch computer for 8 secs
 
         FadeToBlack();
 
@@ -162,7 +165,7 @@ public class LevelManager : MonoBehaviour
         doorAnimator.enabled = true;
         audioMan.gateSFXOpen.Play();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         FadeToBlack();
 
@@ -185,7 +188,7 @@ public class LevelManager : MonoBehaviour
         audioMan.dischargeSFXOpen.Play();
         audioMan.finishSFXOpen.Play();
 
-        yield return new WaitForSeconds(7f); // focus on battery charger for 10 secs
+        yield return new WaitForSeconds(6f); // focus on battery charger for 10 secs
 
         FadeToBlack();
 
