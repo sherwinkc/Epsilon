@@ -39,6 +39,10 @@ public class RoverBehaviour : MonoBehaviour
         {
             canMove = false;
             audioManager.roverEngine.Stop();
+            audioManager.roverStopSFX.Play();
+
+            DisableAllGreenLights();
+            EnableAllRedLights();
         }
     }
 

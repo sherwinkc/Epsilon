@@ -33,6 +33,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource roverGreenLightSFX;
     public AudioSource powerDownSFX;
     public AudioSource smallMotorSFX;
+    public AudioSource roverStopSFX;
 
     [Header("Death")]
     public AudioSource deathCrunch;
