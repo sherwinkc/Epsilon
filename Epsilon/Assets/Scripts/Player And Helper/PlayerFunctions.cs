@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.Experimental.U2D.Animation;
 using UnityEngine.UI;
 
 public class PlayerFunctions : MonoBehaviour
@@ -115,10 +114,7 @@ public class PlayerFunctions : MonoBehaviour
 
     public void LoadFinalRoom()
     {
-        if (collector.orbs >= 3) 
-        {
-            levelMan.LoadFinalRoom();       
-        }
+        //obsolete
     }
 
     public void PlaySoftGruntSFX()

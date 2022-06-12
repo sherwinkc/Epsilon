@@ -37,6 +37,8 @@ public class PlayerJetpackState : PlayerBaseState
             _ctx.audioManager.jetpackLoop.Play();
             //if(!_ctx.audioManager.jetpackStart.isPlaying) _ctx.audioManager.jetpackStart.Play();        
         }
+
+        _ctx.StartCoroutine(_ctx.DelayRaycasts());
     }
 
     public override void UpdateState()

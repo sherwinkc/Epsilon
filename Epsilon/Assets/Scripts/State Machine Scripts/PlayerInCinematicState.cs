@@ -29,6 +29,8 @@ public class PlayerInCinematicState : PlayerBaseState
     public override void ExitState()
     {
         //_ctx.Rigidbody.simulated = true;
+
+        _ctx.Animator.enabled = true;
     }
 
     public override void CheckSwitchStates()

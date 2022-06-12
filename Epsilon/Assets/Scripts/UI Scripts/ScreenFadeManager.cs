@@ -39,6 +39,8 @@ public class ScreenFadeManager : MonoBehaviour
 
     public void FadeIn()
     {
+        TurnOnBlackImage();
+        if (!animator.enabled) animator.enabled = true;
         animator.Play("BlackScreenFadeIn");
     }
 

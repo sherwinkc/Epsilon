@@ -10,6 +10,7 @@ public class Collapse : MonoBehaviour
     LevelMusicManager levelMusicManager;
     PlayerStateMachine playerStateMachine;
     DayAndNightCycle dayNightCycle;
+    ScreenFadeManager screenFadeManager;
 
     [SerializeField] BoxCollider2D boxCollider2D;
 
@@ -35,6 +36,7 @@ public class Collapse : MonoBehaviour
         levelMusicManager = FindObjectOfType<LevelMusicManager>();
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         dayNightCycle = FindObjectOfType<DayAndNightCycle>();
+        screenFadeManager = FindObjectOfType<ScreenFadeManager>();
 
         for (int i = 0; i < rbs.Length; i++)
         {
@@ -83,19 +85,20 @@ public class Collapse : MonoBehaviour
         levelMusicManager.music3.Stop();
         levelMusicManager.music4.Stop();
 
-
-        audioManager.playerBreathingSFX.Stop();
+        audioManager.playerBreathingSFX.Stop(); //TODO Not stopping breathing
 
         yield return new WaitForSeconds(blackScreenWaitTime);
-
-        FindObjectOfType<PlayerStateMachine>().inCinematic = true;
 
         //black screen
         blackScreen.SetActive(true);
 
-        audioManager.crashSFX.Play();
-
         Time.timeScale = 1f;
+
+        FindObjectOfType<PlayerStateMachine>().inCinematic = true;
+
+        playerStateMachine.Animator.SetBool("isFalling", false);   
+
+        dayNightCycle.StartNightTime();
 
         //Destroy falling rocks
         for (int i = 0; i < destroy.Length; i++)
@@ -103,6 +106,8 @@ public class Collapse : MonoBehaviour
             destroy[i].Destroy();
         }
 
+        //audio
+        audioManager.crashSFX.Play();
         audioManager.rockfallSFX.Stop();
 
         yield return new WaitForSeconds(blackScreenTime);
@@ -114,18 +119,13 @@ public class Collapse : MonoBehaviour
 
         blackScreen.SetActive(false);
 
-        ScreenFadeManager screenFadeMan = FindObjectOfType<ScreenFadeManager>(); // TODO Cache ScreenFadeManager
-        if (screenFadeMan != null) screenFadeMan.FadeIn();
+        if (screenFadeManager != null) screenFadeManager.FadeIn();
 
-        audioManager.playerBreathingSFX.Play();
-
-        //Play Level Music
-        //levelMusicManager.music4.Play();
-
+        //switch on helmet light
         if (helmetLight != null) helmetLight.SetActive(true);
 
-        //Initate cinematic state
-        //start timeline w/ animation of standing up
-        //play music
+        //audio
+        levelMusicManager.music1.Play(); //TODO Choos a nice intense piece of music here
+        audioManager.playerBreathingSFX.Play();
     }
 }

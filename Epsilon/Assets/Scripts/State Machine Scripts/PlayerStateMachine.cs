@@ -91,6 +91,7 @@ public class PlayerStateMachine : MonoBehaviour
     public float wallCheckDistance;
     public bool isTouchingClimbingPoint = false;
     public bool canShootClimbingRaycasts = true;
+    [SerializeField] float raycastDelayTime = 0.25f;
 
     /*[Header("Mount")]
     public Transform kneeCheck;
@@ -510,6 +511,13 @@ public class PlayerStateMachine : MonoBehaviour
         inCinematic = true;
         _currentState = _states.InCinematic();
         _currentState.EnterState();
+    }
+
+    public IEnumerator DelayRaycasts()
+    {
+        yield return new WaitForSeconds(raycastDelayTime);
+
+        canShootClimbingRaycasts = true;
     }
 
     private void OnEnable()
