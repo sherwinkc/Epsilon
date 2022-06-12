@@ -44,6 +44,9 @@ public class CameraManager : MonoBehaviour
     [Header("Battery Charger")]
     public CinemachineVirtualCamera batteryChargerCam;
 
+    [Header("Battery Charger")]
+    public CinemachineVirtualCamera miraCam;
+
     private void Awake()
     {
         controls = new PlayerControls();
@@ -181,6 +184,16 @@ public class CameraManager : MonoBehaviour
     public void ResetBatteryChargerCamera()
     {
         batteryChargerCam.Priority = 10;
+    }
+
+    public void FocusMiraCam()
+    {
+        miraCam.Priority = 300;
+    }
+
+    public void ResetMiraCam()
+    {
+        miraCam.Priority = 10;
     }
 
 }

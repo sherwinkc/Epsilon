@@ -115,6 +115,8 @@ public class Collapse : MonoBehaviour
         //teleport player
         playerStateMachine.transform.position = wakeUpLocation.position;
 
+        yield return new WaitForSeconds(1f);
+
         playableDirector.Play();
 
         blackScreen.SetActive(false);
@@ -124,8 +126,12 @@ public class Collapse : MonoBehaviour
         //switch on helmet light
         if (helmetLight != null) helmetLight.SetActive(true);
 
-        //audio
-        levelMusicManager.music1.Play(); //TODO Choos a nice intense piece of music here
+        //audio 
+        if (levelMusicManager.music1 != null) levelMusicManager.music1.Play();
+        if (levelMusicManager.music2 != null) levelMusicManager.music2.Play();
+        if (levelMusicManager.music3 != null) levelMusicManager.music3.Play();
+        if (levelMusicManager.music4 != null) levelMusicManager.music4.Play();
+
         audioManager.playerBreathingSFX.Play();
     }
 }
