@@ -44,6 +44,10 @@ public class PlayerLedgeHangState : PlayerBaseState
             _ctx._hasLetGoOfLedge = true;
             SwitchState(_factory.LetGoOfLedge());
         }
+        else if (_ctx.isThrustPressed && _ctx.isJetpackOn)
+        {
+            SwitchState(_factory.Jetpack());
+        }
     }
 
     public void LedgeHang()

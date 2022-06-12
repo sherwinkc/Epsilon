@@ -92,6 +92,7 @@ public class PlayerStateMachine : MonoBehaviour
     public float wallCheckDistance;
     //public bool ledgeDetected = false;
     //public bool canDetectLedges = true;
+    public bool isTouchingClimbingPoint = false;
 
     [Header("Mount")]
     public Transform kneeCheck;
@@ -188,7 +189,7 @@ public class PlayerStateMachine : MonoBehaviour
         //camera test
         camManager = FindObjectOfType<CameraManager>();
 
-        //ScreenShake
+         //ScreenShake
         impulse = FindObjectOfType<CinemachineImpulseSource>();
 
         //Controls calling OnMovement Input Function
@@ -222,8 +223,6 @@ public class PlayerStateMachine : MonoBehaviour
         EnableDisableJetpackSprite();
 
         impulseJetpack = new Vector3(0f, 20f, 0f);
-
-        isJetpackOn = false;
     }
 
     void Update()
@@ -284,18 +283,15 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void EnableDisableJetpackSprite()
     {
-        //experimenting - swapping out sprites programmatically
-        /*if (isJetpackVisible)
+        if (!isJetpackVisible) 
         {
-            GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOn"); //TODO strings bad slow        
-        }
-        else
+            GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("PlayerV3", "PlayerWithoutJetpack");
+        } 
+        else if (isJetpackVisible) 
         {
-            GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("Player", "JetpackOff"); //TODO strings bad slow   
-            GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("Player", "Entry"); //TODO strings bad slow   
-        }*/
-
-        GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("PlayerV3", "PlayerWithoutJetpack");
+            GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("PlayerV3", "Player");
+            //FindObjectOfType<EquipJetpack>().thrustHolder.SetActive(true); TODO turn on thrust bar
+        } 
     }
 
     private void CheckWhichWayPlayerIsFacing()

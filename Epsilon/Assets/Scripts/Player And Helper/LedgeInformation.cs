@@ -44,6 +44,8 @@ public class LedgeInformation : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("LeftSideLedge") || collision.gameObject.CompareTag("RightSideLedge"))
         {
+            //MakeGrabPointsNull();
+
             if (_currentGrabPoint == null && _currentEndPoint == null) Debug.Log("Current Grab Point Is Null!");
 
             isNearClimbableMesh = false;
@@ -52,7 +54,7 @@ public class LedgeInformation : MonoBehaviour
         }
     }
 
-    public void MakeGrabPointsNull()
+    public void MakeGrabPointsNull() //Not sure why we are not using this
     {
         //_currentGrabPoint = null;
         //_currentEndPoint = null;

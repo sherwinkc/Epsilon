@@ -12,6 +12,8 @@ public class Battery : MonoBehaviour
 
     //public RoverBehaviour roverBehaviour;
 
+    [SerializeField] bool rotateBatteryOnPickUp = false;
+
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -42,7 +44,9 @@ public class Battery : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Helper"))
         {
+            if (rotateBatteryOnPickUp) transform.Rotate(0, 0, 80);
             collision.transform.position = helperTransform.transform.position;
+
             isMovingWithHelper = true;
             helper.isCarryingBattery = true;
             helper.isPickingUpItem = false;
