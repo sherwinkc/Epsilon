@@ -9,9 +9,12 @@ public class PlayerFallingState : PlayerBaseState
 
     public override void EnterState()
     {
+        _ctx.isTouchingClimbingPoint = false;
+
         //set Animator variables
         _ctx.Animator.SetBool(_ctx.IsFallingHash, true);
-        _ctx.Animator.SetBool("ledgeDetected", false);
+        _ctx.Animator.SetBool("isTouchingClimbingPoint", _ctx.isTouchingClimbingPoint);
+        //_ctx.Animator.SetBool("ledgeDetected", false);
 
         //_ctx.isTouchingClimbingPoint = false;
 
@@ -47,14 +50,10 @@ public class PlayerFallingState : PlayerBaseState
         {
             SwitchState(_factory.InCinematic());
         }
-        else if (_ctx.isTouchingClimbingPoint)
+        else if (_ctx.isTouchingClimbingPoint && _ctx.ledgeInfo.isNearClimbableMesh && !_ctx._hasLetGoOfLedge)
         {
             SwitchState(_factory.LedgeHang());
         }
-        /*else if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
-        {
-            SwitchState(_factory.LedgeHang());
-        }*/
         else if (_ctx.IsGrounded && _ctx.airTime > _ctx.timeInAirBeforeDeath && _ctx.Rigidbody.velocity.y < _ctx.velocityInAirBeforeDeath) 
         {
             SwitchState(_factory.Death());
@@ -76,20 +75,14 @@ public class PlayerFallingState : PlayerBaseState
 
     private void ShootRaycastsForClimbing()
     {
-        //_ctx.isTouchingWall = Physics2D.Raycast(_ctx.wallCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
-        //_ctx.isTouchingLedge = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
-
-        //_ctx.isKneeTouchingLedge = Physics2D.Raycast(_ctx.kneeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance * 0.5f, _ctx.whatIsGround);
-
-        _ctx.isTouchingClimbingPoint = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
+        //canshootraycasts is like islettinggoof ledge check
+        if (_ctx.canShootClimbingRaycasts) _ctx.isTouchingClimbingPoint = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * 
+            (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsClimbable);
     }
 
     private void RaycastDebug()
     {
-        //Debug.DrawRay(_ctx.wallCheck.position, (_ctx.transform.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
-        Debug.DrawRay(_ctx.ledgeCheck.position, (_ctx.transform.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.red);
-
-        //Debug.DrawRay(_ctx.kneeCheck.position, (Vector2.right * _ctx.wallCheckDistance * 0.8f) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
+        if (_ctx.canShootClimbingRaycasts) Debug.DrawRay(_ctx.ledgeCheck.position, (_ctx.transform.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.red);
     }
 
     void RotateSprite()

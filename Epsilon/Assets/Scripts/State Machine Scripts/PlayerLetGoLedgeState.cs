@@ -10,9 +10,9 @@ public class PlayerLetGoLedgeState : PlayerBaseState
     public override void EnterState()
     {
         //set Animator variables
-        _ctx.isTouchingLedge = true;
+        //_ctx.isTouchingLedge = true;
         _ctx.Animator.SetBool("isLettingGoLedge", true);
-        _ctx.Animator.SetBool("ledgeDetected", false);
+        //_ctx.Animator.SetBool("ledgeDetected", false);
 
         LetGoLogic();
         //Debug.Log("LetGoState");
@@ -50,9 +50,7 @@ public class PlayerLetGoLedgeState : PlayerBaseState
 
     private void LetGoLogic()
     {
-        //_ctx.canDetectLedges = false;
         _ctx.Rigidbody.simulated = true;
-        //_ctx.Animator.SetBool("ledgeDetected", false);
         //_ctx.Animator.SetBool(_ctx.IsFallingHash, true);
     }
 

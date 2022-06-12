@@ -18,8 +18,6 @@ public class PlayerJumpState : PlayerBaseState
         _ctx.canJump = false;
 
         _ctx._impactEffect.Play();
-
-        //_ctx.isTouchingClimbingPoint = false;
     }
 
     public override void UpdateState()
@@ -33,8 +31,6 @@ public class PlayerJumpState : PlayerBaseState
         ShootRaycastsForClimbing();
         RaycastDebug();
         RotateSprite();
-
-        //Debug.Log(_ctx.ledgeInfo.gameObject.tag);
     }
 
     public override void FixedUpdate()
@@ -53,14 +49,10 @@ public class PlayerJumpState : PlayerBaseState
         {
             SwitchState(_factory.InCinematic());
         }
-        else if (_ctx.isTouchingClimbingPoint)
+        else if (_ctx.isTouchingClimbingPoint && _ctx.ledgeInfo.isNearClimbableMesh && !_ctx._hasLetGoOfLedge)
         {
             SwitchState(_factory.LedgeHang());
         }
-        /*else if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh || _ctx.isTouchingClimbingPoint)
-        {
-            SwitchState(_factory.LedgeHang());
-        }*/
         else if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Idle());
@@ -99,20 +91,14 @@ public class PlayerJumpState : PlayerBaseState
 
     private void ShootRaycastsForClimbing()
     {
-        //_ctx.isTouchingWall = Physics2D.Raycast(_ctx.wallCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
-        //_ctx.isTouchingLedge = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
-
-        _ctx.isTouchingClimbingPoint = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsGround);
-
-        //_ctx.isKneeTouchingLedge = Physics2D.Raycast(_ctx.kneeCheck.position, _ctx.transform.right * (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance * 0.5f, _ctx.whatIsGround);
+        //TODO bool check is like islettinggoofledge?
+        if (_ctx.canShootClimbingRaycasts) _ctx.isTouchingClimbingPoint = Physics2D.Raycast(_ctx.ledgeCheck.position, _ctx.transform.right * 
+            (_ctx.transform.localScale.x * _ctx.playerLocalScaleOffset), _ctx.wallCheckDistance, _ctx.whatIsClimbable);        
     }
 
     private void RaycastDebug()
     {
-        //Debug.DrawRay(_ctx.wallCheck.position, (Vector2.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
-        Debug.DrawRay(_ctx.ledgeCheck.position, (Vector2.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.red);
-
-        //Debug.DrawRay(_ctx.kneeCheck.position, (Vector2.right * _ctx.wallCheckDistance * 0.8f) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.white);
+        if (_ctx.canShootClimbingRaycasts) Debug.DrawRay(_ctx.ledgeCheck.position, (Vector2.right * _ctx.wallCheckDistance) * _ctx.transform.localScale.x * _ctx.playerLocalScaleOffset, Color.red);
     }
 
     void RotateSprite()
@@ -126,15 +112,6 @@ public class PlayerJumpState : PlayerBaseState
         {
             _ctx.transform.localScale = new Vector3(-_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
         }
-        /*//rotate sprite when moving left and right
-        if (_ctx.CurrentMovement.x > 0.1)
-        {
-            _ctx.transform.localScale = new Vector3(_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
-        }
-        else if (_ctx.CurrentMovement.x < -0.1)
-        {
-            _ctx.transform.localScale = new Vector3(-_ctx.RotationScaleAmount, _ctx.RotationScaleAmount, _ctx.transform.localScale.z);
-        }*/
     }
 
     private void InAirLogic()

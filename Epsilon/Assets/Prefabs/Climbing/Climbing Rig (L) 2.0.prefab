@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7156118597182127479}
   - component: {fileID: 7156118597182127478}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Grab Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7156118598161329166}
   - component: {fileID: 7156118598161329161}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Left Side Trigger
   m_TagString: LeftSideLedge
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.15}
+  m_Size: {x: 0.25, y: 0.5}
   m_EdgeRadius: 0
 --- !u!1 &7156118598340221780
 GameObject:
@@ -115,7 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7156118598340221783}
   - component: {fileID: 7156118598340221782}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: End Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7156118598500113836}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Climbing Rig (L) 2.0
   m_TagString: ClimbableMesh
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 7156118598597930273}
   - component: {fileID: 7156118598597930272}
   - component: {fileID: 7534658130266167342}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Square Left Corner
   m_TagString: Untagged
   m_Icon: {fileID: 0}

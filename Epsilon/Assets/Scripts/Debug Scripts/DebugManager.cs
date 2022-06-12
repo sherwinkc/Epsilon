@@ -76,9 +76,9 @@ public class DebugManager : MonoBehaviour
 
     [Header("Ledge Climb Checks")]
     public Animator animator;
-    public TMP_Text ledgeDetectedAnimator;
-    public TMP_Text isTouchingWall;
-    public TMP_Text isTouchingLedge;
+    //public TMP_Text ledgeDetectedAnimator;
+    //public TMP_Text isTouchingWall;
+    public TMP_Text isTouchingClimbPointText;
     public TMP_Text isNearClimbableLedge;
     public TMP_Text isMountDetected;
     public TMP_Text isLettingGoOfLedgeAnimator;
@@ -242,10 +242,7 @@ public class DebugManager : MonoBehaviour
 
     private void DisplayLedgeAndClimbingChecks()
     {
-        ledgeDetectedAnimator.text = "Ledge Detected: " + animator.GetBool("ledgeDetected").ToString();
-        isTouchingWall.text = "isTouchingWall: " + playerStateMachine.isTouchingWall.ToString();
-        isTouchingLedge.text = "isTouchingLedge: " + playerStateMachine.isTouchingLedge.ToString();
-
+        isTouchingClimbPointText.text = "Is Touching Climbable Point: " + playerStateMachine.isTouchingClimbingPoint.ToString();
         isNearClimbableLedge.text = "isNearClimbabeLedge: " + playerStateMachine.ledgeInfo.isNearClimbableMesh.ToString();
         isLettingGoOfLedgeAnimator.text = "Is Letting Go Of Ledge: " + animator.GetBool("isLettingGoLedge").ToString();
     }

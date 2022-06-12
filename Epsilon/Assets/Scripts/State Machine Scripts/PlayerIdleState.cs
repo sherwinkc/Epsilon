@@ -15,7 +15,10 @@ public class PlayerIdleState : PlayerBaseState
         _ctx.Animator.SetBool(_ctx.IsRunningHash, false);
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
         _ctx.Animator.SetBool("isLettingGoLedge", false);
-        _ctx.Animator.SetBool("ledgeDetected", false);
+        _ctx.Animator.SetBool("isTouchingClimbingPoint", _ctx.isTouchingClimbingPoint);
+
+
+        //_ctx.Animator.SetBool("ledgeDetected", false);
 
         //stop foot emission VFX when entering Idle
         _ctx.FootEmission.Stop();
@@ -75,10 +78,10 @@ public class PlayerIdleState : PlayerBaseState
         {
             SwitchState(_factory.GrabbingBox());
         }
-        else if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
+        /*else if (_ctx.isTouchingWall && !_ctx.isTouchingLedge && _ctx.ledgeInfo.isNearClimbableMesh)
         {
             SwitchState(_factory.LedgeHang());
-        }
+        }*/
     }
 
     private void ShootRaycastsForBox()

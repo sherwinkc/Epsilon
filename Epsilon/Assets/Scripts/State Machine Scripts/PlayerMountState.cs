@@ -29,7 +29,6 @@ public class PlayerMountState : PlayerBaseState
     {
         _ctx.camManager.isCameraTargetPlayer = true;
 
-        _ctx.isKneeTouchingLedge = false;
         _ctx.Animator.SetBool("mountDetected", false);
     }
 
@@ -45,11 +44,11 @@ public class PlayerMountState : PlayerBaseState
     {
         if (_ctx.ledgeInfo.isPlayerLeftSideOfMesh)
         {
-            _ctx.transform.position = new Vector2(_ctx.ledgeInfo._currentGrabPoint.transform.position.x + _ctx.mountPositionOffsetX, _ctx.ledgeInfo._currentGrabPoint.transform.position.y + _ctx.mountPositionOffsetY);
+            //_ctx.transform.position = new Vector2(_ctx.ledgeInfo._currentGrabPoint.transform.position.x + _ctx.mountPositionOffsetX, _ctx.ledgeInfo._currentGrabPoint.transform.position.y + _ctx.mountPositionOffsetY);
         }
         else if (_ctx.ledgeInfo.isPlayerRightSideOfMesh)
         {
-            _ctx.transform.position = new Vector2(_ctx.ledgeInfo._currentGrabPoint.transform.position.x - _ctx.mountPositionOffsetX, _ctx.ledgeInfo._currentGrabPoint.transform.position.y + _ctx.mountPositionOffsetY);
+            //_ctx.transform.position = new Vector2(_ctx.ledgeInfo._currentGrabPoint.transform.position.x - _ctx.mountPositionOffsetX, _ctx.ledgeInfo._currentGrabPoint.transform.position.y + _ctx.mountPositionOffsetY);
         }
     }
 }

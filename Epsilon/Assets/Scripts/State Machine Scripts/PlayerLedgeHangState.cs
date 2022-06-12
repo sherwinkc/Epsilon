@@ -8,9 +8,12 @@ public class PlayerLedgeHangState : PlayerBaseState
            : base(currentContext, playerStateFactory) { }
 
     public override void EnterState()
-    { 
+    {
+        _ctx.canShootClimbingRaycasts = false;
+
         //set animator variables
-        _ctx.Animator.SetBool("ledgeDetected", true);
+        //_ctx.Animator.SetBool("ledgeDetected", true);
+        _ctx.Animator.SetBool("isTouchingClimbingPoint", _ctx.isTouchingClimbingPoint);
         _ctx.Animator.Play("Player_Hang");
 
         LedgeHang();

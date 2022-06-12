@@ -36,6 +36,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] float _softLandingSpeedMultiplier = 0.75f;
     [SerializeField] float _hardLandingSpeedMultiplier = 1.5f;
     public bool canJump = true;
+    public bool isFacingRight;
 
     [Header("Ground Checks")]  
     [SerializeField] bool _isGrounded;
@@ -76,7 +77,6 @@ public class PlayerStateMachine : MonoBehaviour
     public float timeInAirBeforeDeath = 10f;
     public float velocityInAirBeforeDeath = -10f;
 
-
     [Header("Footsteps VFX")]    //Footsteps particle system
     public ParticleSystem _footEmission;
     //public ParticleSystem _footsteps;
@@ -86,19 +86,17 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Ledge Hang")]
     public Transform wallCheck;
     public Transform ledgeCheck;
+    public LayerMask whatIsClimbable;
     public float playerLocalScaleOffset = 3f; // should equal 1 divided player scale reduction
-    public bool isTouchingWall;
-    public bool isTouchingLedge;
     public float wallCheckDistance;
-    //public bool ledgeDetected = false;
-    //public bool canDetectLedges = true;
     public bool isTouchingClimbingPoint = false;
+    public bool canShootClimbingRaycasts = true;
 
-    [Header("Mount")]
+    /*[Header("Mount")]
     public Transform kneeCheck;
     public bool isKneeTouchingLedge;
     public float mountPositionOffsetX;
-    public float mountPositionOffsetY = 1.5f;
+    public float mountPositionOffsetY = 1.5f;*/
 
     [Header("Acceleration & Deacceleration")]
     //public float fHorizontalDamping;
@@ -145,8 +143,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     [Header("Screenshake")]
     CinemachineImpulseSource impulse;
-
-    public bool isFacingRight;
 
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
@@ -209,7 +205,6 @@ public class PlayerStateMachine : MonoBehaviour
         _isRunningHash = Animator.StringToHash("isRunning");
         _isFallingHash = Animator.StringToHash("isFalling");
         _jumpHash = Animator.StringToHash("Jump");
-        //speedXHash = Animator.StringToHash("SpeedX");
 
         // setup state
         _states = new PlayerStateFactory(this); // passes this PlayerStateMachine instance. PlayerStateFactory is expecting a PlayerStateMachine 
@@ -247,6 +242,7 @@ public class PlayerStateMachine : MonoBehaviour
         if (_isGrounded) 
         {
             _hasLetGoOfLedge = false;
+            canShootClimbingRaycasts = true;
             canJetpack = true;
             StopCoroutine(DelayThrustRegen());
             StartCoroutine(DelayThrustRegen());
