@@ -12,7 +12,6 @@ public class PlayerLedgeHangState : PlayerBaseState
         _ctx.canShootClimbingRaycasts = false;
 
         //set animator variables
-        //_ctx.Animator.SetBool("ledgeDetected", true);
         _ctx.Animator.SetBool("isTouchingClimbingPoint", _ctx.isTouchingClimbingPoint);
         _ctx.Animator.Play("Player_Hang");
 
@@ -49,6 +48,7 @@ public class PlayerLedgeHangState : PlayerBaseState
         }
         else if (_ctx.isThrustPressed && _ctx.isJetpackOn)
         {
+            _ctx.isTouchingClimbingPoint = false;
             SwitchState(_factory.Jetpack());
         }
     }

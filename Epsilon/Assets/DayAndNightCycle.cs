@@ -6,7 +6,7 @@ public class DayAndNightCycle : MonoBehaviour
 {
     //TODO maybe make one animator / or timeline? to manage the sequence
 
-    [SerializeField] Animator dayAnim;
+    [SerializeField] Animator daySkyImage;
     [SerializeField] Animator globalLight1, globalLight2;
     [SerializeField] Animator sun;
     [SerializeField] Animation sunrise;
@@ -18,7 +18,7 @@ public class DayAndNightCycle : MonoBehaviour
 
     private void Awake()
     {
-        dayAnim.enabled = false;
+        daySkyImage.enabled = false;
         globalLight1.enabled = false;
         globalLight2.enabled = false;
         sun.enabled = false;
@@ -27,11 +27,7 @@ public class DayAndNightCycle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Invoke("BeginSunset", cycleLength);
-        //BeginSunset();
-        //BeginSunrise();
-
-        //BeginSunriseAtMidMorning();
+        BeginSunrise(); // Sunrise until cave sequence.
     }
 
     // Update is called once per frame
@@ -45,7 +41,7 @@ public class DayAndNightCycle : MonoBehaviour
         TurnOnComponents();
 
         Debug.Log("BeginSunsetInvoked");
-        dayAnim.Play("SunSet");
+        daySkyImage.Play("SunSet");
         globalLight1.Play("DimGlobalLight");
         globalLight2.Play("DimGlobalLight1");
         sun.Play("SetSun");
@@ -61,11 +57,18 @@ public class DayAndNightCycle : MonoBehaviour
         TurnOnComponents();
 
         Debug.Log("BeginSunriseInvoked");
-        dayAnim.Play("Sunrise");
-        globalLight1.Play("BrightenGlobalLight1");
-        globalLight2.Play("BrightenGlobalLight");
-        sun.Play("SunSetAndRise");
-        Invoke("BeginSunset", cycleLength);
+
+        //Sun
+        sun.Play("SunriseToNoon");
+
+        //Background
+        daySkyImage.Play("SunriseToNoon");
+
+        //Global Lights
+        globalLight1.Play("SunriseToNoon");
+        globalLight2.Play("SunriseToNoon(GB)");
+
+        //Invoke("BeginSunset", cycleLength);
 
         sunrising = true;
         sunsetting = false;
@@ -73,7 +76,7 @@ public class DayAndNightCycle : MonoBehaviour
 
     private void TurnOnComponents()
     {
-        dayAnim.enabled = true;
+        daySkyImage.enabled = true;
         globalLight1.enabled = true;
         globalLight2.enabled = true;
         sun.enabled = true;
@@ -84,7 +87,7 @@ public class DayAndNightCycle : MonoBehaviour
         TurnOnComponents();
 
         //Debug.Log("BeginSunriseInvoked");
-        dayAnim.Play("Sunrise");
+        daySkyImage.Play("Sunrise");
         globalLight1.Play("BrightenGlobalLight1");
         globalLight2.Play("BrightenGlobalLight");
 

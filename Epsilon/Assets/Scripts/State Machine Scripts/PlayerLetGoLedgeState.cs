@@ -10,9 +10,7 @@ public class PlayerLetGoLedgeState : PlayerBaseState
     public override void EnterState()
     {
         //set Animator variables
-        //_ctx.isTouchingLedge = true;
         _ctx.Animator.SetBool("isLettingGoLedge", true);
-        //_ctx.Animator.SetBool("ledgeDetected", false);
 
         LetGoLogic();
         //Debug.Log("LetGoState");

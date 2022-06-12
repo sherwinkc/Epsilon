@@ -82,6 +82,7 @@ public class DebugManager : MonoBehaviour
     public TMP_Text isNearClimbableLedge;
     public TMP_Text isMountDetected;
     public TMP_Text isLettingGoOfLedgeAnimator;
+    public TMP_Text canShootRaycasts;
 
     [Header("Datapad")]
     public GameObject datapad;
@@ -220,7 +221,6 @@ public class DebugManager : MonoBehaviour
         {
             sunrising.text = "Sunrising: " + dayAndNight.sunrising.ToString();
             sunsetting.text = "Sunsetting: " + dayAndNight.sunsetting.ToString();
-
         }
         else
         {
@@ -245,6 +245,7 @@ public class DebugManager : MonoBehaviour
         isTouchingClimbPointText.text = "Is Touching Climbable Point: " + playerStateMachine.isTouchingClimbingPoint.ToString();
         isNearClimbableLedge.text = "isNearClimbabeLedge: " + playerStateMachine.ledgeInfo.isNearClimbableMesh.ToString();
         isLettingGoOfLedgeAnimator.text = "Is Letting Go Of Ledge: " + animator.GetBool("isLettingGoLedge").ToString();
+        canShootRaycasts.text = "Can Shoot Climbing Raycasts " + playerStateMachine.canShootClimbingRaycasts.ToString();
     }
 
     private void DisplayIsStandingOn()

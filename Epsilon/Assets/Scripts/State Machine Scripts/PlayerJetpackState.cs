@@ -9,6 +9,8 @@ public class PlayerJetpackState : PlayerBaseState
 
     public override void EnterState()
     {
+        if(!_ctx.Rigidbody.simulated) _ctx.Rigidbody.simulated = true; // if the player jetpacks out of ledge hang
+
         if (!_ctx.IsGrounded)
         {
             _ctx.Rigidbody.velocity = Vector2.zero; // get rid of any velocity
@@ -83,7 +85,7 @@ public class PlayerJetpackState : PlayerBaseState
         {
             SwitchState(_factory.Falling());
         }
-        else if (_ctx.Rigidbody.velocity.y < -1f) // switch to falling when veloctity is falling
+        else if (_ctx.Rigidbody.velocity.y < -10f) // switch to falling when veloctity is falling
         {
             SwitchState(_factory.Falling());
         }

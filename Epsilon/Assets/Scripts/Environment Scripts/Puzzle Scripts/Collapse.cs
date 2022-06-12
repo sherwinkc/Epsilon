@@ -8,8 +8,8 @@ public class Collapse : MonoBehaviour
 {
     AudioManager audioManager;
     LevelMusicManager levelMusicManager;
-
     PlayerStateMachine playerStateMachine;
+    DayAndNightCycle dayNightCycle;
 
     [SerializeField] BoxCollider2D boxCollider2D;
 
@@ -25,12 +25,16 @@ public class Collapse : MonoBehaviour
 
     [SerializeField] PlayableDirector playableDirector;
 
+    //Player
+    [SerializeField] GameObject helmetLight;
+
 
     private void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
         levelMusicManager = FindObjectOfType<LevelMusicManager>();
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
+        dayNightCycle = FindObjectOfType<DayAndNightCycle>();
 
         for (int i = 0; i < rbs.Length; i++)
         {
@@ -47,9 +51,8 @@ public class Collapse : MonoBehaviour
             boxCollider2D.enabled = false;
 
             ReleaseRocks();
-            //ActivateDestroyMethod();
-            audioManager.rockfallSFX.Play();
 
+            audioManager.rockfallSFX.Play();
             StartCoroutine(FallSequence());
         }
     }
@@ -73,9 +76,19 @@ public class Collapse : MonoBehaviour
     private IEnumerator FallSequence()
     {
         Time.timeScale = timeScaleFactor;
+
+        //TODO Stop Current Music
+        levelMusicManager.music1.Stop();
+        levelMusicManager.music2.Stop();
+        levelMusicManager.music3.Stop();
         levelMusicManager.music4.Stop();
+
+
         audioManager.playerBreathingSFX.Stop();
+
         yield return new WaitForSeconds(blackScreenWaitTime);
+
+        FindObjectOfType<PlayerStateMachine>().inCinematic = true;
 
         //black screen
         blackScreen.SetActive(true);
@@ -90,13 +103,7 @@ public class Collapse : MonoBehaviour
             destroy[i].Destroy();
         }
 
-        FindObjectOfType<PlayerStateMachine>().inCinematic = true;
-
-
-        //play audio
-        //stop music
-
-        //hold player in place
+        audioManager.rockfallSFX.Stop();
 
         yield return new WaitForSeconds(blackScreenTime);
 
@@ -110,8 +117,12 @@ public class Collapse : MonoBehaviour
         ScreenFadeManager screenFadeMan = FindObjectOfType<ScreenFadeManager>(); // TODO Cache ScreenFadeManager
         if (screenFadeMan != null) screenFadeMan.FadeIn();
 
-            audioManager.playerBreathingSFX.Play();
-        levelMusicManager.music4.Play();
+        audioManager.playerBreathingSFX.Play();
+
+        //Play Level Music
+        //levelMusicManager.music4.Play();
+
+        if (helmetLight != null) helmetLight.SetActive(true);
 
         //Initate cinematic state
         //start timeline w/ animation of standing up

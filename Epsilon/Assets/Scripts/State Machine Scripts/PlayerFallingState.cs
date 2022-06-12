@@ -14,9 +14,6 @@ public class PlayerFallingState : PlayerBaseState
         //set Animator variables
         _ctx.Animator.SetBool(_ctx.IsFallingHash, true);
         _ctx.Animator.SetBool("isTouchingClimbingPoint", _ctx.isTouchingClimbingPoint);
-        //_ctx.Animator.SetBool("ledgeDetected", false);
-
-        //_ctx.isTouchingClimbingPoint = false;
 
         _ctx.FootEmission.Stop();
 

@@ -239,20 +239,29 @@ public class PlayerStateMachine : MonoBehaviour
         JumpLogic();
         PlayLandingImpactVFX();
 
-        if (_isGrounded) 
+        if (_isGrounded) //regen if grounded or hanging
         {
             _hasLetGoOfLedge = false;
             canShootClimbingRaycasts = true;
             canJetpack = true;
+
+            airTime = 0f;
+        }
+        else
+        {
+            airTime += Time.deltaTime;
+        }
+
+        //regenerate thrust logic
+        if (_isGrounded || _anim.GetCurrentAnimatorStateInfo(0).IsName("Player_Hang")) //TODO check if the player is hanging //or
+        {
             StopCoroutine(DelayThrustRegen());
             StartCoroutine(DelayThrustRegen());
-            airTime = 0f;
         }
         else
         {
             regenerateThrust = false; //TODO player only regenerates thrust when on the ground? Yay or Nay
             StopCoroutine(DelayThrustRegen());
-            airTime += Time.deltaTime;
         }
 
         //Thrust Logic
