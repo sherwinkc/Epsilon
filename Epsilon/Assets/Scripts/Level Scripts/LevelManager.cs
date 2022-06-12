@@ -115,7 +115,7 @@ public class LevelManager : MonoBehaviour
     private IEnumerator SignalAndDoorSequence()
     {
         //Computer Signal Sequence
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
 
         PlayerStateMachine playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         playerStateMachine.EnterCinematicState();
