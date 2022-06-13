@@ -73,7 +73,7 @@ public class DayAndNightCycle : MonoBehaviour
 
         //Global Lights
         globalLight1Anim.Play("SunriseToNoon");
-        globalLight2Anim.Play("SunriseToNoon(GB)");
+        globalLight2Anim.Play("SunriseToNoon(BG)");
 
         //Invoke("BeginSunset", cycleLength);
 
