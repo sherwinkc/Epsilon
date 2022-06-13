@@ -14,7 +14,7 @@ public class PlayerIdleState : PlayerBaseState
         //Set Animator        
         _ctx.Animator.SetBool(_ctx.IsRunningHash, false);
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
-        _ctx.Animator.SetBool("isLettingGoLedge", false);
+        //_ctx.Animator.SetBool("isLettingGoLedge", false);
         _ctx.Animator.SetBool("isTouchingClimbingPoint", _ctx.isTouchingClimbingPoint);
 
 

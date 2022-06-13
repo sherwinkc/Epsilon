@@ -244,7 +244,7 @@ public class DebugManager : MonoBehaviour
     {
         isTouchingClimbPointText.text = "Is Touching Climbable Point: " + playerStateMachine.isTouchingClimbingPoint.ToString();
         isNearClimbableLedge.text = "isNearClimbabeLedge: " + playerStateMachine.ledgeInfo.isNearClimbableMesh.ToString();
-        isLettingGoOfLedgeAnimator.text = "Is Letting Go Of Ledge: " + animator.GetBool("isLettingGoLedge").ToString();
+        //isLettingGoOfLedgeAnimator.text = "Is Letting Go Of Ledge: " + animator.GetBool("isLettingGoLedge").ToString();
         canShootRaycasts.text = "Can Shoot Climbing Raycasts " + playerStateMachine.canShootClimbingRaycasts.ToString();
     }
 

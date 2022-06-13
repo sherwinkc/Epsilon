@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class LedgeInformation : MonoBehaviour
 {
+    PlayerStateMachine playerStateMachine;
+
     public Transform _currentGrabPoint;
     public Transform _currentEndPoint;
 
     public bool isNearClimbableMesh; // this checks weather player is near a climable box. See Player Jump State CheckSwitchStates()
 
     public bool isPlayerLeftSideOfMesh, isPlayerRightSideOfMesh;
+
+    private void Awake()
+    {
+        playerStateMachine = GetComponent<PlayerStateMachine>();
+    }
 
     void Start()
     {
@@ -22,6 +29,8 @@ public class LedgeInformation : MonoBehaviour
         {
             //Debug.Log(collision.tag);
             _currentGrabPoint = collision.GetComponentInChildren<GrabPoint>().transform;
+            playerStateMachine.canClimbUp = collision.GetComponentInChildren<GrabPoint>().hasAnExitPoint;
+
             _currentEndPoint = collision.GetComponentInChildren<EndPoint>().transform;
 
             isNearClimbableMesh = true;
@@ -32,6 +41,8 @@ public class LedgeInformation : MonoBehaviour
         {
             //Debug.Log(collision.tag);
             _currentGrabPoint = collision.GetComponentInChildren<GrabPoint>().transform;
+            playerStateMachine.canClimbUp = collision.GetComponentInChildren<GrabPoint>().hasAnExitPoint;
+
             _currentEndPoint = collision.GetComponentInChildren<EndPoint>().transform;
 
             isNearClimbableMesh = true;

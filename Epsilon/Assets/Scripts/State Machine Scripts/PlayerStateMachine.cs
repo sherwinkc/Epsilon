@@ -91,7 +91,9 @@ public class PlayerStateMachine : MonoBehaviour
     public float wallCheckDistance;
     public bool isTouchingClimbingPoint = false;
     public bool canShootClimbingRaycasts = true;
-    [SerializeField] float raycastDelayTime = 0.25f;
+    [SerializeField] float raycastDelayTime = 0.75f;
+    [SerializeField] float raycastDelayTimeShort = 0.33f;
+    public bool canClimbUp = false;
 
     /*[Header("Mount")]
     public Transform kneeCheck;
@@ -233,8 +235,9 @@ public class PlayerStateMachine : MonoBehaviour
         _anim.SetFloat("SpeedX", Mathf.Abs(Rigidbody.velocity.x));
         _anim.SetFloat("VelocityX", Rigidbody.velocity.x);
         _anim.SetFloat("airTime", airTime);
+        _anim.SetBool("canGrabLedge", canShootClimbingRaycasts);
 
-        if (_isGrounded) Animator.SetBool("isLettingGoLedge", false);
+        //if (_isGrounded) Animator.SetBool("isLettingGoLedge", false);
 
         _currentState.UpdateStates();
         JumpLogic();
@@ -513,9 +516,20 @@ public class PlayerStateMachine : MonoBehaviour
         _currentState.EnterState();
     }
 
+    public void StartDelayRaycastsShort()
+    {
+        StartCoroutine(DelayRaycastsShort());
+    }
+
     public IEnumerator DelayRaycasts()
     {
         yield return new WaitForSeconds(raycastDelayTime);
+
+        canShootClimbingRaycasts = true;
+    }
+    public IEnumerator DelayRaycastsShort()
+    {
+        yield return new WaitForSeconds(raycastDelayTimeShort);
 
         canShootClimbingRaycasts = true;
     }

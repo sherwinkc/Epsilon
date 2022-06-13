@@ -14,6 +14,7 @@ public class PlayerLedgeHangState : PlayerBaseState
         //set animator variables
         _ctx.Animator.SetBool("isTouchingClimbingPoint", _ctx.isTouchingClimbingPoint);
         _ctx.Animator.Play("Player_Hang");
+        _ctx.Animator.SetBool("isHangingFromLedge", true);
 
         LedgeHang();
         _ctx.Rigidbody.velocity = new Vector2(0f, 0f);
@@ -31,19 +32,21 @@ public class PlayerLedgeHangState : PlayerBaseState
 
     public override void ExitState()
     {
-
+        //_ctx.StartDelayRaycastsShort();
+        _ctx.Animator.SetBool("isHangingFromLedge", false);
     }
 
     public override void CheckSwitchStates()
     {
         if (Input.GetKeyDown(KeyCode.W) || _ctx.CurrentMovementInput.y > 0.5f || Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Space))
         {
-            SwitchState(_factory.ClimbLedge());
+            if(_ctx.canClimbUp) SwitchState(_factory.ClimbLedge());
         }
         else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Joystick1Button1) || _ctx.CurrentMovementInput.y < -0.5f || 
             (_ctx.CurrentMovementInput.x < -0.5f && _ctx.isFacingRight) || (_ctx.CurrentMovementInput.x > 0.5f && !_ctx.isFacingRight)) //checks which way player is facing and pressing in the opposite direction
         {
             _ctx._hasLetGoOfLedge = true;
+            _ctx.StartDelayRaycastsShort();
             SwitchState(_factory.LetGoOfLedge());
         }
         else if (_ctx.isThrustPressed && _ctx.isJetpackOn)
