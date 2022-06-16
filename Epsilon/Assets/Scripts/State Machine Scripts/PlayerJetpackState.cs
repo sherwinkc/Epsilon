@@ -48,6 +48,11 @@ public class PlayerJetpackState : PlayerBaseState
         //_ctx.Rigidbody.AddForce(new Vector2(0f, _ctx.thrust), ForceMode2D.Force);
         //_ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x, _ctx.Rigidbody.velocity.y + 0.15f);
 
+        if (!_ctx.isInCollapsingBridgeSequence && _ctx.isJetpackOn) //TODO Don't like checking bool for input, just for collapse sequence
+        {
+
+        }
+
         _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * _ctx._jetPackMoveSpeed), _ctx.Rigidbody.velocity.y);
 
         _ctx.thrustCounter -= Time.deltaTime;
@@ -99,6 +104,10 @@ public class PlayerJetpackState : PlayerBaseState
         {
             SwitchState(_factory.LedgeHang());
         }
+        /*else if (!_ctx.canJetpack)
+        {
+            SwitchState(_factory.Falling());
+        }*/
 
         /*if (_ctx.IsGrounded)
         {

@@ -23,14 +23,18 @@ public class PlayerJumpState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
-        _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * (_ctx.MoveSpeed * _ctx.InAirSpeedMultiplier)), _ctx.Rigidbody.velocity.y); //default logic
-        //_ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x, _ctx.Rigidbody.velocity.y);
 
-        //InAirLogic();
+        if (!_ctx.isInCollapsingBridgeSequence) //TODO Don't like checking bool for input, just for collapse sequence
+        {         
+            _ctx.Rigidbody.velocity = new Vector2((_ctx.CurrentMovement.x * (_ctx.MoveSpeed * _ctx.InAirSpeedMultiplier)), _ctx.Rigidbody.velocity.y); //default logic
+            //_ctx.Rigidbody.velocity = new Vector2(_ctx.Rigidbody.velocity.x, _ctx.Rigidbody.velocity.y);
 
-        ShootRaycastsForClimbing();
-        RaycastDebug();
-        RotateSprite();
+            //InAirLogic();
+
+            ShootRaycastsForClimbing();
+            RaycastDebug();
+            RotateSprite();
+        }
     }
 
     public override void FixedUpdate()
@@ -61,7 +65,7 @@ public class PlayerJumpState : PlayerBaseState
         {
             SwitchState(_factory.Falling());
         }  
-        else if (_ctx.isThrustPressed && _ctx.isJetpackOn)
+        else if (_ctx.isThrustPressed && _ctx.isJetpackOn && !_ctx.isInCollapsingBridgeSequence)
         {
             SwitchState(_factory.Jetpack());
         }

@@ -26,8 +26,10 @@ public class Collapse : MonoBehaviour
 
     [SerializeField] PlayableDirector playableDirector;
 
+    bool playFalling = false;
+
     //Player
-    [SerializeField] GameObject helmetLight;
+    public GameObject helmetLight;
 
 
     private void Awake()
@@ -50,6 +52,9 @@ public class Collapse : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            WalkingScript walkingScript = FindObjectOfType<WalkingScript>();
+            if (walkingScript != null) walkingScript.isAutoWalking = false;
+
             boxCollider2D.enabled = false;
 
             ReleaseRocks();
@@ -75,8 +80,23 @@ public class Collapse : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (playFalling) playerStateMachine.Animator.Play("Player_Falling");
+    }
+
     private IEnumerator FallSequence()
     {
+        FindObjectOfType<Letterbox>().MoveIn();
+
+        playFalling = true;
+        playerStateMachine.isInCollapsingBridgeSequence = true;
+        playerStateMachine.canJetpack = false;
+
+        playerStateMachine.DisableGameplayControls();
+
+        playerStateMachine.EnterIdleState();
+
         Time.timeScale = timeScaleFactor;
 
         //TODO Stop Current Music
@@ -94,9 +114,7 @@ public class Collapse : MonoBehaviour
 
         Time.timeScale = 1f;
 
-        FindObjectOfType<PlayerStateMachine>().inCinematic = true;
-
-        playerStateMachine.Animator.SetBool("isFalling", false);   
+        //playerStateMachine.Animator.SetBool("isFalling", false);   
 
         dayNightCycle.StartNightTime();
 
@@ -112,6 +130,8 @@ public class Collapse : MonoBehaviour
 
         yield return new WaitForSeconds(blackScreenTime);
 
+        playFalling = false;
+
         //teleport player
         playerStateMachine.transform.position = wakeUpLocation.position;
 
@@ -119,12 +139,14 @@ public class Collapse : MonoBehaviour
 
         playableDirector.Play();
 
+        yield return new WaitForSeconds(1f);
+
         blackScreen.SetActive(false);
 
         if (screenFadeManager != null) screenFadeManager.FadeIn();
 
         //switch on helmet light
-        if (helmetLight != null) helmetLight.SetActive(true);
+        //if (helmetLight != null) helmetLight.SetActive(true);
 
         //audio 
         if (levelMusicManager.music1 != null) levelMusicManager.music1.Play();
@@ -133,5 +155,12 @@ public class Collapse : MonoBehaviour
         if (levelMusicManager.music4 != null) levelMusicManager.music4.Play();
 
         audioManager.playerBreathingSFX.Play();
+
+        playerStateMachine.isInCollapsingBridgeSequence = false;
+        playerStateMachine.canJetpack = true;
+
+        playerStateMachine.EnableGameplayControls();
+
+        //FindObjectOfType<Letterbox>().MoveOut();
     }
 }

@@ -24,6 +24,8 @@ public class FinalOrbSequence : MonoBehaviour
 
     public IEnumerator FinalOrbSequenceCo()
     {
+        //FindObjectOfType<Letterbox>().MoveIn();
+
         player.inCinematic = true;
         yield return new WaitForSeconds(7.5f);
 
@@ -33,6 +35,8 @@ public class FinalOrbSequence : MonoBehaviour
         yield return new WaitForSeconds(6.5f);
 
         gunk1.SetActive(true);
-        helperLegs.SetActive(true);        
+        helperLegs.SetActive(true);
+
+        //FindObjectOfType<Letterbox>().MoveOut();
     }
 }

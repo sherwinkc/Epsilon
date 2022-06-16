@@ -8,6 +8,7 @@ public class MiraSequence : MonoBehaviour
     PlayerStateMachine playerStateMachine;
 
     [SerializeField] BoxCollider2D trigger;
+    [SerializeField] float holdTime = 16f;
 
     private void Awake()
     {
@@ -36,12 +37,16 @@ public class MiraSequence : MonoBehaviour
 
     public IEnumerator StartMiraSequence()
     {
+        //FindObjectOfType<Letterbox>().MoveIn();
+
         cameraManager.FocusMiraCam();
         playerStateMachine.inCinematic = true;
 
-        yield return new WaitForSeconds(16f);
+        yield return new WaitForSeconds(holdTime);
 
         cameraManager.ResetMiraCam();
         playerStateMachine.inCinematic = false;
+
+        //FindObjectOfType<Letterbox>().MoveOut();
     }
 }

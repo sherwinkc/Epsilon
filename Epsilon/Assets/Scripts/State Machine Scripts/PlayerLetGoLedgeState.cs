@@ -49,7 +49,7 @@ public class PlayerLetGoLedgeState : PlayerBaseState
         {
             SwitchState(_factory.Idle());
         }
-        else if (_ctx.isThrustPressed && _ctx.isJetpackOn)
+        else if (_ctx.isThrustPressed && _ctx.isJetpackOn && !_ctx.isInCollapsingBridgeSequence)
         {
             SwitchState(_factory.Jetpack());
         }

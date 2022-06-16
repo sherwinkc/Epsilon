@@ -69,6 +69,7 @@ public class AudioManager : MonoBehaviour
     [Header("Player")]
     public AudioSource playerBreathingSFX;
     public AudioSource grabSFX;
+    public AudioSource helmetLightOnSFX;
 
     [Header("Drop Pod")]
     public AudioSource airDecompressSFX;

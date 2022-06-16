@@ -134,4 +134,23 @@ public class PlayerFunctions : MonoBehaviour
     {
         interact.isLerping = false;
     }
+
+    public void SwitchOnHelmetLight()
+    {
+        Collapse collapse = FindObjectOfType<Collapse>();
+        collapse.helmetLight.SetActive(true);
+
+        audioManager.helmetLightOnSFX.Play();
+        FindObjectOfType<Letterbox>().MoveOut();
+    }
+
+    public void LetterboxMoveIn()
+    {
+        FindObjectOfType<Letterbox>().MoveIn();
+    }
+
+    public void LetterboxMoveOut()
+    {
+        FindObjectOfType<Letterbox>().MoveOut();
+    }
 }

@@ -49,7 +49,7 @@ public class PlayerLedgeHangState : PlayerBaseState
             _ctx.StartDelayRaycastsShort();
             SwitchState(_factory.LetGoOfLedge());
         }
-        else if (_ctx.isThrustPressed && _ctx.isJetpackOn)
+        else if (_ctx.isThrustPressed && _ctx.isJetpackOn && !_ctx.isInCollapsingBridgeSequence)
         {
             _ctx.isTouchingClimbingPoint = false;
             SwitchState(_factory.Jetpack());

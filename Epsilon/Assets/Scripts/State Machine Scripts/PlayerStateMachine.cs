@@ -147,6 +147,9 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Screenshake")]
     CinemachineImpulseSource impulse;
 
+    [Header("Collapsing Bridge")]
+    public bool isInCollapsingBridgeSequence = false;
+
     #region Getters & Setters
     // getters and setters - Cleaner way to access member variable in another class. Grant accessing class read, write or both permission on the var
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }

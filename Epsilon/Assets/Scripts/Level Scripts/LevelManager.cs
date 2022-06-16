@@ -114,6 +114,7 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator SignalAndDoorSequence()
     {
+        FindObjectOfType<Letterbox>().MoveIn();
         //Computer Signal Sequence
         yield return new WaitForSeconds(5f);
 
@@ -202,6 +203,8 @@ public class LevelManager : MonoBehaviour
         FadeFromBlack();
 
         playerStateMachine.inCinematic = false;
+
+        FindObjectOfType<Letterbox>().MoveOut();
     }
 
     private void FadeFromBlack()
