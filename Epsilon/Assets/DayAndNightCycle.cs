@@ -11,7 +11,7 @@ public class DayAndNightCycle : MonoBehaviour
     [SerializeField] Animator sunAnimator;
 
     [Header("Sky")]
-    [SerializeField] Animator daySkyImageAnimator;
+    //[SerializeField] Animator daySkyImageAnimator;
     [SerializeField] SpriteRenderer dayImageSpriteRend;
     [SerializeField] float dayImageOpacity = 0.15f;
 
@@ -32,7 +32,7 @@ public class DayAndNightCycle : MonoBehaviour
 
     private void Awake()
     {
-        daySkyImageAnimator.enabled = false;
+        //daySkyImageAnimator.enabled = false;
         globalLight1Anim.enabled = false;
         globalLight2Anim.enabled = false;
         sunAnimator.enabled = false;
@@ -40,7 +40,7 @@ public class DayAndNightCycle : MonoBehaviour
 
     void Start()
     {
-        BeginSunrise(); // Sunrise until cave sequence.
+
     }
 
     private void BeginSunset()
@@ -48,7 +48,7 @@ public class DayAndNightCycle : MonoBehaviour
         TurnOnComponents();
 
         Debug.Log("BeginSunsetInvoked");
-        daySkyImageAnimator.Play("SunSet");
+       // daySkyImageAnimator.Play("SunSet");
         globalLight1Anim.Play("DimGlobalLight");
         globalLight2Anim.Play("DimGlobalLight1");
         sunAnimator.Play("SetSun");
@@ -63,13 +63,13 @@ public class DayAndNightCycle : MonoBehaviour
     {
         TurnOnComponents();
 
-        Debug.Log("BeginSunriseInvoked");
+        //Debug.Log("BeginSunriseInvoked");
 
         //Sun
         sunAnimator.Play("SunriseToNoon");
 
         //Background
-        daySkyImageAnimator.Play("SunriseToNoon");
+        //if (daySkyImageAnimator != null) daySkyImageAnimator.Play("SunriseToNoon");
 
         //Global Lights
         globalLight1Anim.Play("SunriseToNoon");
@@ -94,7 +94,7 @@ public class DayAndNightCycle : MonoBehaviour
 
         //Background
         //daySkyImage.Play("SunriseToNoon");
-        daySkyImageAnimator.enabled = false;
+        //daySkyImageAnimator.enabled = false;
         dayImageSpriteRend.color = new Color(1, 1, 1, dayImageOpacity);
         //daySkyImageAnimator.gameObject.SetActive(false);
 
@@ -115,7 +115,7 @@ public class DayAndNightCycle : MonoBehaviour
 
     private void TurnOnComponents()
     {
-        daySkyImageAnimator.enabled = true;
+        //if(daySkyImageAnimator != null) daySkyImageAnimator.enabled = true;
         globalLight1Anim.enabled = true;
         globalLight2Anim.enabled = true;
         sunAnimator.enabled = true;
@@ -126,7 +126,7 @@ public class DayAndNightCycle : MonoBehaviour
         TurnOnComponents();
 
         //Debug.Log("BeginSunriseInvoked");
-        daySkyImageAnimator.Play("Sunrise");
+        //daySkyImageAnimator.Play("Sunrise");
         globalLight1Anim.Play("BrightenGlobalLight1");
         globalLight2Anim.Play("BrightenGlobalLight");
 
@@ -137,5 +137,19 @@ public class DayAndNightCycle : MonoBehaviour
 
         sunrising = true;
         sunsetting = false;
+    }
+
+    public void SetNightTime()
+    {
+        //sun
+        sunAnimator.gameObject.transform.position = sunStartingPos.transform.position;
+
+        //lighting
+        globalLight1.intensity = lightIntensityAtNight;
+        globalLight2.intensity = lightIntensityAtNight;
+
+        //dayImage
+        //daySkyImageAnimator.enabled = false;
+        dayImageSpriteRend.color = new Color(1, 1, 1, dayImageOpacity);
     }
 }

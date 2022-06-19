@@ -11,6 +11,7 @@ public class Collapse : MonoBehaviour
     PlayerStateMachine playerStateMachine;
     DayAndNightCycle dayNightCycle;
     ScreenFadeManager screenFadeManager;
+    Letterbox letterbox;
 
     [SerializeField] BoxCollider2D boxCollider2D;
 
@@ -39,6 +40,7 @@ public class Collapse : MonoBehaviour
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         dayNightCycle = FindObjectOfType<DayAndNightCycle>();
         screenFadeManager = FindObjectOfType<ScreenFadeManager>();
+        letterbox = FindObjectOfType<Letterbox>();
 
         for (int i = 0; i < rbs.Length; i++)
         {
@@ -87,7 +89,7 @@ public class Collapse : MonoBehaviour
 
     private IEnumerator FallSequence()
     {
-        FindObjectOfType<Letterbox>().MoveIn();
+        if(letterbox != null) letterbox.MoveIn();
 
         playFalling = true;
         playerStateMachine.isInCollapsingBridgeSequence = true;
@@ -116,7 +118,7 @@ public class Collapse : MonoBehaviour
 
         //playerStateMachine.Animator.SetBool("isFalling", false);   
 
-        dayNightCycle.StartNightTime();
+        dayNightCycle.SetNightTime();
 
         //Destroy falling rocks
         for (int i = 0; i < destroy.Length; i++)
@@ -160,7 +162,5 @@ public class Collapse : MonoBehaviour
         playerStateMachine.canJetpack = true;
 
         playerStateMachine.EnableGameplayControls();
-
-        //FindObjectOfType<Letterbox>().MoveOut();
     }
 }

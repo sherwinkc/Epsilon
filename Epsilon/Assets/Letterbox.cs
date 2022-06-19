@@ -7,20 +7,28 @@ public class Letterbox : MonoBehaviour
     Animator animator;
     [SerializeField] GameObject blackBarsHolder;
 
+    [SerializeField] bool playOnAwake;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-
-        //blackBarsHolder.SetActive(false);
     }
 
     void Start()
     {
-        //MoveIn();
+        if (playOnAwake)
+        {
+            blackBarsHolder.SetActive(true);
+            animator.enabled = true;
+            MoveIn();
+        }
+        else
+        {
+            blackBarsHolder.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
@@ -28,13 +36,14 @@ public class Letterbox : MonoBehaviour
 
     public void MoveIn()
     {
-        if(blackBarsHolder.activeSelf == false) blackBarsHolder.SetActive(true);
-        animator.enabled = true;
-        animator.SetTrigger("MoveIn");
+        if (blackBarsHolder.activeSelf == false) blackBarsHolder.SetActive(true);
+        if (animator.enabled == false) animator.enabled = true;
+        animator.Play("MoveIn");
     }
 
     public void MoveOut()
     {
-        animator.SetTrigger("MoveOut");
+
+        animator.Play("MoveOut");
     }
 }

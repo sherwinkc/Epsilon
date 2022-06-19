@@ -44,8 +44,12 @@ public class CameraManager : MonoBehaviour
     [Header("Battery Charger")]
     public CinemachineVirtualCamera batteryChargerCam;
 
-    [Header("Battery Charger")]
+    [Header("Mira")]
     public CinemachineVirtualCamera miraCam;
+
+    [Header("Clones")]
+    public CinemachineVirtualCamera cloneCam;
+    public CinemachineVirtualCamera cloneCam2;
 
     private void Awake()
     {
@@ -194,6 +198,26 @@ public class CameraManager : MonoBehaviour
     public void ResetMiraCam()
     {
         miraCam.Priority = 10;
+    }
+
+    public void FocusClonesCam()
+    {
+        cloneCam.Priority = 300;
+    }
+
+    public void ResetClonesCam()
+    {
+        cloneCam.Priority = 10;
+    }
+
+    public void FocusClonesCam2()
+    {
+        cloneCam2.Priority = 301;
+    }
+
+    public void ResetClonesCam2()
+    {
+        cloneCam2.Priority = 10;
     }
 
 }

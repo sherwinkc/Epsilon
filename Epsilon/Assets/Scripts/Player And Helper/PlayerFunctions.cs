@@ -141,16 +141,19 @@ public class PlayerFunctions : MonoBehaviour
         collapse.helmetLight.SetActive(true);
 
         audioManager.helmetLightOnSFX.Play();
-        FindObjectOfType<Letterbox>().MoveOut();
+
+        LetterboxMoveOut();
     }
 
     public void LetterboxMoveIn()
     {
-        FindObjectOfType<Letterbox>().MoveIn();
+        Letterbox letterbox = FindObjectOfType<Letterbox>();
+        if (letterbox != null) letterbox.MoveIn();
     }
 
     public void LetterboxMoveOut()
     {
-        FindObjectOfType<Letterbox>().MoveOut();
+        Letterbox letterbox = FindObjectOfType<Letterbox>();
+        if(letterbox != null) letterbox.MoveOut();
     }
 }

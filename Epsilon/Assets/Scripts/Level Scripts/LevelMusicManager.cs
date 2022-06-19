@@ -9,7 +9,7 @@ public class LevelMusicManager : MonoBehaviour
 
     void Start()
     {
-        PlaySelectedMusic();
+        //PlaySelectedMusic();
     }
 
     private void PlaySelectedMusic()

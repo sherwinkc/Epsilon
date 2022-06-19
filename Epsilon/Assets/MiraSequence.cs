@@ -37,7 +37,7 @@ public class MiraSequence : MonoBehaviour
 
     public IEnumerator StartMiraSequence()
     {
-        //FindObjectOfType<Letterbox>().MoveIn();
+        FindObjectOfType<Letterbox>().MoveIn();
 
         cameraManager.FocusMiraCam();
         playerStateMachine.inCinematic = true;
@@ -47,6 +47,6 @@ public class MiraSequence : MonoBehaviour
         cameraManager.ResetMiraCam();
         playerStateMachine.inCinematic = false;
 
-        //FindObjectOfType<Letterbox>().MoveOut();
+        FindObjectOfType<Letterbox>().MoveOut();
     }
 }
