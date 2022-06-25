@@ -620,7 +620,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player_Push_Backward 0
-  m_Speed: -1
+  m_Speed: -0.75
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5090687617998953063}
@@ -1484,7 +1484,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player_Push_Forward 0
-  m_Speed: 1
+  m_Speed: 0.75
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6524080404219825535}
@@ -1901,7 +1901,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player_Push_Backward
-  m_Speed: -1
+  m_Speed: -0.75
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3133900037455482132}
@@ -2323,7 +2323,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player_Push_Forward
-  m_Speed: 1
+  m_Speed: 0.75
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 2845389005552726974}
@@ -2510,16 +2510,16 @@ AnimatorStateMachine:
     m_Position: {x: -1810, y: 430, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4125947363709159934}
-    m_Position: {x: -1890, y: 160, z: 0}
+    m_Position: {x: -1670, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2109977880991596632}
-    m_Position: {x: -1650, y: 270, z: 0}
+    m_Position: {x: -1580, y: 340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8495799574990565508}
-    m_Position: {x: -2030, y: 230, z: 0}
+    m_Position: {x: -1960, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2086246451798635222}
-    m_Position: {x: -2070, y: 340, z: 0}
+    m_Position: {x: -2050, y: 340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8623720878955609730}
     m_Position: {x: 120, y: -180, z: 0}

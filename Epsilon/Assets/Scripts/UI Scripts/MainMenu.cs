@@ -45,8 +45,8 @@ public class MainMenu : MonoBehaviour
 
         Cursor.visible = true;
 
-        selectedIcon1.SetActive(true);
-        selectedline1.SetActive(true);
+        //selectedIcon1.SetActive(true);
+        //selectedline1.SetActive(true);
     }
 
     // Update is called once per frame
@@ -54,7 +54,7 @@ public class MainMenu : MonoBehaviour
     {
         //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
 
-        if (EventSystem.current.currentSelectedGameObject.name == "Button Start Game")
+        /*if (EventSystem.current.currentSelectedGameObject.name == "Button Start Game")
         {
             selectedIcon1.SetActive(true);
             selectedline1.SetActive(true);
@@ -85,9 +85,9 @@ public class MainMenu : MonoBehaviour
         {
             selectedIcon3.SetActive(false);
             selectedline3.SetActive(false);
-        }
+        }*/
 
-        //HandleButtonScalingWhenSelected();
+        HandleButtonScalingWhenSelected();
 
         /*if (Input.GetKeyDown(KeyCode.Return))
         {
