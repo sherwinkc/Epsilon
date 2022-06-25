@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class FinalOrbSequence : MonoBehaviour
 {
@@ -10,17 +11,28 @@ public class FinalOrbSequence : MonoBehaviour
 
     [SerializeField] GameObject gunk1;
     [SerializeField] GameObject helperLegs;
-    
+
+    [Header("Screenshake")]
+    CinemachineImpulseSource impulse;
+    [SerializeField] float force;
+    public bool isScreenshaking = false;
+
     public float waitTime = 5f;
 
     private void Awake()
     {
         player = FindObjectOfType<PlayerStateMachine>();
+        impulse = FindObjectOfType<CinemachineImpulseSource>();
     }
 
     public void StartCoroutineSequence()
     {
         StartCoroutine(FinalOrbSequenceCo());
+    }
+
+    private void Update()
+    {
+        if (isScreenshaking) impulse.GenerateImpulse(force);
     }
 
     public IEnumerator FinalOrbSequenceCo()
@@ -29,6 +41,13 @@ public class FinalOrbSequence : MonoBehaviour
 
         player.inCinematic = true;
         player.DisableGameplayControls();
+
+        LevelMusicManager levelMusicManager = FindObjectOfType<LevelMusicManager>();
+        levelMusicManager.isFadingMusicOut = true;
+
+        levelMusicManager.ominousMusic.volume = 0f;
+        levelMusicManager.ominousMusic.Play();
+        levelMusicManager.isFadingOminousMusicIn = true;
 
         FindObjectOfType<Letterbox>().MoveIn();
 
@@ -53,8 +72,20 @@ public class FinalOrbSequence : MonoBehaviour
 
         //Die
         anim.Play("Player_ScriptedDeath");
+        isScreenshaking = true;
+
+        AudioManager audioManager = FindObjectOfType<AudioManager>();
+
+        audioManager.playerBreathingSFX.Stop();
+        audioManager.playerPainBreathingSFX.Play();
 
         yield return new WaitForSeconds(6.5f);
+
+        isScreenshaking = false;
+        levelMusicManager.ominousMusic.Stop();
+        audioManager.playerPainBreathingSFX.Stop();
+
+        yield return new WaitForSeconds(0.5f);
 
         //gunk1.SetActive(true);
         //helperLegs.SetActive(true);

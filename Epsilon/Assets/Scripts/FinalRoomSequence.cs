@@ -48,8 +48,8 @@ public class FinalRoomSequence : MonoBehaviour
 
         if (levelMusicMan != null) 
         {
-            levelMusicMan.music4.Stop();
-            levelMusicMan.music5.Play();
+            //levelMusicMan.music.Stop();
+            //levelMusicMan.music5.Play();
         } 
 
         StartCoroutine(CameraLogic());        

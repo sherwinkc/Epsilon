@@ -47,7 +47,7 @@ public class DayAndNightCycle : MonoBehaviour
     {
         TurnOnComponents();
 
-        Debug.Log("BeginSunsetInvoked");
+        //Debug.Log("BeginSunsetInvoked");
        // daySkyImageAnimator.Play("SunSet");
         globalLight1Anim.Play("DimGlobalLight");
         globalLight2Anim.Play("DimGlobalLight1");
@@ -85,7 +85,7 @@ public class DayAndNightCycle : MonoBehaviour
     {
         TurnOnComponents();
 
-        Debug.Log("NightTimeInvoked");
+        //Debug.Log("NightTimeInvoked");
 
         //Sun
         sunAnimator.enabled = false;

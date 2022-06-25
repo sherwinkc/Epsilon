@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdfbdbb87d3286943a057f7791b43141, type: 3}
   m_Name: ChannelMixer
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   redOutRedIn:
     m_OverrideState: 1
     m_Value: 100
@@ -379,13 +379,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.9
+    m_Value: 0.8
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.85
   scatter:
     m_OverrideState: 1
     m_Value: 0.496
@@ -419,16 +419,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
   m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   postExposure:
     m_OverrideState: 1
     m_Value: -0.25
   contrast:
     m_OverrideState: 1
-    m_Value: 30
+    m_Value: 1.1
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0.827044, b: 0.827044, a: 1}
+    m_Value: {r: 0.9339623, g: 0.7472157, b: 0.7019402, a: 1}
   hueShift:
     m_OverrideState: 0
     m_Value: 35

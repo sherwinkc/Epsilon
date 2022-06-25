@@ -102,10 +102,10 @@ public class Collapse : MonoBehaviour
         Time.timeScale = timeScaleFactor;
 
         //TODO Stop Current Music
-        levelMusicManager.music1.Stop();
-        levelMusicManager.music2.Stop();
-        levelMusicManager.music3.Stop();
-        levelMusicManager.music4.Stop();
+        levelMusicManager.music.Stop();
+        //levelMusicManager.music2.Stop();
+        //levelMusicManager.music3.Stop();
+        //levelMusicManager.music4.Stop();
 
         audioManager.playerBreathingSFX.Stop(); //TODO Not stopping breathing
 
@@ -147,14 +147,16 @@ public class Collapse : MonoBehaviour
 
         if (screenFadeManager != null) screenFadeManager.FadeIn();
 
+        /*levelMusicManager.ominousMusic.volume = 0f;
+        levelMusicManager.ominousMusic.Play();
+        levelMusicManager.isFadingOminousMusicIn = true;*/
+
         //switch on helmet light
         //if (helmetLight != null) helmetLight.SetActive(true);
 
         //audio 
-        if (levelMusicManager.music1 != null) levelMusicManager.music1.Play();
-        if (levelMusicManager.music2 != null) levelMusicManager.music2.Play();
-        if (levelMusicManager.music3 != null) levelMusicManager.music3.Play();
-        if (levelMusicManager.music4 != null) levelMusicManager.music4.Play();
+        //if (levelMusicManager.music != null) levelMusicManager.music.Play();
+
 
         audioManager.playerBreathingSFX.Play();
 

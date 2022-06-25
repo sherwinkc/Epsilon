@@ -37,6 +37,12 @@ public class MiraSequence : MonoBehaviour
 
     public IEnumerator StartMiraSequence()
     {
+        LevelMusicManager levelMusicManager = FindObjectOfType<LevelMusicManager>();
+
+        levelMusicManager.ominousMusic.volume = 0f;
+        levelMusicManager.ominousMusic.Play();
+        levelMusicManager.isFadingOminousMusicIn = true;
+
         FindObjectOfType<Letterbox>().MoveIn();
 
         cameraManager.FocusMiraCam();
@@ -46,6 +52,13 @@ public class MiraSequence : MonoBehaviour
 
         cameraManager.ResetMiraCam();
         playerStateMachine.inCinematic = false;
+
+        levelMusicManager.isFadingOminousMusicIn = false;
+        levelMusicManager.isFadingOminousMusicOut = true;
+
+        levelMusicManager.music.volume = 0f;
+        levelMusicManager.music.Play();
+        levelMusicManager.isFadingMusicIn = true;
 
         FindObjectOfType<Letterbox>().MoveOut();
     }

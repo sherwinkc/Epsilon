@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1611158393
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bd65d52a45857d04a87b7920cb49f223, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -171,7 +171,8 @@ MonoBehaviour:
   spr: {fileID: 0}
   boxCollider: {fileID: 0}
   textToShow: {fileID: 0}
-  showTextDuration: 10
+  showTextDuration: 13
+  errandsHUD: {fileID: 0}
 --- !u!61 &5494225937707182708
 BoxCollider2D:
   m_ObjectHideFlags: 0
