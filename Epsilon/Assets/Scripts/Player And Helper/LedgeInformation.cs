@@ -67,7 +67,7 @@ public class LedgeInformation : MonoBehaviour
 
     public void MakeGrabPointsNull() //Not sure why we are not using this
     {
-        //_currentGrabPoint = null;
-        //_currentEndPoint = null;
+        _currentGrabPoint = null;
+        _currentEndPoint = null;
     }
 }

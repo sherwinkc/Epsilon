@@ -12,6 +12,8 @@ public class PlayerFunctions : MonoBehaviour
     Collector collector;
     Animator anim;
     Interact interact;
+    Collapse collapse;
+    Letterbox letterbox;
 
     public GameObject powerBeams;
     [SerializeField] Transform beamOrigin;
@@ -28,6 +30,8 @@ public class PlayerFunctions : MonoBehaviour
         collector = GetComponent<Collector>();
         anim = GetComponent<Animator>();
         interact = GetComponent<Interact>();
+        collapse = FindObjectOfType<Collapse>();
+        letterbox = FindObjectOfType<Letterbox>();
     }
 
     // A U D I O
@@ -137,7 +141,6 @@ public class PlayerFunctions : MonoBehaviour
 
     public void SwitchOnHelmetLight()
     {
-        Collapse collapse = FindObjectOfType<Collapse>();
         collapse.helmetLight.SetActive(true);
 
         audioManager.helmetLightOnSFX.Play();
@@ -145,15 +148,18 @@ public class PlayerFunctions : MonoBehaviour
         LetterboxMoveOut();
     }
 
+    public void SwitchOffHelmetLight()
+    {
+        collapse.helmetLight.SetActive(false);
+    }
+
     public void LetterboxMoveIn()
     {
-        Letterbox letterbox = FindObjectOfType<Letterbox>();
         if (letterbox != null) letterbox.MoveIn();
     }
 
     public void LetterboxMoveOut()
     {
-        Letterbox letterbox = FindObjectOfType<Letterbox>();
         if(letterbox != null) letterbox.MoveOut();
     }
 }

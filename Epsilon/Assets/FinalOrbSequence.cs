@@ -84,6 +84,7 @@ public class FinalOrbSequence : MonoBehaviour
         isScreenshaking = false;
         levelMusicManager.ominousMusic.Stop();
         audioManager.playerPainBreathingSFX.Stop();
+        player.GetComponent<UnityEngine.U2D.Animation.SpriteResolver>().SetCategoryAndLabel("PlayerV3", "PlayerCrackedHelm");
 
         yield return new WaitForSeconds(0.5f);
 
