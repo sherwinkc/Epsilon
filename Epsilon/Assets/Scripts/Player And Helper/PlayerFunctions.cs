@@ -162,4 +162,11 @@ public class PlayerFunctions : MonoBehaviour
     {
         if(letterbox != null) letterbox.MoveOut();
     }
+
+    public void StopJetpackVFX()
+    {
+        playerStateMachine.isThrustPressed = false;
+        playerStateMachine._jetEmission.Stop();
+        playerStateMachine.boostDetails.SetActive(false);
+    }
 }

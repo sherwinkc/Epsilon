@@ -110,6 +110,7 @@ public class PlayerStateMachine : MonoBehaviour
     public float decelerationRate = 0.5f;
 
     [Header("Jetpack")]
+    public GameObject boostDetails;
     public Slider thrustImage;
     public ParticleSystem _jetEmission;
     public float _jetPackMoveSpeed = 2f;
@@ -125,7 +126,6 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] float delayThrustRegenerationSpeed = 1f;
     public Vector3 impulseJetpack; //TODO not currently used
 
-    public GameObject boostDetails;
 
     [Header("Player Health & Death")]
     public int playerHealth = 1;
