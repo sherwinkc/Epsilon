@@ -31,7 +31,7 @@ public class MiraSequence : MonoBehaviour
             //Debug.Log("Collided with player");
             trigger.enabled = false;
 
-            StartCoroutine(StartMiraSequence());            
+            //StartCoroutine(StartMiraSequence()); //Breaking the build           
         }
     }
 

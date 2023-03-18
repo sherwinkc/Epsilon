@@ -50,7 +50,9 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        if(!cursorOn) Cursor.visible = false;
+        //Application.targetFrameRate = 30;
+
+        if (!cursorOn) Cursor.visible = false;
     }
 
     public void LoadFinalRoom()

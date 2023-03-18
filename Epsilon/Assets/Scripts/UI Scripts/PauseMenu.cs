@@ -25,6 +25,7 @@ public class PauseMenu : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
 
         //Set60FPS();
+        //Set30FPS();
     }
 
 
